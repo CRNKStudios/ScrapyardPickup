@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0912844F1E558C5700BAB7AD /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0912844E1E558C5700BAB7AD /* MenuViewController.swift */; };
+		093B03E61E5591E2008727AE /* Front Screen V2.png in Resources */ = {isa = PBXBuildFile; fileRef = 093B03E41E5591E2008727AE /* Front Screen V2.png */; };
+		093B03E71E5591E2008727AE /* Front Screen.png in Resources */ = {isa = PBXBuildFile; fileRef = 093B03E51E5591E2008727AE /* Front Screen.png */; };
 		09E7B51B1E54F46E0027B069 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E7B51A1E54F46E0027B069 /* AppDelegate.swift */; };
 		09E7B51D1E54F46E0027B069 /* Shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 09E7B51C1E54F46E0027B069 /* Shader.fsh */; };
 		09E7B51F1E54F46E0027B069 /* Shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 09E7B51E1E54F46E0027B069 /* Shader.vsh */; };
@@ -17,6 +20,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0912844E1E558C5700BAB7AD /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
+		093B03E41E5591E2008727AE /* Front Screen V2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Front Screen V2.png"; path = "Assets/Front Screen V2.png"; sourceTree = "<group>"; };
+		093B03E51E5591E2008727AE /* Front Screen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Front Screen.png"; path = "Assets/Front Screen.png"; sourceTree = "<group>"; };
 		09E7B5171E54F46E0027B069 /* ScrapyardPickup.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScrapyardPickup.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		09E7B51A1E54F46E0027B069 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		09E7B51C1E54F46E0027B069 /* Shader.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Shader.fsh; path = Shaders/Shader.fsh; sourceTree = "<group>"; };
@@ -39,6 +45,41 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		091284501E558C6700BAB7AD /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				0912844E1E558C5700BAB7AD /* MenuViewController.swift */,
+				09E7B5201E54F46E0027B069 /* GameViewController.swift */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		091284511E558C8900BAB7AD /* StoryBoards */ = {
+			isa = PBXGroup;
+			children = (
+				09E7B5221E54F46E0027B069 /* Main.storyboard */,
+				09E7B5271E54F46E0027B069 /* LaunchScreen.storyboard */,
+			);
+			name = StoryBoards;
+			sourceTree = "<group>";
+		};
+		093B03DE1E558EAD008727AE /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				093B03DF1E558EB6008727AE /* Images */,
+			);
+			name = Assets;
+			sourceTree = "<group>";
+		};
+		093B03DF1E558EB6008727AE /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				093B03E41E5591E2008727AE /* Front Screen V2.png */,
+				093B03E51E5591E2008727AE /* Front Screen.png */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
 		09E7B50E1E54F46D0027B069 = {
 			isa = PBXGroup;
 			children = (
@@ -58,13 +99,13 @@
 		09E7B5191E54F46E0027B069 /* ScrapyardPickup */ = {
 			isa = PBXGroup;
 			children = (
+				093B03DE1E558EAD008727AE /* Assets */,
+				091284511E558C8900BAB7AD /* StoryBoards */,
+				091284501E558C6700BAB7AD /* ViewControllers */,
 				09E7B51A1E54F46E0027B069 /* AppDelegate.swift */,
 				09E7B51C1E54F46E0027B069 /* Shader.fsh */,
 				09E7B51E1E54F46E0027B069 /* Shader.vsh */,
-				09E7B5201E54F46E0027B069 /* GameViewController.swift */,
-				09E7B5221E54F46E0027B069 /* Main.storyboard */,
 				09E7B5251E54F46E0027B069 /* Assets.xcassets */,
-				09E7B5271E54F46E0027B069 /* LaunchScreen.storyboard */,
 				09E7B52A1E54F46E0027B069 /* Info.plist */,
 			);
 			path = ScrapyardPickup;
@@ -102,6 +143,7 @@
 				TargetAttributes = {
 					09E7B5161E54F46D0027B069 = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = 26RCKZ873P;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -134,6 +176,8 @@
 				09E7B5261E54F46E0027B069 /* Assets.xcassets in Resources */,
 				09E7B5291E54F46E0027B069 /* LaunchScreen.storyboard in Resources */,
 				09E7B51D1E54F46E0027B069 /* Shader.fsh in Resources */,
+				093B03E61E5591E2008727AE /* Front Screen V2.png in Resources */,
+				093B03E71E5591E2008727AE /* Front Screen.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -145,6 +189,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				09E7B5211E54F46E0027B069 /* GameViewController.swift in Sources */,
+				0912844F1E558C5700BAB7AD /* MenuViewController.swift in Sources */,
 				09E7B51B1E54F46E0027B069 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -268,6 +313,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 26RCKZ873P;
 				INFOPLIST_FILE = ScrapyardPickup/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -281,6 +327,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 26RCKZ873P;
 				INFOPLIST_FILE = ScrapyardPickup/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -309,6 +356,7 @@
 				09E7B52F1E54F46E0027B069 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
