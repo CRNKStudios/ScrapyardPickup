@@ -1,5 +1,5 @@
 //
-//  MenuViewController.swift
+//  LevelSelectViewController.swift
 //  ScrapyardPickup
 //
 //  Created by Spencer Pollock on 2017-02-21.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MenuViewController: UIViewController {
+class LevelSelectViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,4 +32,7 @@ class MenuViewController: UIViewController {
     }
     */
 
+    @IBAction func backButtonDown(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
+    }
 }
