@@ -1,5 +1,5 @@
 //
-//  GameViewController.swift
+//  OptionsViewController.swift
 //  ScrapyardPickup
 //
 //  Created by Spencer Pollock on 2017-02-21.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GameViewController: UIViewController {
+class OptionsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,5 +42,11 @@ class GameViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-    
+
+    @IBAction func backButtonDown(_ sender: UIButton) {
+        _ = self.navigationController?.popViewController(animated: true)
+    }
+    @IBAction func levelMenuBackButtonDown(_ sender: UIButton) {
+        self.performSegue(withIdentifier: "unwindToMenu", sender: self)
+    }
 }

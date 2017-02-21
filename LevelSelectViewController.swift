@@ -1,5 +1,5 @@
 //
-//  GameViewController.swift
+//  LevelSelectViewController.swift
 //  ScrapyardPickup
 //
 //  Created by Spencer Pollock on 2017-02-21.
@@ -8,14 +8,14 @@
 
 import UIKit
 
-class GameViewController: UIViewController {
+class LevelSelectViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         NSLog(self.title! + " Appeared")
     }
@@ -23,7 +23,7 @@ class GameViewController: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         NSLog(self.title! + " Disappeared")
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -31,6 +31,11 @@ class GameViewController: UIViewController {
     
     override var prefersStatusBarHidden: Bool {
         return true
+    }
+    
+    // I want to unwind to this controller
+    @IBAction func unwindToMenu(segue: UIStoryboardSegue) {
+        
     }
 
     /*
@@ -42,5 +47,8 @@ class GameViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-    
+
+    @IBAction func backButtonDown(_ sender: UIButton) {
+        _ = self.navigationController?.popViewController(animated: true)
+    }
 }

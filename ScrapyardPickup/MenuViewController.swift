@@ -1,5 +1,5 @@
 //
-//  GameViewController.swift
+//  MenuViewController.swift
 //  ScrapyardPickup
 //
 //  Created by Spencer Pollock on 2017-02-21.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GameViewController: UIViewController {
+class MenuViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,5 +42,5 @@ class GameViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-    
+
 }
