@@ -15,12 +15,23 @@ class OptionsViewController: UIViewController {
 
         // Do any additional setup after loading the view.
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        NSLog(self.title! + " Appeared")
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        NSLog(self.title! + " Disappeared")
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
 
     /*
     // MARK: - Navigation
@@ -33,9 +44,9 @@ class OptionsViewController: UIViewController {
     */
 
     @IBAction func backButtonDown(_ sender: UIButton) {
-        dismiss(animated: true, completion: nil)
+        _ = self.navigationController?.popViewController(animated: true)
     }
-    @IBAction func menuBackButtonDown(_ sender: UIButton) {
-        dismiss(animated: true, completion: nil)
+    @IBAction func levelMenuBackButtonDown(_ sender: UIButton) {
+        self.performSegue(withIdentifier: "unwindToMenu", sender: self)
     }
 }

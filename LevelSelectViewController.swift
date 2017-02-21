@@ -16,11 +16,27 @@ class LevelSelectViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        NSLog(self.title! + " Appeared")
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        NSLog(self.title! + " Disappeared")
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
+    
+    // I want to unwind to this controller
+    @IBAction func unwindToMenu(segue: UIStoryboardSegue) {
+        
+    }
 
     /*
     // MARK: - Navigation
@@ -33,6 +49,6 @@ class LevelSelectViewController: UIViewController {
     */
 
     @IBAction func backButtonDown(_ sender: UIButton) {
-        dismiss(animated: true, completion: nil)
+        _ = self.navigationController?.popViewController(animated: true)
     }
 }

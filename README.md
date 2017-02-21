@@ -37,8 +37,7 @@ Naming of methods/functions are to be given Lower Camel Case.
 Please use the [Allman](https://en.wikipedia.org/wiki/Indent_style#Allman_style) 
 Coding style conventions:
 ```
-while (x == y) 
-{
+while (x == y) {
     something();
     somethingElse();
 }

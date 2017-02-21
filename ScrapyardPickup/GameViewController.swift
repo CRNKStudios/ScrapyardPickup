@@ -15,12 +15,23 @@ class GameViewController: UIViewController {
 
         // Do any additional setup after loading the view.
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        NSLog(self.title! + " Appeared")
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        NSLog(self.title! + " Disappeared")
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
 
     /*
     // MARK: - Navigation
@@ -31,5 +42,5 @@ class GameViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
+    
 }
