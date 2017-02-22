@@ -24,6 +24,11 @@
 		09E7B5241E54F46E0027B069 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 09E7B5221E54F46E0027B069 /* Main.storyboard */; };
 		09E7B5261E54F46E0027B069 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 09E7B5251E54F46E0027B069 /* Assets.xcassets */; };
 		09E7B5291E54F46E0027B069 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 09E7B5271E54F46E0027B069 /* LaunchScreen.storyboard */; };
+		B9317F1F1E5E26090030ECEA /* downArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = B9317F1B1E5E26090030ECEA /* downArrow.png */; };
+		B9317F201E5E26090030ECEA /* leftArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = B9317F1C1E5E26090030ECEA /* leftArrow.png */; };
+		B9317F211E5E26090030ECEA /* rightArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = B9317F1D1E5E26090030ECEA /* rightArrow.png */; };
+		B9317F221E5E26090030ECEA /* upArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = B9317F1E1E5E26090030ECEA /* upArrow.png */; };
+		B9317F241E5E27B20030ECEA /* redButton.png in Resources */ = {isa = PBXBuildFile; fileRef = B9317F231E5E27B20030ECEA /* redButton.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +51,11 @@
 		09E7B5251E54F46E0027B069 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		09E7B5281E54F46E0027B069 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		09E7B52A1E54F46E0027B069 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B9317F1B1E5E26090030ECEA /* downArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = downArrow.png; path = Assets/downArrow.png; sourceTree = "<group>"; };
+		B9317F1C1E5E26090030ECEA /* leftArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = leftArrow.png; path = Assets/leftArrow.png; sourceTree = "<group>"; };
+		B9317F1D1E5E26090030ECEA /* rightArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = rightArrow.png; path = Assets/rightArrow.png; sourceTree = "<group>"; };
+		B9317F1E1E5E26090030ECEA /* upArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = upArrow.png; path = Assets/upArrow.png; sourceTree = "<group>"; };
+		B9317F231E5E27B20030ECEA /* redButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = redButton.png; path = Assets/redButton.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +120,11 @@
 		093B03DF1E558EB6008727AE /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				B9317F231E5E27B20030ECEA /* redButton.png */,
+				B9317F1B1E5E26090030ECEA /* downArrow.png */,
+				B9317F1C1E5E26090030ECEA /* leftArrow.png */,
+				B9317F1D1E5E26090030ECEA /* rightArrow.png */,
+				B9317F1E1E5E26090030ECEA /* upArrow.png */,
 				093B03E41E5591E2008727AE /* Front Screen V2.png */,
 				093B03E51E5591E2008727AE /* Front Screen.png */,
 			);
@@ -180,7 +195,7 @@
 				TargetAttributes = {
 					09E7B5161E54F46D0027B069 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = 26RCKZ873P;
+						DevelopmentTeam = 93B4SHK7UN;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -210,11 +225,16 @@
 			files = (
 				09E7B5241E54F46E0027B069 /* Main.storyboard in Resources */,
 				09E7B51F1E54F46E0027B069 /* Shader.vsh in Resources */,
+				B9317F201E5E26090030ECEA /* leftArrow.png in Resources */,
 				09E7B5261E54F46E0027B069 /* Assets.xcassets in Resources */,
+				B9317F1F1E5E26090030ECEA /* downArrow.png in Resources */,
 				09E7B5291E54F46E0027B069 /* LaunchScreen.storyboard in Resources */,
 				09E7B51D1E54F46E0027B069 /* Shader.fsh in Resources */,
 				093B03E61E5591E2008727AE /* Front Screen V2.png in Resources */,
+				B9317F211E5E26090030ECEA /* rightArrow.png in Resources */,
 				093B03E71E5591E2008727AE /* Front Screen.png in Resources */,
+				B9317F221E5E26090030ECEA /* upArrow.png in Resources */,
+				B9317F241E5E27B20030ECEA /* redButton.png in Resources */,
 				090363081E5CD91900584BE8 /* ic_settings_36pt.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -357,11 +377,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 26RCKZ873P;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 93B4SHK7UN;
 				INFOPLIST_FILE = ScrapyardPickup/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.crnkstudios.ScrapyardPickup;
+				PRODUCT_BUNDLE_IDENTIFIER = com.matthewwong.ScrapyardPickup;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -371,11 +392,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 26RCKZ873P;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 93B4SHK7UN;
 				INFOPLIST_FILE = ScrapyardPickup/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.crnkstudios.ScrapyardPickup;
+				PRODUCT_BUNDLE_IDENTIFIER = com.matthewwong.ScrapyardPickup;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
