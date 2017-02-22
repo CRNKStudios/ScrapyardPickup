@@ -28,7 +28,7 @@ class PlayerPrefs {
         return self.score!
     }
     func incrementLevel() {
-        self.curLevel++
+        self.curLevel += 1
     }
     func pushLevelScore(level: Int, score: Int) {
         if let lvl = self.levelScores[level] { // if levl isn't there
