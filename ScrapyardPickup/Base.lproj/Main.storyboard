@@ -210,7 +210,10 @@
                                 <rect key="frame" x="16" y="617" width="85" height="30"/>
                                 <color key="backgroundColor" red="0.40000000000000002" green="0.59999999999999998" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="4yd-j3-ji6"/>
+                                    <constraint firstAttribute="width" secondItem="Mf2-74-LQq" secondAttribute="height" multiplier="17:6" id="KeZ-xv-vBQ"/>
                                     <constraint firstAttribute="width" constant="85" id="X6o-ZR-B0H"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="85" id="hOY-yM-Isr"/>
                                 </constraints>
                                 <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="BACK">
@@ -620,7 +623,7 @@
         <image name="ic_settings_36pt.png" width="36" height="36"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="H08-L1-2JQ"/>
+        <segue reference="8Ev-C6-tjK"/>
         <segue reference="yEh-63-4JT"/>
     </inferredMetricsTieBreakers>
 </document>

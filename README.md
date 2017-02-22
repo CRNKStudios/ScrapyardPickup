@@ -34,7 +34,7 @@ Naming of class variables are to be given Underscore Lower Camel Case names.
 Naming of methods/functions are to be given Lower Camel Case.
 >*Example*: setString
 #### Coding Style
-Please use the [Allman](https://en.wikipedia.org/wiki/Indent_style#Allman_style) 
+Please use the [K&R](https://en.wikipedia.org/wiki/Indent_style#K.26R_style) 
 Coding style conventions:
 ```
 while (x == y) {
