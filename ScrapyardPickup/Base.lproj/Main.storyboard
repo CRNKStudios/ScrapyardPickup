@@ -576,7 +576,7 @@
                         <viewControllerLayoutGuide type="top" id="aIQ-rV-w0j"/>
                         <viewControllerLayoutGuide type="bottom" id="uOK-pe-8Ts"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="KLd-fY-XbN">
+                    <view key="view" contentMode="scaleToFill" id="KLd-fY-XbN" customClass="GLKView">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -587,11 +587,75 @@
                                     <segue destination="aMc-Xg-PWj" kind="show" id="LXb-LA-vm2"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HSN-6q-zd0">
+                                <rect key="frame" x="62" y="499" width="45" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="22B-8f-edf"/>
+                                    <constraint firstAttribute="width" constant="45" id="Gdw-tB-PZD"/>
+                                    <constraint firstAttribute="width" secondItem="HSN-6q-zd0" secondAttribute="height" multiplier="1:1" id="vWl-Fw-pWz"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="1"/>
+                                <state key="normal" title="UP" image="upArrow.png">
+                                    <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OUv-ef-kSi">
+                                <rect key="frame" x="16" y="549" width="45" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="45" id="MCp-Fy-905"/>
+                                    <constraint firstAttribute="height" constant="45" id="dW6-uk-uuM"/>
+                                    <constraint firstAttribute="width" secondItem="OUv-ef-kSi" secondAttribute="height" multiplier="1:1" id="tHD-QX-MSW"/>
+                                </constraints>
+                                <state key="normal" title="Left" image="leftArrow.png">
+                                    <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1o2-k9-2kN">
+                                <rect key="frame" x="108" y="549" width="45" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="45" id="9cm-Ts-brn"/>
+                                    <constraint firstAttribute="height" constant="45" id="jp6-lk-KWp"/>
+                                    <constraint firstAttribute="width" secondItem="1o2-k9-2kN" secondAttribute="height" multiplier="1:1" id="kXW-VX-jvq"/>
+                                </constraints>
+                                <state key="normal" title="Right" image="rightArrow.png">
+                                    <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UDg-9x-aqh">
+                                <rect key="frame" x="62" y="602" width="45" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="45" id="1j3-Nc-tZZ"/>
+                                    <constraint firstAttribute="width" secondItem="UDg-9x-aqh" secondAttribute="height" multiplier="1:1" id="3s2-Jw-ktl"/>
+                                    <constraint firstAttribute="height" constant="45" id="Ps5-4t-sE2"/>
+                                </constraints>
+                                <state key="normal" title="Down" image="downArrow.png">
+                                    <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FOi-7s-URO">
+                                <rect key="frame" x="284" y="534" width="75" height="75"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="75" id="HFN-n4-WMB"/>
+                                    <constraint firstAttribute="height" constant="75" id="eSt-Bz-9yb"/>
+                                </constraints>
+                                <state key="normal" title="PushBtn" image="redButton.png"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="yrU-wF-ZI1" firstAttribute="top" secondItem="aIQ-rV-w0j" secondAttribute="bottom" constant="8" id="ntA-h7-Qbw"/>
-                            <constraint firstItem="yrU-wF-ZI1" firstAttribute="trailing" secondItem="KLd-fY-XbN" secondAttribute="trailingMargin" id="tF6-lD-ScA"/>
+                            <constraint firstItem="uOK-pe-8Ts" firstAttribute="top" secondItem="OUv-ef-kSi" secondAttribute="bottom" constant="73" id="1su-pD-uEM"/>
+                            <constraint firstItem="yrU-wF-ZI1" firstAttribute="trailing" secondItem="KLd-fY-XbN" secondAttribute="trailingMargin" id="5zF-eE-ZVG"/>
+                            <constraint firstItem="1o2-k9-2kN" firstAttribute="leading" secondItem="OUv-ef-kSi" secondAttribute="trailing" constant="47" id="NC5-Ph-gcJ"/>
+                            <constraint firstItem="OUv-ef-kSi" firstAttribute="leading" secondItem="KLd-fY-XbN" secondAttribute="leadingMargin" id="P0J-WB-G8s"/>
+                            <constraint firstItem="HSN-6q-zd0" firstAttribute="leading" secondItem="KLd-fY-XbN" secondAttribute="leadingMargin" constant="46" id="TYl-x5-wvK"/>
+                            <constraint firstItem="uOK-pe-8Ts" firstAttribute="top" secondItem="1o2-k9-2kN" secondAttribute="bottom" constant="73" id="XrR-mf-4OA"/>
+                            <constraint firstItem="UDg-9x-aqh" firstAttribute="top" secondItem="HSN-6q-zd0" secondAttribute="bottom" constant="58" id="id2-k1-azo"/>
+                            <constraint firstItem="FOi-7s-URO" firstAttribute="trailing" secondItem="KLd-fY-XbN" secondAttribute="trailingMargin" id="mQd-z5-RgA"/>
+                            <constraint firstItem="UDg-9x-aqh" firstAttribute="leading" secondItem="KLd-fY-XbN" secondAttribute="leadingMargin" constant="46" id="orr-o3-RvH"/>
+                            <constraint firstItem="uOK-pe-8Ts" firstAttribute="top" secondItem="FOi-7s-URO" secondAttribute="bottom" constant="58" id="pOl-kr-ogc"/>
+                            <constraint firstItem="yrU-wF-ZI1" firstAttribute="top" secondItem="aIQ-rV-w0j" secondAttribute="bottom" constant="8" symbolic="YES" id="pe3-Wp-eHK"/>
+                            <constraint firstItem="uOK-pe-8Ts" firstAttribute="top" secondItem="UDg-9x-aqh" secondAttribute="bottom" constant="20" id="r6F-Ie-DHa"/>
+                            <constraint firstItem="UDg-9x-aqh" firstAttribute="top" secondItem="HSN-6q-zd0" secondAttribute="bottom" constant="58" id="vni-xT-prd"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -617,13 +681,35 @@
             </objects>
             <point key="canvasLocation" x="332" y="-27.436281859070466"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="4U3-zR-R67">
+            <objects>
+                <viewController id="T94-15-Sfs" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="F4a-kW-KGB"/>
+                        <viewControllerLayoutGuide type="bottom" id="hZd-46-4jW"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="uol-yf-DgZ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="InA-nQ-mgU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
     </scenes>
     <resources>
         <image name="Front Screen V2.png" width="2632" height="1500"/>
+        <image name="downArrow.png" width="90" height="89"/>
         <image name="ic_settings_36pt.png" width="36" height="36"/>
+        <image name="leftArrow.png" width="90" height="89"/>
+        <image name="redButton.png" width="800" height="800"/>
+        <image name="rightArrow.png" width="90" height="89"/>
+        <image name="upArrow.png" width="90" height="89"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Tlv-ce-pzF"/>
-        <segue reference="yEh-63-4JT"/>
+        <segue reference="eeB-iC-dAG"/>
+        <segue reference="Wfz-1b-6sR"/>
     </inferredMetricsTieBreakers>
 </document>
