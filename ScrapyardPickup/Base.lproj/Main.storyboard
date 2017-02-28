@@ -661,6 +661,7 @@
                     <connections>
                         <outlet property="UIButtonDown" destination="UDg-9x-aqh" id="9Uw-ez-jPF"/>
                         <outlet property="UIButtonLeft" destination="OUv-ef-kSi" id="00d-MP-WqS"/>
+                        <outlet property="UIButtonMagnetPower" destination="FOi-7s-URO" id="SJg-Od-kFN"/>
                         <outlet property="UIButtonRight" destination="1o2-k9-2kN" id="BZW-qc-lyd"/>
                         <outlet property="UIButtonUp" destination="HSN-6q-zd0" id="dUl-sq-ACr"/>
                     </connections>

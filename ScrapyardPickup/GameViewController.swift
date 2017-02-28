@@ -31,7 +31,9 @@ class GameViewController: GLKViewController {
     var context: EAGLContext? = nil
     var effect: GLKBaseEffect? = nil
     
-    let BUTTON_UP=0,BUTTON_DOWN=2,BUTTON_LEFT=3,BUTTON_RIGHT=4;
+    var magnetIsOn = false;
+    
+    let BUTTON_UP=0,BUTTON_DOWN=2,BUTTON_LEFT=3,BUTTON_RIGHT=4, BUTTON_MAGNET_POWER=5;
     
     
     var playerMagnet: GameObject = GameObject(ObjectVertexData: [
@@ -81,6 +83,7 @@ class GameViewController: GLKViewController {
     @IBOutlet weak var UIButtonDown: UIButton!
     @IBOutlet weak var UIButtonLeft: UIButton!
     @IBOutlet weak var UIButtonRight: UIButton!
+    @IBOutlet weak var UIButtonMagnetPower: UIButton!
     
     
     deinit {
@@ -123,6 +126,10 @@ class GameViewController: GLKViewController {
         
         UIButtonRight.tag=BUTTON_RIGHT;
         UIButtonRight.addTarget(self,action:#selector(buttonClicked),for:.touchUpInside);
+        
+        UIButtonMagnetPower.tag=BUTTON_MAGNET_POWER;
+        UIButtonMagnetPower.addTarget(self,action:#selector(buttonClicked),for:.touchDown);
+        UIButtonMagnetPower.addTarget(self,action:#selector(buttonReleased),for:.touchUpInside);
     }
     
     func buttonClicked(sender:UIButton)
@@ -140,10 +147,26 @@ class GameViewController: GLKViewController {
         case BUTTON_RIGHT:
             playerMagnet.moveObject(xMove: 0.1, yMove: 0.0, zMove: 0.0);
             break;
+        case BUTTON_MAGNET_POWER:
+            print("magnet power on");
+            magnetIsOn=true;
+            break;
         default:
             break;
         }
         
+    }
+    
+    //Handle UI button Releases
+    func buttonReleased(sender:UIButton){
+        switch(sender.tag){
+        case BUTTON_MAGNET_POWER:
+            print("magnet power off");
+            magnetIsOn=false;
+            break;
+        default:
+            break;
+        }
     }
     
     override func didReceiveMemoryWarning() {
