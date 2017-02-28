@@ -235,7 +235,9 @@ class GameViewController: GLKViewController {
         modelViewMatrix = GLKMatrix4Rotate(modelViewMatrix, rotation, 1.0, 1.0, 1.0)
         modelViewMatrix = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix)
         
-        projectionMatrix = GLKMatrix4RotateX(projectionMatrix, -0.78);
+        projectionMatrix = GLKMatrix4RotateX(projectionMatrix, -1.0);
+        let worldTranslationMatrix = GLKMatrix4MakeTranslation(0.0, 7, -3)
+        projectionMatrix = GLKMatrix4Multiply(projectionMatrix, worldTranslationMatrix)
         
         normalMatrix = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(modelViewMatrix), nil)
         
