@@ -30,6 +30,7 @@
 		B9317F211E5E26090030ECEA /* rightArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = B9317F1D1E5E26090030ECEA /* rightArrow.png */; };
 		B9317F221E5E26090030ECEA /* upArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = B9317F1E1E5E26090030ECEA /* upArrow.png */; };
 		B9317F241E5E27B20030ECEA /* redButton.png in Resources */ = {isa = PBXBuildFile; fileRef = B9317F231E5E27B20030ECEA /* redButton.png */; };
+		BE785A1D1E6601EC0062B6D3 /* GameObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE785A1C1E6601EC0062B6D3 /* GameObject.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +59,7 @@
 		B9317F1D1E5E26090030ECEA /* rightArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = rightArrow.png; path = Assets/rightArrow.png; sourceTree = "<group>"; };
 		B9317F1E1E5E26090030ECEA /* upArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = upArrow.png; path = Assets/upArrow.png; sourceTree = "<group>"; };
 		B9317F231E5E27B20030ECEA /* redButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = redButton.png; path = Assets/redButton.png; sourceTree = "<group>"; };
+		BE785A1C1E6601EC0062B6D3 /* GameObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameObject.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +86,7 @@
 			isa = PBXGroup;
 			children = (
 				0903630C1E5D2FB400584BE8 /* PlayerPrefs.swift */,
+				BE785A1C1E6601EC0062B6D3 /* GameObject.swift */,
 			);
 			name = GameFiles;
 			sourceTree = "<group>";
@@ -262,6 +265,7 @@
 				0903630F1E5D2FBF00584BE8 /* LevelSelectViewController.swift in Sources */,
 				090363001E5CD02D00584BE8 /* LeaderboardViewController.swift in Sources */,
 				090363021E5CD03E00584BE8 /* OptionsViewController.swift in Sources */,
+				BE785A1D1E6601EC0062B6D3 /* GameObject.swift in Sources */,
 				090363061E5CD05300584BE8 /* GameViewController.swift in Sources */,
 				0903630D1E5D2FB400584BE8 /* PlayerPrefs.swift in Sources */,
 				090362FA1E5CC6CE00584BE8 /* MenuViewController.swift in Sources */,

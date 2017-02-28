@@ -31,6 +31,58 @@ class GameViewController: GLKViewController {
     var context: EAGLContext? = nil
     var effect: GLKBaseEffect? = nil
     
+    let BUTTON_UP=0,BUTTON_DOWN=2,BUTTON_LEFT=3,BUTTON_RIGHT=4;
+    
+    
+    var playerMagnet: GameObject = GameObject(ObjectVertexData: [
+        0.5, -0.5, -0.5,        1.0, 0.0, 0.0,
+        0.5, 0.5, -0.5,         1.0, 0.0, 0.0,
+        0.5, -0.5, 0.5,         1.0, 0.0, 0.0,
+        0.5, -0.5, 0.5,         1.0, 0.0, 0.0,
+        0.5, 0.5, -0.5,         1.0, 0.0, 0.0,
+        0.5, 0.5, 0.5,          1.0, 0.0, 0.0,
+        
+        0.5, 0.5, -0.5,         0.0, 1.0, 0.0,
+        -0.5, 0.5, -0.5,        0.0, 1.0, 0.0,
+        0.5, 0.5, 0.5,          0.0, 1.0, 0.0,
+        0.5, 0.5, 0.5,          0.0, 1.0, 0.0,
+        -0.5, 0.5, -0.5,        0.0, 1.0, 0.0,
+        -0.5, 0.5, 0.5,         0.0, 1.0, 0.0,
+        
+        -0.5, 0.5, -0.5,        -1.0, 0.0, 0.0,
+        -0.5, -0.5, -0.5,      -1.0, 0.0, 0.0,
+        -0.5, 0.5, 0.5,         -1.0, 0.0, 0.0,
+        -0.5, 0.5, 0.5,         -1.0, 0.0, 0.0,
+        -0.5, -0.5, -0.5,      -1.0, 0.0, 0.0,
+        -0.5, -0.5, 0.5,        -1.0, 0.0, 0.0,
+        
+        -0.5, -0.5, -0.5,      0.0, -1.0, 0.0,
+        0.5, -0.5, -0.5,        0.0, -1.0, 0.0,
+        -0.5, -0.5, 0.5,        0.0, -1.0, 0.0,
+        -0.5, -0.5, 0.5,        0.0, -1.0, 0.0,
+        0.5, -0.5, -0.5,        0.0, -1.0, 0.0,
+        0.5, -0.5, 0.5,         0.0, -1.0, 0.0,
+        
+        0.5, 0.5, 0.5,          0.0, 0.0, 1.0,
+        -0.5, 0.5, 0.5,         0.0, 0.0, 1.0,
+        0.5, -0.5, 0.5,         0.0, 0.0, 1.0,
+        0.5, -0.5, 0.5,         0.0, 0.0, 1.0,
+        -0.5, 0.5, 0.5,         0.0, 0.0, 1.0,
+        -0.5, -0.5, 0.5,        0.0, 0.0, 1.0,
+        
+        0.5, -0.5, -0.5,        0.0, 0.0, -1.0,
+        -0.5, -0.5, -0.5,      0.0, 0.0, -1.0,
+        0.5, 0.5, -0.5,         0.0, 0.0, -1.0,
+        0.5, 0.5, -0.5,         0.0, 0.0, -1.0,
+        -0.5, -0.5, -0.5,      0.0, 0.0, -1.0,
+        -0.5, 0.5, -0.5,        0.0, 0.0, -1.0], 0.0, 0.0, 0.0);
+    
+    @IBOutlet weak var UIButtonUp: UIButton!
+    @IBOutlet weak var UIButtonDown: UIButton!
+    @IBOutlet weak var UIButtonLeft: UIButton!
+    @IBOutlet weak var UIButtonRight: UIButton!
+    
+    
     deinit {
         self.tearDownGL()
         
@@ -52,7 +104,46 @@ class GameViewController: GLKViewController {
         view.context = self.context!
         view.drawableDepthFormat = .format24
         
+        //setup the ui buttons
+        initButtons();
+        
         self.setupGL()
+    }
+    
+    //connect UI buttons to funtions
+    func initButtons(){
+        UIButtonUp.tag=BUTTON_UP;
+        UIButtonUp.addTarget(self,action:#selector(buttonClicked),for:.touchUpInside);
+        
+        UIButtonDown.tag=BUTTON_DOWN;
+        UIButtonDown.addTarget(self,action:#selector(buttonClicked),for:.touchUpInside);
+        
+        UIButtonLeft.tag=BUTTON_LEFT;
+        UIButtonLeft.addTarget(self,action:#selector(buttonClicked),for:.touchUpInside);
+        
+        UIButtonRight.tag=BUTTON_RIGHT;
+        UIButtonRight.addTarget(self,action:#selector(buttonClicked),for:.touchUpInside);
+    }
+    
+    func buttonClicked(sender:UIButton)
+    {
+        switch(sender.tag){
+        case BUTTON_UP:
+            playerMagnet.moveObject(xMove: 0.0, yMove: 0.1, zMove: 0.0);
+            break;
+        case BUTTON_DOWN:
+            playerMagnet.moveObject(xMove: 0.0, yMove: -0.1, zMove: 0.0);
+            break;
+        case BUTTON_LEFT:
+            playerMagnet.moveObject(xMove: -0.1, yMove: 0.0, zMove: 0.0);
+            break;
+        case BUTTON_RIGHT:
+            playerMagnet.moveObject(xMove: 0.1, yMove: 0.0, zMove: 0.0);
+            break;
+        default:
+            break;
+        }
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -86,9 +177,17 @@ class GameViewController: GLKViewController {
         glGenVertexArraysOES(1, &vertexArray)
         glBindVertexArrayOES(vertexArray)
         
+        
+        
         glGenBuffers(1, &vertexBuffer)
         glBindBuffer(GLenum(GL_ARRAY_BUFFER), vertexBuffer)
-        glBufferData(GLenum(GL_ARRAY_BUFFER), GLsizeiptr(MemoryLayout<GLfloat>.size * gCubeVertexData.count), &gCubeVertexData, GLenum(GL_STATIC_DRAW))
+        //glBufferData(GLenum(GL_ARRAY_BUFFER), GLsizeiptr(MemoryLayout<GLfloat>.size * gCubeVertexData.count), &gCubeVertexData, GLenum(GL_STATIC_DRAW))
+        
+        
+        //Get the vertex data from the playermagnet object for drawing
+        var vertexDataTest = playerMagnet.getObjectVertexData();
+        
+        glBufferData(GLenum(GL_ARRAY_BUFFER), GLsizeiptr(MemoryLayout<GLfloat>.size * vertexDataTest.count), &vertexDataTest, GLenum(GL_STATIC_DRAW))
         
         glEnableVertexAttribArray(GLuint(GLKVertexAttrib.position.rawValue))
         glVertexAttribPointer(GLuint(GLKVertexAttrib.position.rawValue), 3, GLenum(GL_FLOAT), GLboolean(GL_FALSE), 24, BUFFER_OFFSET(0))
@@ -116,7 +215,7 @@ class GameViewController: GLKViewController {
     
     func update() {
         let aspect = fabsf(Float(self.view.bounds.size.width / self.view.bounds.size.height))
-        let projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(65.0), aspect, 0.1, 100.0)
+        var projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(65.0), aspect, 0.1, 100.0)
         
         self.effect?.transform.projectionMatrix = projectionMatrix
         
@@ -124,22 +223,25 @@ class GameViewController: GLKViewController {
         baseModelViewMatrix = GLKMatrix4Rotate(baseModelViewMatrix, rotation, 0.0, 1.0, 0.0)
         
         // Compute the model view matrix for the object rendered with GLKit
-        var modelViewMatrix = GLKMatrix4MakeTranslation(0.0, 0.0, -1.5)
-        modelViewMatrix = GLKMatrix4Rotate(modelViewMatrix, rotation, 1.0, 1.0, 1.0)
-        modelViewMatrix = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix)
-        
-        self.effect?.transform.modelviewMatrix = modelViewMatrix
+//        var modelViewMatrix = GLKMatrix4MakeTranslation(0.0, 0.0, -1.5)
+//        modelViewMatrix = GLKMatrix4Rotate(modelViewMatrix, rotation, 1.0, 1.0, 1.0)
+//        modelViewMatrix = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix)
+//        
+//        self.effect?.transform.modelviewMatrix = modelViewMatrix
         
         // Compute the model view matrix for the object rendered with ES2
-        modelViewMatrix = GLKMatrix4MakeTranslation(0.0, 0.0, 1.5)
+        //var modelViewMatrix = GLKMatrix4MakeTranslation(0.0, 0.0, 1.5)
+        var modelViewMatrix = playerMagnet.getTranslationMatrix();
         modelViewMatrix = GLKMatrix4Rotate(modelViewMatrix, rotation, 1.0, 1.0, 1.0)
         modelViewMatrix = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix)
+        
+        projectionMatrix = GLKMatrix4RotateX(projectionMatrix, -0.78);
         
         normalMatrix = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(modelViewMatrix), nil)
         
         modelViewProjectionMatrix = GLKMatrix4Multiply(projectionMatrix, modelViewMatrix)
         
-        rotation += Float(self.timeSinceLastUpdate * 0.5)
+        //rotation += Float(self.timeSinceLastUpdate * 0.5)
     }
     
     override func glkView(_ view: GLKView, drawIn rect: CGRect) {
@@ -149,9 +251,9 @@ class GameViewController: GLKViewController {
         glBindVertexArrayOES(vertexArray)
         
         // Render the object with GLKit
-        self.effect?.prepareToDraw()
+        //self.effect?.prepareToDraw()
         
-        glDrawArrays(GLenum(GL_TRIANGLES) , 0, 36)
+        //glDrawArrays(GLenum(GL_TRIANGLES) , 0, 36)
         
         // Render the object again with ES2
         glUseProgram(program)
@@ -321,6 +423,8 @@ class GameViewController: GLKViewController {
         }
         return returnVal
     }
+    
+    
 }
 
 var gCubeVertexData: [GLfloat] = [
