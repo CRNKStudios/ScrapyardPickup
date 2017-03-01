@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="JiH-D8-TUi">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="JiH-D8-TUi">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -640,15 +640,24 @@
                                 </constraints>
                                 <state key="normal" title="PushBtn" image="redButton.png"/>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Timer:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tGK-aA-amM" userLabel="TimerLabel">
+                                <rect key="frame" x="108" y="43" width="160" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="uOK-pe-8Ts" firstAttribute="top" secondItem="OUv-ef-kSi" secondAttribute="bottom" constant="73" id="1su-pD-uEM"/>
+                            <constraint firstItem="tGK-aA-amM" firstAttribute="leading" secondItem="1o2-k9-2kN" secondAttribute="leading" id="4Bm-f1-vDO"/>
                             <constraint firstItem="yrU-wF-ZI1" firstAttribute="trailing" secondItem="KLd-fY-XbN" secondAttribute="trailingMargin" id="5zF-eE-ZVG"/>
+                            <constraint firstItem="tGK-aA-amM" firstAttribute="bottom" secondItem="yrU-wF-ZI1" secondAttribute="bottom" id="8RH-06-cC2"/>
                             <constraint firstItem="1o2-k9-2kN" firstAttribute="leading" secondItem="OUv-ef-kSi" secondAttribute="trailing" constant="47" id="NC5-Ph-gcJ"/>
                             <constraint firstItem="OUv-ef-kSi" firstAttribute="leading" secondItem="KLd-fY-XbN" secondAttribute="leadingMargin" id="P0J-WB-G8s"/>
                             <constraint firstItem="HSN-6q-zd0" firstAttribute="leading" secondItem="KLd-fY-XbN" secondAttribute="leadingMargin" constant="46" id="TYl-x5-wvK"/>
                             <constraint firstItem="uOK-pe-8Ts" firstAttribute="top" secondItem="1o2-k9-2kN" secondAttribute="bottom" constant="73" id="XrR-mf-4OA"/>
+                            <constraint firstItem="tGK-aA-amM" firstAttribute="centerX" secondItem="KLd-fY-XbN" secondAttribute="centerX" id="bdv-YL-e61"/>
                             <constraint firstItem="UDg-9x-aqh" firstAttribute="top" secondItem="HSN-6q-zd0" secondAttribute="bottom" constant="58" id="id2-k1-azo"/>
                             <constraint firstItem="FOi-7s-URO" firstAttribute="trailing" secondItem="KLd-fY-XbN" secondAttribute="trailingMargin" id="mQd-z5-RgA"/>
                             <constraint firstItem="UDg-9x-aqh" firstAttribute="leading" secondItem="KLd-fY-XbN" secondAttribute="leadingMargin" constant="46" id="orr-o3-RvH"/>
@@ -659,6 +668,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="TimerLabel" destination="tGK-aA-amM" id="POT-Rh-84I"/>
                         <outlet property="UIButtonDown" destination="UDg-9x-aqh" id="9Uw-ez-jPF"/>
                         <outlet property="UIButtonLeft" destination="OUv-ef-kSi" id="00d-MP-WqS"/>
                         <outlet property="UIButtonMagnetPower" destination="FOi-7s-URO" id="SJg-Od-kFN"/>

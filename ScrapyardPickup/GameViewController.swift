@@ -19,6 +19,8 @@ var uniforms = [GLint](repeating: 0, count: 2)
 
 class GameViewController: GLKViewController {
     
+    // MARK: Properties
+    
     var program: GLuint = 0
     
     var modelViewProjectionMatrix:GLKMatrix4 = GLKMatrix4Identity
@@ -38,6 +40,8 @@ class GameViewController: GLKViewController {
     
     var magnetIsOn = false;
     
+    var timer = 0.0
+    
     let BUTTON_UP=0,BUTTON_DOWN=2,BUTTON_LEFT=3,BUTTON_RIGHT=4, BUTTON_MAGNET_POWER=5;
     
     
@@ -49,7 +53,7 @@ class GameViewController: GLKViewController {
     @IBOutlet weak var UIButtonLeft: UIButton!
     @IBOutlet weak var UIButtonRight: UIButton!
     @IBOutlet weak var UIButtonMagnetPower: UIButton!
-    
+    @IBOutlet weak var TimerLabel: UILabel!
     
     deinit {
         self.tearDownGL()
@@ -252,6 +256,7 @@ class GameViewController: GLKViewController {
         modelViewProjectionMatrix2 = GLKMatrix4Multiply(projectionMatrix, modelViewMatrix2)
         
         //rotation += Float(self.timeSinceLastUpdate * 0.5)
+        self.updateTimer(dt: self.timeSinceLastUpdate)
     }
     
     override func glkView(_ view: GLKView, drawIn rect: CGRect) {
@@ -450,6 +455,20 @@ class GameViewController: GLKViewController {
         return returnVal
     }
     
+    func updateTimer(dt: TimeInterval) {
+        timer = timer + dt;
+        self.TimerLabel.text = "Timer: " + (stringFromTimeInterval(interval: timer) as String);
+    }
+    
+    func stringFromTimeInterval(interval: TimeInterval) -> NSString {
+        let ti = NSInteger(interval)
+        
+        let seconds = ti % 60
+        let minutes = (ti / 60) % 60
+        let hours = (ti / 3600)
+        
+        return NSString(format: "%0.2d:%0.2d:%0.2d",hours,minutes,seconds)
+    }
     
 }
 
@@ -500,7 +519,8 @@ var gCubeVertexData: [GLfloat] = [
 ]
 
 
-var v_crane: [GLfloat] = [-2.369095,-0.1016,-0.634797,-2.369095,-0.1016,0.634797,-2.452667,-0.1016,0.0,
+var v_crane: [GLfloat] = [
+    -2.369095,-0.1016,-0.634797,-2.369095,-0.1016,0.634797,-2.452667,-0.1016,0.0,
     -2.369095,-0.1016,0.634797,-2.369095,-0.1016,-0.634797,-2.124072,-0.1016,-1.226334,
     -2.369095,-0.1016,0.634797,-2.124072,-0.1016,-1.226334,-2.124072,-0.1016,1.226334,
     -2.124072,-0.1016,1.226334,-2.124072,-0.1016,-1.226334,-1.734298,-0.1016,-1.734298,
@@ -1242,7 +1262,8 @@ var v_crane: [GLfloat] = [-2.369095,-0.1016,-0.634797,-2.369095,-0.1016,0.634797
     2.287693,0.5461,-1.3208,1.867893,0.0,-1.867893,1.867893,0.5461,-1.867893,
 ]
 
-var vn_crane: [GLfloat] = [0.0,-1.0,0.0,0.0,-1.0,0.0,0.0,-1.0,0.0,
+var vn_crane: [GLfloat] = [
+    0.0,-1.0,0.0,0.0,-1.0,0.0,0.0,-1.0,0.0,
     0.0,-1.0,0.0,0.0,-1.0,0.0,0.0,-1.0,0.0,
     0.0,-1.0,0.0,0.0,-1.0,0.0,0.0,-1.0,0.0,
     0.0,-1.0,0.0,0.0,-1.0,0.0,0.0,-1.0,0.0,
