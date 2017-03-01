@@ -23,10 +23,15 @@ class GameViewController: GLKViewController {
     
     var modelViewProjectionMatrix:GLKMatrix4 = GLKMatrix4Identity
     var normalMatrix: GLKMatrix3 = GLKMatrix3Identity
+    var modelViewProjectionMatrix2:GLKMatrix4 = GLKMatrix4Identity
+    var normalMatrix2: GLKMatrix3 = GLKMatrix3Identity
+
     var rotation: Float = 0.0
     
     var vertexArray: GLuint = 0
     var vertexBuffer: GLuint = 0
+    var vertexArray2: GLuint = 0
+    var vertexBuffer2: GLuint = 0
     
     var context: EAGLContext? = nil
     var effect: GLKBaseEffect? = nil
@@ -37,6 +42,7 @@ class GameViewController: GLKViewController {
     
     
     var playerMagnet: GameObject = GameObject(ObjectVertexData: v_crane, ObjectNormalData: vn_crane, 0.0, 0.0, 0.0);
+    var playerCube: GameObject = GameObject(ObjectVertexData: gCubeVertexData, 0.0, -2.0, 0.0);
     
     @IBOutlet weak var UIButtonUp: UIButton!
     @IBOutlet weak var UIButtonDown: UIButton!
@@ -108,6 +114,22 @@ class GameViewController: GLKViewController {
             break;
         case BUTTON_MAGNET_POWER:
             print("magnet power on");
+            
+            var vertexDataTest = playerCube.getObjectVertexData();
+            glGenVertexArraysOES(1, &vertexArray2)
+            glBindVertexArrayOES(vertexArray2)
+            
+            glGenBuffers(1, &vertexBuffer2)
+            glBindBuffer(GLenum(GL_ARRAY_BUFFER), vertexBuffer2)
+            glBindVertexArrayOES(vertexArray2)
+            glBufferData(GLenum(GL_ARRAY_BUFFER), GLsizeiptr(MemoryLayout<GLfloat>.size * vertexDataTest.count), &vertexDataTest, GLenum(GL_STATIC_DRAW))
+            glEnableVertexAttribArray(GLuint(GLKVertexAttrib.position.rawValue))
+            glVertexAttribPointer(GLuint(GLKVertexAttrib.position.rawValue), 3, GLenum(GL_FLOAT), GLboolean(GL_FALSE), 24, BUFFER_OFFSET(0))
+            glEnableVertexAttribArray(GLuint(GLKVertexAttrib.normal.rawValue))
+            glVertexAttribPointer(GLuint(GLKVertexAttrib.normal.rawValue), 3, GLenum(GL_FLOAT), GLboolean(GL_FALSE), 24, BUFFER_OFFSET(12))
+            
+            //glBindVertexArrayOES(0)
+            glDrawArrays(GLenum(GL_TRIANGLES), 0, 36)
             magnetIsOn=true;
             break;
         default:
@@ -201,7 +223,7 @@ class GameViewController: GLKViewController {
         
         self.effect?.transform.projectionMatrix = projectionMatrix
         
-        var baseModelViewMatrix = GLKMatrix4MakeTranslation(0.0, -2.0, -4.0)
+        let baseModelViewMatrix = GLKMatrix4MakeTranslation(0.0, -2.0, -4.0)
         //baseModelViewMatrix = GLKMatrix4Rotate(baseModelViewMatrix, rotation, 0.0, 1.0, 0.0)
         
         // Compute the model view matrix for the object rendered with GLKit
@@ -214,16 +236,20 @@ class GameViewController: GLKViewController {
         // Compute the model view matrix for the object rendered with ES2
         //var modelViewMatrix = GLKMatrix4MakeTranslation(0.0, 0.0, 1.5)
         var modelViewMatrix = playerMagnet.getTranslationMatrix();
+        var modelViewMatrix2 = playerCube.getTranslationMatrix();
         modelViewMatrix = GLKMatrix4Scale(modelViewMatrix, 0.5, 0.5, 0.5)
         modelViewMatrix = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix)
+        modelViewMatrix2 = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix2)
         
         projectionMatrix = GLKMatrix4RotateX(projectionMatrix, 0.5);
         let worldTranslationMatrix = GLKMatrix4MakeTranslation(0.0,  0.0, -3.0)
         projectionMatrix = GLKMatrix4Multiply(projectionMatrix, worldTranslationMatrix)
         
         normalMatrix = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(modelViewMatrix), nil)
+        normalMatrix2 = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(modelViewMatrix2), nil)
         
         modelViewProjectionMatrix = GLKMatrix4Multiply(projectionMatrix, modelViewMatrix)
+        modelViewProjectionMatrix2 = GLKMatrix4Multiply(projectionMatrix, modelViewMatrix2)
         
         //rotation += Float(self.timeSinceLastUpdate * 0.5)
     }
@@ -255,6 +281,22 @@ class GameViewController: GLKViewController {
         })
         
         glDrawArrays(GLenum(GL_TRIANGLES), 0, 2500)
+        
+        glBindVertexArrayOES(vertexArray2)
+        
+         withUnsafePointer(to: &modelViewProjectionMatrix2, {
+            $0.withMemoryRebound(to: Float.self, capacity: 16, {
+                glUniformMatrix4fv(uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0, $0)
+            })
+        })
+        
+        withUnsafePointer(to: &normalMatrix2, {
+            $0.withMemoryRebound(to: Float.self, capacity: 9, {
+                glUniformMatrix3fv(uniforms[UNIFORM_NORMAL_MATRIX], 1, 0, $0)
+            })
+        })
+
+        glDrawArrays(GLenum(GL_TRIANGLES), 0, 36)
     }
     
     // MARK: -  OpenGL ES 2 shader compilation
