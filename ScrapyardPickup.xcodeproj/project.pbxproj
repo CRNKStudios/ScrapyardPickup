@@ -54,6 +54,7 @@
 		09E7B5251E54F46E0027B069 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		09E7B5281E54F46E0027B069 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		09E7B52A1E54F46E0027B069 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		82AEE6651E66548200606C35 /* CraneObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CraneObject.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		B9317F1B1E5E26090030ECEA /* downArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = downArrow.png; path = Assets/downArrow.png; sourceTree = "<group>"; };
 		B9317F1C1E5E26090030ECEA /* leftArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = leftArrow.png; path = Assets/leftArrow.png; sourceTree = "<group>"; };
 		B9317F1D1E5E26090030ECEA /* rightArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = rightArrow.png; path = Assets/rightArrow.png; sourceTree = "<group>"; };
@@ -117,6 +118,7 @@
 		093B03DE1E558EAD008727AE /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				82AEE6641E66546B00606C35 /* Objects */,
 				090363091E5CD92700584BE8 /* Icons */,
 				093B03DF1E558EB6008727AE /* Images */,
 			);
@@ -178,6 +180,14 @@
 			path = ScrapyardPickup;
 			sourceTree = "<group>";
 		};
+		82AEE6641E66546B00606C35 /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+				82AEE6651E66548200606C35 /* CraneObject.h */,
+			);
+			name = Objects;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -210,7 +220,7 @@
 				TargetAttributes = {
 					09E7B5161E54F46D0027B069 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = 26RCKZ873P;
+						DevelopmentTeam = MTV9GXELZQ;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -394,7 +404,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 26RCKZ873P;
+				DEVELOPMENT_TEAM = MTV9GXELZQ;
 				INFOPLIST_FILE = ScrapyardPickup/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -409,7 +419,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 26RCKZ873P;
+				DEVELOPMENT_TEAM = MTV9GXELZQ;
 				INFOPLIST_FILE = ScrapyardPickup/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

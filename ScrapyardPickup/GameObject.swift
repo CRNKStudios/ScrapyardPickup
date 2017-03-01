@@ -26,17 +26,28 @@ class GameObject{
     }
     
     //combine seperated vertex and normal array into a single array for drawing
-    func combineVerticesAndNormals(vertexData: [GLfloat], normalData: [GLfloat]) ->[GLfloat]{
-        //TODO: combine vertices and normals into one array
-        return [0.0];
+    func combineVerticesAndNormals(vertexData: [GLfloat], normalData: [GLfloat]){
+        
     }
     
     //overloaded init for seperated vertices and normals from blender
     init(ObjectVertexData: [GLfloat], ObjectNormalData: [GLfloat], _ xPos: Float, _ yPos: Float, _ zPos: Float){
-        self.ObjectVertexData = ObjectVertexData;
         self.xPos = xPos;
         self.yPos = yPos;
         self.zPos = zPos;
+        self.ObjectVertexData = [GLfloat]();
+        var j = 0;
+        var k = 0;
+        for index in 0...ObjectVertexData.count + ObjectNormalData.count - 1{
+            if(index % 6 < 3){
+                self.ObjectVertexData.append(ObjectVertexData[j]);
+                j += 1;
+            }
+            if(index % 6 >= 3){
+                self.ObjectVertexData.append(ObjectNormalData[k]);
+                k += 1;
+            }
+        }
     }
     
     //Deinitialize game object
