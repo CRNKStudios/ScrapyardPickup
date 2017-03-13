@@ -11,18 +11,31 @@ import Foundation
 import OpenGLES
 import GLKit
 
-class GameObject{
-    var ObjectVertexData: [GLfloat];
-    var xPos: Float = 0.0;
-    var yPos: Float = 0.0;
-    var zPos: Float = 0.0;
+struct Vector3 {
+    var x: Float
+    var y: Float
+    var z: Float
+}
+
+public class GameObject{
+    public var name: String // must be defined
+    public var tag: String? // can be nil
+    var ObjectVertexData: [GLfloat]
+    var position: Vector3 = Vector3(x: 0, y: 0, z: 0)
+    var scale: Float
+    var baseMatrix: GLKMatrix4
+    
     
     //Initialize object fields
-    init(ObjectVertexData: [GLfloat], _ xPos: Float, _ yPos: Float, _ zPos: Float){
-        self.ObjectVertexData = ObjectVertexData;
-        self.xPos = xPos;
-        self.yPos = yPos;
-        self.zPos = zPos;
+    init(name: String, tag: String?, ObjectVertexData: [GLfloat], _ xPos: Float, _ yPos: Float, _ zPos: Float, scale: Float, baseMatrix: GLKMatrix4){
+        self.name = name
+        self.tag = tag
+        self.ObjectVertexData = ObjectVertexData
+        self.position.x = xPos
+        self.position.y = yPos
+        self.position.z = zPos
+        self.scale = scale
+        self.baseMatrix = baseMatrix
     }
     
     //combine seperated vertex and normal array into a single array for drawing
@@ -31,10 +44,9 @@ class GameObject{
     }
     
     //overloaded init for seperated vertices and normals from blender
-    init(ObjectVertexData: [GLfloat], ObjectNormalData: [GLfloat], _ xPos: Float, _ yPos: Float, _ zPos: Float){
-        self.xPos = xPos;
-        self.yPos = yPos;
-        self.zPos = zPos;
+    init(name: String, tag: String?, ObjectVertexData: [GLfloat], ObjectNormalData: [GLfloat], _ xPos: Float, _ yPos: Float, _ zPos: Float, scale: Float, baseMatrix: GLKMatrix4){
+        self.name = name
+        self.tag = tag
         self.ObjectVertexData = [GLfloat]();
         var j = 0;
         var k = 0;
@@ -48,6 +60,11 @@ class GameObject{
                 k += 1;
             }
         }
+        self.position.x = xPos;
+        self.position.y = yPos;
+        self.position.z = zPos;
+        self.scale = scale
+        self.baseMatrix = baseMatrix
     }
     
     //Deinitialize game object
@@ -62,13 +79,17 @@ class GameObject{
     
     //Get objects translation matrix for drawing
     func getTranslationMatrix() -> GLKMatrix4{
-        return GLKMatrix4MakeTranslation(xPos, yPos, zPos);
+        return GLKMatrix4MakeTranslation(
+            self.position.x,
+            self.position.y,
+            self.position.z
+        );
     }
     
     //Move the object by the passed amount in each dimension
     func moveObject(xMove: Float, yMove: Float, zMove: Float){
-        xPos+=xMove;
-        yPos+=yMove;
-        zPos+=zMove;
+        self.position.x += xMove;
+        self.position.y += yMove;
+        self.position.z += zMove;
     }
 }

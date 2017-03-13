@@ -45,8 +45,8 @@ class GameViewController: GLKViewController {
     let BUTTON_UP=0,BUTTON_DOWN=2,BUTTON_LEFT=3,BUTTON_RIGHT=4, BUTTON_MAGNET_POWER=5;
     
     
-    var playerMagnet: GameObject = GameObject(ObjectVertexData: v_crane, ObjectNormalData: vn_crane, 0.0, 0.0, 0.0);
-    var playerCube: GameObject = GameObject(ObjectVertexData: gCubeVertexData, 0.0, -2.0, 0.0);
+    var playerMagnet: GameObject = GameObject(name: "CraneModel1", tag: "Player", ObjectVertexData: v_crane, ObjectNormalData: vn_crane, 0.0, 0.0, 0.0, scale: 1.0, baseMatrix: GLKMatrix4Identity)
+    var playerCube: GameObject = GameObject(name: "Cube", tag: "Scrap", ObjectVertexData: gCubeVertexData, 0.0, -2.0, 0.0, scale: 1.0, baseMatrix: GLKMatrix4Identity)
     
     @IBOutlet weak var UIButtonUp: UIButton!
     @IBOutlet weak var UIButtonDown: UIButton!
