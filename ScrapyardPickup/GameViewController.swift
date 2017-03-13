@@ -17,6 +17,13 @@ let UNIFORM_MODELVIEWPROJECTION_MATRIX = 0
 let UNIFORM_NORMAL_MATRIX = 1
 var uniforms = [GLint](repeating: 0, count: 2)
 
+
+// MARK: Buttons
+enum Buttons: Int
+{
+    case BUTTON_UP = 0, BUTTON_DOWN, BUTTON_LEFT, BUTTON_RIGHT, BUTTON_MAGNET_POWER
+}
+
 class GameViewController: GLKViewController {
     
     // MARK: Properties
@@ -42,11 +49,11 @@ class GameViewController: GLKViewController {
     
     var timer = 0.0
     
-    let BUTTON_UP=0,BUTTON_DOWN=2,BUTTON_LEFT=3,BUTTON_RIGHT=4, BUTTON_MAGNET_POWER=5;
+//    let BUTTON_UP=0,BUTTON_DOWN=2,BUTTON_LEFT=3,BUTTON_RIGHT=4, BUTTON_MAGNET_POWER=5;
     
-    
-    var playerMagnet: GameObject = GameObject(name: "CraneModel1", tag: "Player", ObjectVertexData: v_crane, ObjectNormalData: vn_crane, 0.0, 0.0, 0.0, scale: 1.0, baseMatrix: GLKMatrix4Identity)
-    var playerCube: GameObject = GameObject(name: "Cube", tag: "Scrap", ObjectVertexData: gCubeVertexData, 0.0, -2.0, 0.0, scale: 1.0, baseMatrix: GLKMatrix4Identity)
+// MARK: Create objects
+    var playerMagnet: GameObject = GameObject(name: "CraneModel1", tag: "Player", vertices: v_crane, ObjectNormalData: vn_crane, 0.0, 0.0, 0.0, scale: 1.0, baseMatrix: GLKMatrix4Identity)
+    var playerCube: GameObject = GameObject(name: "Cube", tag: "Scrap", vertices: gCubeVertexData, 0.0, -2.0, 0.0, scale: 1.0, baseMatrix: GLKMatrix4Identity)
     
     @IBOutlet weak var UIButtonUp: UIButton!
     @IBOutlet weak var UIButtonDown: UIButton!
@@ -55,6 +62,7 @@ class GameViewController: GLKViewController {
     @IBOutlet weak var UIButtonMagnetPower: UIButton!
     @IBOutlet weak var TimerLabel: UILabel!
     
+// MARK: Functions
     deinit {
         self.tearDownGL()
         
@@ -84,19 +92,19 @@ class GameViewController: GLKViewController {
     
     //connect UI buttons to funtions
     func initButtons(){
-        UIButtonUp.tag=BUTTON_UP;
+        UIButtonUp.tag = Buttons.BUTTON_UP.rawValue;
         UIButtonUp.addTarget(self,action:#selector(buttonClicked),for:.touchUpInside);
         
-        UIButtonDown.tag=BUTTON_DOWN;
+        UIButtonDown.tag = Buttons.BUTTON_DOWN.rawValue;
         UIButtonDown.addTarget(self,action:#selector(buttonClicked),for:.touchUpInside);
         
-        UIButtonLeft.tag=BUTTON_LEFT;
+        UIButtonLeft.tag = Buttons.BUTTON_LEFT.rawValue;
         UIButtonLeft.addTarget(self,action:#selector(buttonClicked),for:.touchUpInside);
         
-        UIButtonRight.tag=BUTTON_RIGHT;
+        UIButtonRight.tag = Buttons.BUTTON_RIGHT.rawValue;
         UIButtonRight.addTarget(self,action:#selector(buttonClicked),for:.touchUpInside);
         
-        UIButtonMagnetPower.tag=BUTTON_MAGNET_POWER;
+        UIButtonMagnetPower.tag = Buttons.BUTTON_MAGNET_POWER.rawValue;
         UIButtonMagnetPower.addTarget(self,action:#selector(buttonClicked),for:.touchDown);
         UIButtonMagnetPower.addTarget(self,action:#selector(buttonReleased),for:.touchUpInside);
     }
@@ -104,19 +112,19 @@ class GameViewController: GLKViewController {
     func buttonClicked(sender:UIButton)
     {
         switch(sender.tag){
-        case BUTTON_UP:
+        case Buttons.BUTTON_UP.rawValue:
             playerMagnet.moveObject(xMove: 0.0, yMove: 0.0, zMove: -0.1);
             break;
-        case BUTTON_DOWN:
+        case Buttons.BUTTON_DOWN.rawValue:
             playerMagnet.moveObject(xMove: 0.0, yMove: 0.0, zMove: 0.1);
             break;
-        case BUTTON_LEFT:
+        case Buttons.BUTTON_LEFT.rawValue:
             playerMagnet.moveObject(xMove: -0.1, yMove: 0.0, zMove: 0.0);
             break;
-        case BUTTON_RIGHT:
+        case Buttons.BUTTON_RIGHT.rawValue:
             playerMagnet.moveObject(xMove: 0.1, yMove: 0.0, zMove: 0.0);
             break;
-        case BUTTON_MAGNET_POWER:
+        case Buttons.BUTTON_MAGNET_POWER.rawValue:
             print("magnet power on");
             
             var vertexDataTest = playerCube.getObjectVertexData();
@@ -145,7 +153,7 @@ class GameViewController: GLKViewController {
     //Handle UI button Releases
     func buttonReleased(sender:UIButton){
         switch(sender.tag){
-        case BUTTON_MAGNET_POWER:
+        case Buttons.BUTTON_MAGNET_POWER.rawValue:
             print("magnet power off");
             magnetIsOn=false;
             break;
@@ -520,9 +528,9 @@ var gCubeVertexData: [GLfloat] = [
 
 
 var v_crane: [GLfloat] = [
-    -2.369095,-0.1016,-0.634797,-2.369095,-0.1016,0.634797,-2.452667,-0.1016,0.0,
-    -2.369095,-0.1016,0.634797,-2.369095,-0.1016,-0.634797,-2.124072,-0.1016,-1.226334,
-    -2.369095,-0.1016,0.634797,-2.124072,-0.1016,-1.226334,-2.124072,-0.1016,1.226334,
+    -2.369095,-0.1016,-0.634797,    -2.369095,-0.1016,0.634797,     -2.452667,-0.1016,0.0,
+    -2.369095,-0.1016,0.634797,     -2.369095,-0.1016,-0.634797,    -2.124072,-0.1016,-1.226334,
+    -2.369095,-0.1016,0.634797,     -2.124072,-0.1016,-1.226334,    -2.124072,-0.1016,1.226334,
     -2.124072,-0.1016,1.226334,-2.124072,-0.1016,-1.226334,-1.734298,-0.1016,-1.734298,
     -2.124072,-0.1016,1.226334,-1.734298,-0.1016,-1.734298,-1.734298,-0.1016,1.734298,
     -1.734298,-0.1016,1.734298,-1.734298,-0.1016,-1.734298,-1.226334,-0.1016,-2.124072,
