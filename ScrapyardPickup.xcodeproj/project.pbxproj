@@ -20,6 +20,9 @@
 		093B03E71E5591E2008727AE /* Front Screen.png in Resources */ = {isa = PBXBuildFile; fileRef = 093B03E51E5591E2008727AE /* Front Screen.png */; };
 		0958EBD51E6128A400B2FC7F /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0958EBD41E6128A400B2FC7F /* GLKit.framework */; };
 		0980E9801E771E0F00E5107E /* PlayerObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0980E97F1E771E0F00E5107E /* PlayerObject.swift */; };
+		0980E9821E77457200E5107E /* CraneObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0980E9811E77457200E5107E /* CraneObject.swift */; };
+		09D2CE7D1E774679009E3D24 /* CubeObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D2CE7C1E774679009E3D24 /* CubeObject.swift */; };
+		09D2CE7F1E774B2F009E3D24 /* ModelObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D2CE7E1E774B2F009E3D24 /* ModelObject.swift */; };
 		09E7B51B1E54F46E0027B069 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E7B51A1E54F46E0027B069 /* AppDelegate.swift */; };
 		09E7B51D1E54F46E0027B069 /* Shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 09E7B51C1E54F46E0027B069 /* Shader.fsh */; };
 		09E7B51F1E54F46E0027B069 /* Shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 09E7B51E1E54F46E0027B069 /* Shader.vsh */; };
@@ -48,6 +51,9 @@
 		093B03E51E5591E2008727AE /* Front Screen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Front Screen.png"; path = "Assets/Front Screen.png"; sourceTree = "<group>"; };
 		0958EBD41E6128A400B2FC7F /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		0980E97F1E771E0F00E5107E /* PlayerObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerObject.swift; sourceTree = "<group>"; };
+		0980E9811E77457200E5107E /* CraneObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CraneObject.swift; sourceTree = "<group>"; };
+		09D2CE7C1E774679009E3D24 /* CubeObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CubeObject.swift; sourceTree = "<group>"; };
+		09D2CE7E1E774B2F009E3D24 /* ModelObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelObject.swift; sourceTree = "<group>"; };
 		09E7B5171E54F46E0027B069 /* ScrapyardPickup.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScrapyardPickup.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		09E7B51A1E54F46E0027B069 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		09E7B51C1E54F46E0027B069 /* Shader.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Shader.fsh; path = Shaders/Shader.fsh; sourceTree = "<group>"; };
@@ -91,6 +97,9 @@
 				0903630C1E5D2FB400584BE8 /* PlayerPrefs.swift */,
 				BE785A1C1E6601EC0062B6D3 /* GameObject.swift */,
 				0980E97F1E771E0F00E5107E /* PlayerObject.swift */,
+				0980E9811E77457200E5107E /* CraneObject.swift */,
+				09D2CE7C1E774679009E3D24 /* CubeObject.swift */,
+				09D2CE7E1E774B2F009E3D24 /* ModelObject.swift */,
 			);
 			name = GameFiles;
 			sourceTree = "<group>";
@@ -282,8 +291,11 @@
 				BE785A1D1E6601EC0062B6D3 /* GameObject.swift in Sources */,
 				090363061E5CD05300584BE8 /* GameViewController.swift in Sources */,
 				0903630D1E5D2FB400584BE8 /* PlayerPrefs.swift in Sources */,
+				09D2CE7F1E774B2F009E3D24 /* ModelObject.swift in Sources */,
+				0980E9821E77457200E5107E /* CraneObject.swift in Sources */,
 				090362FA1E5CC6CE00584BE8 /* MenuViewController.swift in Sources */,
 				090363041E5CD04600584BE8 /* HowToViewController.swift in Sources */,
+				09D2CE7D1E774679009E3D24 /* CubeObject.swift in Sources */,
 				09E7B51B1E54F46E0027B069 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

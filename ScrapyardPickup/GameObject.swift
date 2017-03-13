@@ -11,30 +11,31 @@ import Foundation
 import OpenGLES
 import GLKit
 
-struct Vector3 {
-    var x: Float
-    var y: Float
-    var z: Float
+public struct Vector3 {
+    var x: GLfloat = 0
+    var y: GLfloat = 0
+    var z: GLfloat = 0
+    var w: GLfloat = 0
 }
 
-struct Vertex {
-    var positions: [GLfloat]
-    var colors: [GLfloat]
-    var textures: [GLfloat]
-    var normals: [GLfloat]
+public struct Vertex {
+    var positions: [GLfloat] = []
+    var colors: [GLfloat] = []
+    var textures: [GLfloat] = []
+    var normals: [GLfloat] = []
 }
 
 public class GameObject{
     public var name: String // must be defined
     public var tag: String? // can be nil
-    var vertices: [Vertex]
-    var position: Vector3 = Vector3(x: 0, y: 0, z: 0)
+    var vertices: Vertex
+    var position: Vector3 = Vector3(x: 0, y: 0, z: 0, w: 0)
     var scale: Float
     var baseMatrix: GLKMatrix4
     
     
     //Initialize object fields
-    init(name: String, tag: String?, vertices: [Vertex], _ xPos: Float, _ yPos: Float, _ zPos: Float, scale: Float, baseMatrix: GLKMatrix4){
+    init(name: String, tag: String?, vertices: Vertex, _ xPos: Float, _ yPos: Float, _ zPos: Float, scale: Float, baseMatrix: GLKMatrix4){
         self.name = name
         self.tag = tag
         self.vertices = vertices
@@ -51,13 +52,13 @@ public class GameObject{
     }
     
     //overloaded init for seperated vertices and normals from blender
-    init(name: String, tag: String?, vertices: [Vertex], ObjectNormalData: [GLfloat], _ xPos: Float, _ yPos: Float, _ zPos: Float, scale: Float, baseMatrix: GLKMatrix4){
+    init(name: String, tag: String?, vertices: Vertex, ObjectNormalData: [GLfloat], _ xPos: Float, _ yPos: Float, _ zPos: Float, scale: Float, baseMatrix: GLKMatrix4){
         self.name = name
         self.tag = tag
-        self.vertices = [Vertex]()
-        self.position.x = xPos;
-        self.position.y = yPos;
-        self.position.z = zPos;
+        self.vertices = vertices
+        self.position.x = xPos
+        self.position.y = yPos
+        self.position.z = zPos
         self.scale = scale
         self.baseMatrix = baseMatrix
     }
@@ -68,7 +69,7 @@ public class GameObject{
     }
     
     //Returns the object's vertex data
-    func getVertexData() -> [Vertex]{
+    func getVertices() -> Vertex{
         return self.vertices;
     }
     
