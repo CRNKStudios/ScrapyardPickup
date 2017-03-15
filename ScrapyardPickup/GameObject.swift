@@ -11,37 +11,28 @@ import Foundation
 import OpenGLES
 import GLKit
 
-public struct Vector3 {
-    var x: GLfloat = 0
-    var y: GLfloat = 0
-    var z: GLfloat = 0
-    var w: GLfloat = 0
-}
-
 public struct Vertex {
-    var positions: [GLfloat] = []
-    var colors: [GLfloat] = []
-    var textures: [GLfloat] = []
-    var normals: [GLfloat] = []
+    var position: GLKVector4
+    var color: GLKVector4
+    var texture: GLKVector4
+    var normal: GLKVector4
 }
 
 public class GameObject{
     public var name: String // must be defined
     public var tag: String? // can be nil
-    var vertices: Vertex
-    var position: Vector3 = Vector3(x: 0, y: 0, z: 0, w: 0)
+    var objectData: [Vertex]
+    var position: GLKVector4 = GLKVector4Make(0.0, 0.0, 0.0, 0.0)
     var scale: Float
     var baseMatrix: GLKMatrix4
     
     
     //Initialize object fields
-    init(name: String, tag: String?, vertices: Vertex, _ xPos: Float, _ yPos: Float, _ zPos: Float, scale: Float, baseMatrix: GLKMatrix4){
+    init(name: String, tag: String?, objectData: [Vertex], _ xPos: Float, _ yPos: Float, _ zPos: Float, scale: Float, baseMatrix: GLKMatrix4){
         self.name = name
         self.tag = tag
-        self.vertices = vertices
-        self.position.x = xPos
-        self.position.y = yPos
-        self.position.z = zPos
+        self.objectData = objectData
+        self.position = GLKVector4Make(xPos, yPos, zPos, 1)
         self.scale = scale
         self.baseMatrix = baseMatrix
     }
@@ -52,13 +43,11 @@ public class GameObject{
     }
     
     //overloaded init for seperated vertices and normals from blender
-    init(name: String, tag: String?, vertices: Vertex, ObjectNormalData: [GLfloat], _ xPos: Float, _ yPos: Float, _ zPos: Float, scale: Float, baseMatrix: GLKMatrix4){
+    init(name: String, tag: String?, objectData: [Vertex], ObjectNormalData: [GLfloat], _ xPos: Float, _ yPos: Float, _ zPos: Float, scale: Float, baseMatrix: GLKMatrix4){
         self.name = name
         self.tag = tag
-        self.vertices = vertices
-        self.position.x = xPos
-        self.position.y = yPos
-        self.position.z = zPos
+        self.objectData = objectData
+        self.position = GLKVector4Make(xPos, yPos, zPos, 1)
         self.scale = scale
         self.baseMatrix = baseMatrix
     }
@@ -69,8 +58,40 @@ public class GameObject{
     }
     
     //Returns the object's vertex data
-    func getVertices() -> Vertex{
-        return self.vertices;
+    func getObjectData() -> [Vertex]{
+        return self.objectData;
+    }
+    
+    func getPositionsData() -> [GLKVector4] {
+        var positions: [GLKVector4] = [GLKVector4](repeating: GLKVector4(), count: objectData.count)
+        for i in 0..<objectData.count {
+            positions[i] = objectData[i].position
+        }
+        return positions
+    }
+    
+    func getNormalsData() -> [GLKVector4] {
+        var normals: [GLKVector4] = [GLKVector4](repeating: GLKVector4(), count: objectData.count)
+        for i in 0..<objectData.count {
+            normals[i] = objectData[i].normal
+        }
+        return normals
+    }
+    
+    func getTexturesData() -> [GLKVector4] {
+        var textures: [GLKVector4] = [GLKVector4](repeating: GLKVector4(), count: objectData.count)
+        for i in 0..<objectData.count {
+            textures[i] = objectData[i].texture
+        }
+        return textures
+    }
+    
+    func getColorsData() -> [GLKVector4] {
+        var colors: [GLKVector4] = [GLKVector4](repeating: GLKVector4(), count: objectData.count)
+        for i in 0..<objectData.count {
+            colors[i] = objectData[i].color
+        }
+        return colors
     }
     
     //Get objects translation matrix for drawing
@@ -84,8 +105,6 @@ public class GameObject{
     
     //Move the object by the passed amount in each dimension
     func moveObject(xMove: Float, yMove: Float, zMove: Float){
-        self.position.x += xMove;
-        self.position.y += yMove;
-        self.position.z += zMove;
+        self.position = GLKVector4Make(self.position.x + xMove, self.position.y + yMove, self.position.z + zMove, 0)
     }
 }

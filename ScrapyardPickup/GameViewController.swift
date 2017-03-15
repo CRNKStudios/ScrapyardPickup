@@ -52,8 +52,8 @@ class GameViewController: GLKViewController {
 //    let BUTTON_UP=0,BUTTON_DOWN=2,BUTTON_LEFT=3,BUTTON_RIGHT=4, BUTTON_MAGNET_POWER=5;
     
 // MARK: Create objects
-    var playerMagnet: PlayerObject = PlayerObject(name: "CraneModel1", tag: "Player", vertices: CraneObject().getVertexArray(), 0.0, 0.0, 0.0, scale: 1.0, baseMatrix: GLKMatrix4Identity)
-    var playerCube: GameObject = GameObject(name: "Cube", tag: "Scrap", vertices: CubeObject().getVertexArray(), 0.0, -2.0, 0.0, scale: 1.0, baseMatrix: GLKMatrix4Identity)
+    var playerMagnet: PlayerObject = PlayerObject(name: "CraneModel1", tag: "Player", objectData: CraneObject().getModelData(), 0.0, 0.0, 0.0, scale: 1.0, baseMatrix: GLKMatrix4Identity)
+    var playerCube: GameObject = GameObject(name: "Cube", tag: "Scrap", objectData: CubeObject().getModelData(), 0.0, -2.0, 0.0, scale: 1.0, baseMatrix: GLKMatrix4Identity)
     
     @IBOutlet weak var UIButtonUp: UIButton!
     @IBOutlet weak var UIButtonDown: UIButton!
@@ -128,16 +128,16 @@ class GameViewController: GLKViewController {
             print("magnet power on");
             
 // MARK: Refactor
-            var cubeVertexData = playerCube.getVertices();
+            var cubeVertexData = playerCube.getObjectData()
             glGenVertexArraysOES(1, &vertexArray2)
             glBindVertexArrayOES(vertexArray2)
             
             glGenBuffers(1, &vertexBuffer2)
             glBindBuffer(GLenum(GL_ARRAY_BUFFER), vertexBuffer2)
             glBindVertexArrayOES(vertexArray2)
-            glBufferData(GLenum(GL_ARRAY_BUFFER), GLsizeiptr(MemoryLayout<GLfloat>.size * cubeVertexData.positions.count + MemoryLayout<GLfloat>.size * cubeVertexData.normals.count), nil, GLenum(GL_STATIC_DRAW))
-            glBufferSubData(GLenum(GL_ARRAY_BUFFER), 0, GLsizeiptr(MemoryLayout<GLfloat>.size * cubeVertexData.positions.count), &cubeVertexData.positions) // target, offset, size, data
-            glBufferSubData(GLenum(GL_ARRAY_BUFFER), MemoryLayout<GLfloat>.size * cubeVertexData.positions.count, GLsizeiptr(MemoryLayout<GLfloat>.size * cubeVertexData.normals.count), &cubeVertexData.normals) // target, offset, size, data
+            glBufferData(GLenum(GL_ARRAY_BUFFER), GLsizeiptr(MemoryLayout<GLfloat>.size * cubeVertexData.count + MemoryLayout<GLfloat>.size * cubeVertexData.count), nil, GLenum(GL_STATIC_DRAW))
+            glBufferSubData(GLenum(GL_ARRAY_BUFFER), 0, GLsizeiptr(MemoryLayout<GLfloat>.size * cubeVertexData.count), playerCube.getPositionsData()) // target, offset, size, data
+            glBufferSubData(GLenum(GL_ARRAY_BUFFER), MemoryLayout<GLfloat>.size * cubeVertexData.count, GLsizeiptr(MemoryLayout<GLfloat>.size * cubeVertexData.count), playerCube.getNormalsData()) // target, offset, size, data
             
             glEnableVertexAttribArray(GLuint(GLKVertexAttrib.position.rawValue))
             glVertexAttribPointer(GLuint(GLKVertexAttrib.position.rawValue), 3, GLenum(GL_FLOAT), GLboolean(GL_FALSE), 0, BUFFER_OFFSET(0))
@@ -206,11 +206,12 @@ class GameViewController: GLKViewController {
         
 // MARK: Refactor
         //Get the vertex data from the playermagnet object for drawing
-        var playerVertexData: Vertex = playerMagnet.getVertices()
+        var playerVertexData: [Vertex] = playerMagnet.getObjectData()
         
-        glBufferData(GLenum(GL_ARRAY_BUFFER), GLsizeiptr(MemoryLayout<GLfloat>.size * playerVertexData.positions.count + MemoryLayout<GLfloat>.size * playerVertexData.normals.count), nil, GLenum(GL_STATIC_DRAW))
-        glBufferSubData(GLenum(GL_ARRAY_BUFFER), 0, MemoryLayout<GLfloat>.size * playerVertexData.positions.count, &playerVertexData.positions);
-        glBufferSubData(GLenum(GL_ARRAY_BUFFER), MemoryLayout<GLfloat>.size * playerVertexData.positions.count, MemoryLayout<GLfloat>.size * playerVertexData.normals.count, &playerVertexData.normals);
+        
+        glBufferData(GLenum(GL_ARRAY_BUFFER), GLsizeiptr(MemoryLayout<GLfloat>.size * playerVertexData.count + MemoryLayout<GLfloat>.size * playerVertexData.count), nil, GLenum(GL_STATIC_DRAW))
+        glBufferSubData(GLenum(GL_ARRAY_BUFFER), 0, MemoryLayout<GLfloat>.size * playerVertexData.count, playerMagnet.getPositionsData());
+        glBufferSubData(GLenum(GL_ARRAY_BUFFER), MemoryLayout<GLfloat>.size * playerVertexData.count, MemoryLayout<GLfloat>.size * playerVertexData.count, playerMagnet.getNormalsData());
         
         glEnableVertexAttribArray(GLuint(GLKVertexAttrib.position.rawValue))
         glVertexAttribPointer(GLuint(GLKVertexAttrib.position.rawValue), 3, GLenum(GL_FLOAT), GLboolean(GL_FALSE), 0, BUFFER_OFFSET(0))
@@ -300,7 +301,7 @@ class GameViewController: GLKViewController {
             })
         })
         
-        glDrawArrays(GLenum(GL_TRIANGLES), 0, 2500)
+        glDrawArrays(GLenum(GL_TRIANGLES), 0, 10000)
         
         glBindVertexArrayOES(vertexArray2)
         

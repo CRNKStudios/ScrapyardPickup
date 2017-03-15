@@ -11,9 +11,7 @@ import GLKit
 
 public class CraneObject: ModelObject {
     public override init() {
-        super.init()
-        self.v.positions = v_crane
-        self.v.normals = vn_crane
+        super.init(v_crane, vn_crane)
     }
 }
 
