@@ -33,6 +33,8 @@ public class GameObject{
     var scale: Float
     var baseMatrix: GLKMatrix4
     
+    var velocity: Vector3 = Vector3(x:0, y:0, z: 0, w: 0);
+    
     
     //Initialize object fields
     init(name: String, tag: String?, vertices: Vertex, _ xPos: Float, _ yPos: Float, _ zPos: Float, scale: Float, baseMatrix: GLKMatrix4){
@@ -87,5 +89,24 @@ public class GameObject{
         self.position.x += xMove;
         self.position.y += yMove;
         self.position.z += zMove;
+    }
+    
+    func updatePosition(deltaTime: GLfloat){
+        self.position.x += self.velocity.x*deltaTime;
+        if(self.position.y + self.velocity.y*deltaTime >= -2){
+            self.position.y += self.velocity.y*deltaTime;
+        }else{
+            self.velocity.y=0;
+            self.velocity.x = self.velocity.x*0.5;
+            self.velocity.z = self.velocity.z*0.5;
+            self.position.y = -2;
+        }
+        self.position.z += self.velocity.z*deltaTime;
+    }
+    
+    func addToVelocities(velx: GLfloat, vely: GLfloat, velz: GLfloat){
+        self.velocity.x+=velx;
+        self.velocity.y+=vely;
+        self.velocity.z+=velz;
     }
 }
