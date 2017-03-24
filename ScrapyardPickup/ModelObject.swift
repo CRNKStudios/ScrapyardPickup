@@ -9,23 +9,36 @@
 import Foundation
 import GLKit
 
+/**
+    ModelObject Class
+
+    All objs are Models. This will setup vertex objects and model objects.
+ 
+    Note: Vincent, when working on the Object loader, look at putting it in 
+    here for reference and ease of use (plus makes sence really since they are 
+    model objects.
+ */
 public class ModelObject {
     var modelData: [Vertex]
     
+    //Initialize the data
     public init() {
         self.modelData = []
     }
     
+    //Sets up postions and normals
     public init(_ positions: [GLfloat], _ normals: [GLfloat]) {
-        self.modelData = [Vertex](repeating: Vertex(position: GLKVector4(), color: GLKVector4(), texture: GLKVector4(), normal: GLKVector4()), count: positions.count)
+        self.modelData = [Vertex](repeating: Vertex(position: GLKVector4(), texture: GLKVector4(), normal: GLKVector4()), count: positions.count)
         loadData(positions, normals)
     }
     
-    public init(_ positions: [GLfloat], _ normals: [GLfloat], _ textures: [GLfloat], _ colors: [GLfloat]) {
-        self.modelData = [Vertex](repeating: Vertex(position: GLKVector4(), color: GLKVector4(), texture: GLKVector4(), normal: GLKVector4()), count: positions.count)
+    //Sets up postions textures and normals
+    public init(_ positions: [GLfloat], _ normals: [GLfloat], _ textures: [GLfloat]) {
+        self.modelData = [Vertex](repeating: Vertex(position: GLKVector4(), texture: GLKVector4(), normal: GLKVector4()), count: positions.count)
         loadData(positions, normals, textures, colors)
     }
     
+    //Loads the data from the GLfloat arrays into the model data vertex array (pos and norm only)
     func loadData(_ positions: [GLfloat], _ normals: [GLfloat]) {
         for i in stride(from: 0, to: positions.count, by: 3) {
             if (positions.indices.contains(i)) {
@@ -37,6 +50,7 @@ public class ModelObject {
         }
     }
     
+    //Loads the data from the GLfloat arrays into the model data vertex array
     func loadData(_ positions: [GLfloat], _ normals: [GLfloat], _ textures: [GLfloat], _ colors: [GLfloat]) {
         for i in stride(from: 0, to: positions.count, by: 3) {
             if (positions.indices.contains(i)) {
@@ -48,12 +62,10 @@ public class ModelObject {
             if (textures.indices.contains(i)) {
                 modelData[i].texture = GLKVector4Make(textures[i], textures[i+1], textures[i+2], 1)
             }
-            if (colors.indices.contains(i)) {
-                modelData[i].color = GLKVector4Make(colors[i], colors[i+1], colors[i+2], 1)
-            }
         }
     }
     
+    //Returns the model data vertex array
     public func getModelData() -> [Vertex] {
         return modelData
     }

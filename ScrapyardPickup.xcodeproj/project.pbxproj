@@ -52,6 +52,7 @@
 		0958EBD41E6128A400B2FC7F /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		0980E97F1E771E0F00E5107E /* PlayerObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerObject.swift; sourceTree = "<group>"; };
 		0980E9811E77457200E5107E /* CraneObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CraneObject.swift; sourceTree = "<group>"; };
+		09C4C15E1E858712006F549B /* monkey.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = monkey.obj; sourceTree = "<group>"; };
 		09D2CE7C1E774679009E3D24 /* CubeObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CubeObject.swift; sourceTree = "<group>"; };
 		09D2CE7E1E774B2F009E3D24 /* ModelObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelObject.swift; sourceTree = "<group>"; };
 		09E7B5171E54F46E0027B069 /* ScrapyardPickup.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScrapyardPickup.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -196,6 +197,7 @@
 			isa = PBXGroup;
 			children = (
 				82AEE6651E66548200606C35 /* CraneObject.h */,
+				09C4C15E1E858712006F549B /* monkey.obj */,
 			);
 			name = Objects;
 			sourceTree = "<group>";
