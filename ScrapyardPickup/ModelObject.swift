@@ -130,9 +130,63 @@ public class ModelObject {
         } else {
             NSLog("File: " + fileName + ".obj could not be opened");
         }
-// TODO: Test this
     }
-    //reorder data based on inidices and return the data
+    
+    public static func parseOBJFileToModel(fileName: String) -> ModelObject {
+        var modelOut: ModelObject = ModelObject()
+        var positions: [GLfloat] = []
+        var textures: [GLfloat] = []
+        var normals: [GLfloat] = []
+        var indices: [GLuint] = []
+        // parsing into arrays
+        if let filePath = Bundle.main.path(forResource: fileName, ofType: "obj"){
+            do {
+                let contentsArray = try String(contentsOfFile: filePath).components(separatedBy: "\n")
+                for line in 0..<contentsArray.count {
+                    if (contentsArray[line].hasPrefix("v ")) {
+                        let numbers = contentsArray[line].components(separatedBy: " ")
+                        positions.append(Float(numbers[1])!)
+                        positions.append(Float(numbers[2])!)
+                        positions.append(Float(numbers[3])!)
+                    }
+                    if (contentsArray[line].hasPrefix("vt ")) {
+                        let numbers = contentsArray[line].components(separatedBy: " ")
+                        textures.append(Float(numbers[1])!)
+                        textures.append(Float(numbers[2])!) // only has 2
+                    }
+                    if (contentsArray[line].hasPrefix("vn ")) {
+                        let numbers = contentsArray[line].components(separatedBy: " ")
+                        normals.append(Float(numbers[1])!)
+                        normals.append(Float(numbers[2])!)
+                        normals.append(Float(numbers[3])!)
+                    }
+                    if (contentsArray[line].hasPrefix("f ")) {
+                        let faces = contentsArray[line].components(separatedBy: " ")
+                        for n in 1..<faces.count {
+                            let faceNumbers = faces[n].components(separatedBy: "/")
+                            indices.append(GLuint(faceNumbers[0])!)
+                            if (faceNumbers[1] == "") {
+                                indices.append(GLuint(0))
+                            } else {
+                                indices.append(GLuint(faceNumbers[1])!)
+                            }
+                            indices.append(GLuint(faceNumbers[2])!)
+                        }
+                    }
+                }
+                modelOut.modelData.position = ModelObject.reorder3(data: positions, indices: indices, offset: 0)
+                modelOut.modelData.texture = ModelObject.reorder2(data: textures, indices: indices, offset: 1)
+                modelOut.modelData.normal = ModelObject.reorder3(data: normals, indices: indices, offset: 2)
+            } catch {
+                NSLog("File: " + fileName + ".obj file contents could not be loaded")
+            }
+        } else {
+            NSLog("File: " + fileName + ".obj could not be opened");
+        }
+        return modelOut
+    }
+    
+    // NONSTATIC
     private func reorder3(data: [GLfloat], indices: [GLuint], offset: Int) -> [GLfloat] {
         var dataOut: [GLfloat] = []
         for i in stride(from: offset, to: indices.count, by: 3) {
@@ -144,6 +198,30 @@ public class ModelObject {
     }
     
     private func reorder2(data: [GLfloat], indices: [GLuint], offset: Int) -> [GLfloat] {
+        if (data.count <= 0) {
+            return []
+        }
+        var dataOut: [GLfloat] = []
+        for i in stride(from: offset, to: (indices.count / 3) * 2, by: 3) {
+            dataOut.append(data[(Int(indices[i]) - 1) * 3])
+            dataOut.append(data[(Int(indices[i]) - 1) * 3 + 1])
+        }
+        return dataOut
+    }
+    
+    // STATIC
+    //reorder data based on inidices and return the data
+    private static func reorder3(data: [GLfloat], indices: [GLuint], offset: Int) -> [GLfloat] {
+        var dataOut: [GLfloat] = []
+        for i in stride(from: offset, to: indices.count, by: 3) {
+            dataOut.append(data[(Int(indices[i]) - 1) * 3])
+            dataOut.append(data[(Int(indices[i]) - 1) * 3 + 1])
+            dataOut.append(data[(Int(indices[i]) - 1) * 3 + 2])
+        }
+        return dataOut
+    }
+    
+    private static func reorder2(data: [GLfloat], indices: [GLuint], offset: Int) -> [GLfloat] {
         if (data.count <= 0) {
             return []
         }

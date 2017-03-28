@@ -55,6 +55,7 @@ public class GameObject{
         self.position = GLKVector4Make(xPos, yPos, zPos, 1)
         self.scale = scale
         self.baseMatrix = baseMatrix
+        //Conduct other things here
     }
     
     //combine seperated vertex and normal array into a single array for drawing
@@ -68,8 +69,9 @@ public class GameObject{
         self.tag = tag
         self.objectData = objectData
         self.position = GLKVector4Make(xPos, yPos, zPos, 1)
-        self.scale = scale
+        self.scale = scale // TODO fix scaling of object
         self.baseMatrix = baseMatrix
+        //Conduct other things here
     }
     
     //Deinitialize game object
@@ -107,6 +109,14 @@ public class GameObject{
             textures[i] = objectData.texture[i]
         }
         return textures
+    }
+    
+    //Scale the base matrix of the object
+    func getScaleMatrix() -> GLKMatrix4 {
+        return GLKMatrix4MakeScale(
+            self.scale,
+            self.scale,
+            self.scale)
     }
     
     //Get objects translation matrix for drawing
