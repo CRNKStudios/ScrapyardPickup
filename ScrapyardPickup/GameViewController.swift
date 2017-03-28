@@ -44,8 +44,9 @@ class GameViewController: GLKViewController {
     var timer = 0.0
     
 // MARK: Create objects
-    var playerMagnet: PlayerObject = PlayerObject(name: "CraneModel1", tag: "Player", objectData: CraneObject().getModelData(), 0.0, 0.0, 0.0, scale: 1.0, baseMatrix: GLKMatrix4Identity)
+//    var playerMagnet: PlayerObject = PlayerObject(name: "CraneModel1", tag: "Player", objectData: CraneObject().getModelData(), 0.0, 0.0, 0.0, scale: 1.0, baseMatrix: GLKMatrix4Identity)
 //    var playerCube: GameObject = GameObject(name: "Cube", tag: "Scrap", objectData: CubeObject().getModelData(), 0.0, -2.0, 0.0, scale: 1.0, baseMatrix: GLKMatrix4Identity)
+    var playerMagnet: PlayerObject = PlayerObject()
     var playerCube: GameObject = GameObject()
     
     @IBOutlet weak var UIButtonUp: UIButton!
@@ -146,7 +147,6 @@ class GameViewController: GLKViewController {
         default:
             break;
         }
-        
     }
     
     //Handle UI button Releases
@@ -195,18 +195,19 @@ class GameViewController: GLKViewController {
         glGenBuffers(1, &vertexBuffer)
         glBindBuffer(GLenum(GL_ARRAY_BUFFER), vertexBuffer)
         
+        playerMagnet = PlayerObject(name: "CraneModel", tag: "Player", objectData: ModelObject.parseOBJFileToModel(fileName: "CraneModel")
+.getModelData(), 0, 0, 0, scale: 1, baseMatrix: GLKMatrix4Identity)
         
-// MARK: Magnet Object Creation
+        // MARK: Magnet Object Creation
         //Get the vertex data from the playermagnet object for drawing
         let playerVertexData: VertexData = playerMagnet.getObjectData()
         
-        glBufferData(GLenum(GL_ARRAY_BUFFER), GLsizeiptr(MemoryLayout<GLfloat>.size * playerVertexData.position.count + MemoryLayout<GLfloat>.size * playerVertexData.texture.count + MemoryLayout<GLfloat>.size * playerVertexData.normal.count), nil, GLenum(GL_STATIC_DRAW))
+        glBufferData(GLenum(GL_ARRAY_BUFFER), GLsizeiptr(MemoryLayout<GLfloat>.size * playerVertexData.position.count * 3), nil, GLenum(GL_STATIC_DRAW))
         
         glBufferSubData(GLenum(GL_ARRAY_BUFFER), 0, MemoryLayout<GLfloat>.size * playerVertexData.position.count, playerMagnet.getPositionsData());
         glBufferSubData(GLenum(GL_ARRAY_BUFFER), MemoryLayout<GLfloat>.size * playerVertexData.position.count, MemoryLayout<GLfloat>.size * playerVertexData.texture.count, playerMagnet.getTexturesData());
-        glBufferSubData(GLenum(GL_ARRAY_BUFFER), MemoryLayout<GLfloat>.size * playerVertexData.position.count + MemoryLayout<GLfloat>.size * playerVertexData.texture.count, MemoryLayout<GLfloat>.size * playerVertexData.normal.count, playerMagnet.getNormalsData());
+        glBufferSubData(GLenum(GL_ARRAY_BUFFER), MemoryLayout<GLfloat>.size * playerVertexData.position.count * 2, MemoryLayout<GLfloat>.size * playerVertexData.normal.count, playerMagnet.getNormalsData());
         
-// TODO: These arrays need to be in the correct order of the indices. Double check this data in the OBJ parser
         glEnableVertexAttribArray(GLuint(GLKVertexAttrib.position.rawValue))
         glVertexAttribPointer(GLuint(GLKVertexAttrib.position.rawValue), 3, GLenum(GL_FLOAT), GLboolean(GL_FALSE), 0, BUFFER_OFFSET(0))
         glEnableVertexAttribArray(GLuint(GLKVertexAttrib.normal.rawValue))
@@ -214,10 +215,7 @@ class GameViewController: GLKViewController {
         
         glBindVertexArrayOES(0)
         
-        let mo: ModelObject = ModelObject()
-        mo.parseOBJFile(fileName: "monkey")
-//        var data: VertexData = mo.getModelData()
-        playerCube = GameObject(name: "Cube", tag: "Scrap", objectData: mo.getModelData(), 0.0, -2.0, 0.0, scale: 0.1, baseMatrix: GLKMatrix4Identity)
+        playerCube = GameObject(name: "Cube", tag: "Scrap", objectData: ModelObject.parseOBJFileToModel(fileName: "monkey").getModelData(), 0.0, -2.0, 0.0, scale: 0.5, baseMatrix: GLKMatrix4Identity)
     }
     
     func tearDownGL() {
