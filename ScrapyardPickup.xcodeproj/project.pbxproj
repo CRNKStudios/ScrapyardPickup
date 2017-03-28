@@ -37,7 +37,7 @@
 		B9317F211E5E26090030ECEA /* rightArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = B9317F1D1E5E26090030ECEA /* rightArrow.png */; };
 		B9317F221E5E26090030ECEA /* upArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = B9317F1E1E5E26090030ECEA /* upArrow.png */; };
 		B9317F241E5E27B20030ECEA /* redButton.png in Resources */ = {isa = PBXBuildFile; fileRef = B9317F231E5E27B20030ECEA /* redButton.png */; };
-		BE4E71C61E89F735006F17CD /* Physics.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4E71C51E89F735006F17CD /* Physics.swift */; };
+		BE4E71C61E89F735006F17CD /* Physics.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4E71C51E89F735006F17CD /* Physics.swift */; settings = {COMPILER_FLAGS = "-w"; }; };
 		BE59414C1E7B351D006B4DBE /* HitBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE59414B1E7B351D006B4DBE /* HitBox.swift */; };
 		BE785A1D1E6601EC0062B6D3 /* GameObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE785A1C1E6601EC0062B6D3 /* GameObject.swift */; };
 		C489AE3F1E88EE7E00695525 /* ScoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C489AE3B1E88E93700695525 /* ScoreManager.swift */; };

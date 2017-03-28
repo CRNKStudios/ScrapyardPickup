@@ -196,7 +196,7 @@ class GameViewController: GLKViewController {
         glBindBuffer(GLenum(GL_ARRAY_BUFFER), vertexBuffer)
         
         playerMagnet = PlayerObject(name: "CraneModel", tag: "Player", objectData: ModelObject.parseOBJFileToModel(fileName: "CraneModel")
-.getModelData(), 0, 0, 0, scale: 1, baseMatrix: GLKMatrix4Identity)
+.getModelData(), 0, 2, 0, scale: 1, baseMatrix: GLKMatrix4Identity)
         
         // MARK: Magnet Object Creation
         //Get the vertex data from the playermagnet object for drawing
@@ -270,7 +270,7 @@ class GameViewController: GLKViewController {
         //print("collision: ",HitBox.collisionHasOccured(firstPos: playerMagnet.position, firstBox: magnetBox, secondPos: playerCube.position, secondBox: junkHitBox));
         
         if(HitBox.collisionHasOccured(firstPos: playerMagnet.position, firstBox: magnetBox, secondPos: playerCube.position, secondBox: junkHitBox)&&blockActivated){
-            var magnetVel = Vector3(x:0,y:0,z:0,w:0);
+            var magnetVel = Vector4(x:0,y:0,z:0,w:0)
             Physics.calculateCollision(ui: &magnetVel, firstPos: playerMagnet.position, firstBox: magnetBox, vi: &playerCube.velocity, secondPos: playerCube.position, secondBox: junkHitBox, mass1: 1000, mass2: 1)
         }
         

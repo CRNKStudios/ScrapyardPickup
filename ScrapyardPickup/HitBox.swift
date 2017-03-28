@@ -29,7 +29,7 @@ public class HitBox{
         self.back = back;
     }
     
-    static func collisionHasOccured(firstPos: Vector3, firstBox: HitBox, secondPos: Vector3, secondBox: HitBox)->Bool{
+    static func collisionHasOccured(firstPos: Vector4, firstBox: HitBox, secondPos: Vector4, secondBox: HitBox)->Bool{
         let first = HitBox(left: firstBox.left+firstPos.x, right: firstBox.right+firstPos.x, top: firstBox.top+firstPos.y, bottom: firstBox.bottom+firstPos.y, front: firstBox.front+firstPos.z, back: firstBox.back+firstPos.z);
         let second = HitBox(left: secondBox.left+secondPos.x, right: secondBox.right+secondPos.x, top: secondBox.top+secondPos.y, bottom: secondBox.bottom+secondPos.y, front: secondBox.front+secondPos.z, back: secondBox.back+secondPos.z);
         
