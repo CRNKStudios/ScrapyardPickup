@@ -36,6 +36,9 @@
 		B9317F241E5E27B20030ECEA /* redButton.png in Resources */ = {isa = PBXBuildFile; fileRef = B9317F231E5E27B20030ECEA /* redButton.png */; };
 		BE59414C1E7B351D006B4DBE /* HitBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE59414B1E7B351D006B4DBE /* HitBox.swift */; };
 		BE785A1D1E6601EC0062B6D3 /* GameObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE785A1C1E6601EC0062B6D3 /* GameObject.swift */; };
+		C489AE3F1E88EE7E00695525 /* ScoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C489AE3B1E88E93700695525 /* ScoreManager.swift */; };
+		C489AE401E88EE8200695525 /* LevelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C489AE3D1E88EAE100695525 /* LevelManager.swift */; };
+		C489AE421E8A5E0B00695525 /* FileWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C489AE411E8A5E0B00695525 /* FileWriter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -71,6 +74,9 @@
 		B9317F231E5E27B20030ECEA /* redButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = redButton.png; path = Assets/redButton.png; sourceTree = "<group>"; };
 		BE59414B1E7B351D006B4DBE /* HitBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HitBox.swift; sourceTree = "<group>"; };
 		BE785A1C1E6601EC0062B6D3 /* GameObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameObject.swift; sourceTree = "<group>"; };
+		C489AE3B1E88E93700695525 /* ScoreManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScoreManager.swift; sourceTree = "<group>"; };
+		C489AE3D1E88EAE100695525 /* LevelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelManager.swift; sourceTree = "<group>"; };
+		C489AE411E8A5E0B00695525 /* FileWriter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileWriter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +109,9 @@
 				09D2CE7C1E774679009E3D24 /* CubeObject.swift */,
 				09D2CE7E1E774B2F009E3D24 /* ModelObject.swift */,
 				BE59414B1E7B351D006B4DBE /* HitBox.swift */,
+				C489AE411E8A5E0B00695525 /* FileWriter.swift */,
+				C489AE3B1E88E93700695525 /* ScoreManager.swift */,
+				C489AE3D1E88EAE100695525 /* LevelManager.swift */,
 			);
 			name = GameFiles;
 			sourceTree = "<group>";
@@ -290,11 +299,14 @@
 				090362FC1E5CC76700584BE8 /* SceneViewController.swift in Sources */,
 				0903630F1E5D2FBF00584BE8 /* LevelSelectViewController.swift in Sources */,
 				090363001E5CD02D00584BE8 /* LeaderboardViewController.swift in Sources */,
+				C489AE401E88EE8200695525 /* LevelManager.swift in Sources */,
 				090363021E5CD03E00584BE8 /* OptionsViewController.swift in Sources */,
+				C489AE421E8A5E0B00695525 /* FileWriter.swift in Sources */,
 				BE785A1D1E6601EC0062B6D3 /* GameObject.swift in Sources */,
 				BE59414C1E7B351D006B4DBE /* HitBox.swift in Sources */,
 				090363061E5CD05300584BE8 /* GameViewController.swift in Sources */,
 				0903630D1E5D2FB400584BE8 /* PlayerPrefs.swift in Sources */,
+				C489AE3F1E88EE7E00695525 /* ScoreManager.swift in Sources */,
 				09D2CE7F1E774B2F009E3D24 /* ModelObject.swift in Sources */,
 				0980E9821E77457200E5107E /* CraneObject.swift in Sources */,
 				090362FA1E5CC6CE00584BE8 /* MenuViewController.swift in Sources */,
