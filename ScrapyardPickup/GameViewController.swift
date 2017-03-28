@@ -40,6 +40,7 @@ class GameViewController: GLKViewController {
     var context: EAGLContext? = nil
     var effect: GLKBaseEffect? = nil
     var magnetIsOn = false;
+    var magnetStrength: GLfloat = 15.0;
     var timer = 0.0
     
 // MARK: Create objects
@@ -251,8 +252,20 @@ class GameViewController: GLKViewController {
         
         // Compute the model view matrix for the object rendered with ES2
         //var modelViewMatrix = GLKMatrix4MakeTranslation(0.0, 0.0, 1.5)
-        var modelViewMatrix = playerMagnet.getTranslationMatrix()
-        var modelViewMatrix2 = playerCube.getTranslationMatrix()
+        if(magnetIsOn){
+            var xdiff = playerMagnet.position.x-playerCube.position.x;
+            var ydiff = playerMagnet.position.y-playerCube.position.y;
+            var zdiff = playerMagnet.position.z-playerCube.position.z;
+            var magnitude = sqrt(xdiff*xdiff+ydiff*ydiff+zdiff*zdiff);
+            xdiff = xdiff/magnitude;
+            ydiff = ydiff/magnitude;
+            zdiff = zdiff/magnitude;
+            playerCube.addToVelocities(velx: magnetStrength*xdiff*Float(self.timeSinceLastUpdate), vely: magnetStrength*ydiff*Float(self.timeSinceLastUpdate), velz: magnetStrength*zdiff*Float(self.timeSinceLastUpdate));
+        }
+        playerCube.addToVelocities(velx: 0, vely: Float(-9.81*self.timeSinceLastUpdate), velz: 0);
+        playerCube.updatePosition(deltaTime: GLfloat(self.timeSinceLastUpdate));
+        var modelViewMatrix = playerMagnet.getTranslationMatrix();
+        var modelViewMatrix2 = playerCube.getTranslationMatrix();
         modelViewMatrix = GLKMatrix4Scale(modelViewMatrix, 0.5, 0.5, 0.5)
         modelViewMatrix = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix)
         modelViewMatrix2 = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix2)

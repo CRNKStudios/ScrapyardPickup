@@ -23,6 +23,13 @@ public struct VertexData {
     var normal: [GLfloat]
 }
 
+public struct Vector4 {
+    var x: GLfloat = 0
+    var y: GLfloat = 0
+    var z: GLfloat = 0
+    var w: GLfloat = 1
+}
+
 /**
     GameObject Class
  
@@ -34,7 +41,8 @@ public class GameObject{
     public var name: String // must be defined
     public var tag: String? // can be nil
     var objectData: VertexData
-    var position: GLKVector4 = GLKVector4Make(0.0, 0.0, 0.0, 0.0)
+    var position: Vector4 = Vector4(x: 0, y: 0, z: 0, w: 1)
+    var velocity: Vector4 = Vector4(x: 0, y: 0, z: 0, w: 1)
     var scale: Float
     var baseMatrix: GLKMatrix4
     
@@ -42,7 +50,8 @@ public class GameObject{
         self.name = ""
         self.tag = ""
         self.objectData = VertexData(position: [], texture: [], normal: [])
-        self.position = GLKVector4Make(0, 0, 0, 1)
+        self.position = Vector4(x:0, y:0, z:0, w:1)
+        self.velocity = Vector4(x:0, y:0, z:0, w:1)
         self.scale = 1
         self.baseMatrix = GLKMatrix4Identity
     }
@@ -52,7 +61,7 @@ public class GameObject{
         self.name = name
         self.tag = tag
         self.objectData = objectData
-        self.position = GLKVector4Make(xPos, yPos, zPos, 1)
+        self.position = Vector4(x:xPos, y:yPos, z:zPos, w:1)
         self.scale = scale
         self.baseMatrix = baseMatrix
         //Conduct other things here
@@ -68,8 +77,8 @@ public class GameObject{
         self.name = name
         self.tag = tag
         self.objectData = objectData
-        self.position = GLKVector4Make(xPos, yPos, zPos, 1)
-        self.scale = scale // TODO fix scaling of object
+        self.position = Vector4(x:xPos, y:yPos, z:zPos, w:1)
+        self.scale = scale
         self.baseMatrix = baseMatrix
         //Conduct other things here
     }
@@ -130,6 +139,25 @@ public class GameObject{
     
     //Move the object by the passed amount in each dimension
     func moveObject(xMove: Float, yMove: Float, zMove: Float){
-        self.position = GLKVector4Make(self.position.x + xMove, self.position.y + yMove, self.position.z + zMove, 0)
+        self.position = Vector4(x:self.position.x + xMove, y:self.position.y + yMove, z:self.position.z + zMove, w:0)
+    }
+    
+    func updatePosition(deltaTime: GLfloat){
+        self.position.x += self.velocity.x*deltaTime;
+        if(self.position.y + self.velocity.y*deltaTime >= -2){
+            self.position.y += self.velocity.y*deltaTime;
+        }else{
+            self.velocity.y=0;
+            self.velocity.x = self.velocity.x*0.5;
+            self.velocity.z = self.velocity.z*0.5;
+//            self.position.y = -2;
+        }
+        self.position.z += self.velocity.z*deltaTime;
+    }
+    
+    func addToVelocities(velx: GLfloat, vely: GLfloat, velz: GLfloat){
+        self.velocity.x+=velx;
+        self.velocity.y+=vely;
+        self.velocity.z+=velz;
     }
 }
