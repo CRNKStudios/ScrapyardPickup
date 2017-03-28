@@ -11,39 +11,57 @@ import Foundation
 import OpenGLES
 import GLKit
 
-public struct Vector3 {
+/**
+    Vertex Structure
+    
+    As discussed, each point drawn to the screen has a: position, texture and 
+    normal (in that order read from `faces` in an `*.obj` file).
+ */
+public struct VertexData {
+    var position: [GLfloat]
+    var texture: [GLfloat]
+    var normal: [GLfloat]
+}
+
+public struct Vector4 {
     var x: GLfloat = 0
     var y: GLfloat = 0
     var z: GLfloat = 0
-    var w: GLfloat = 0
+    var w: GLfloat = 1
 }
 
-public struct Vertex {
-    var positions: [GLfloat] = []
-    var colors: [GLfloat] = []
-    var textures: [GLfloat] = []
-    var normals: [GLfloat] = []
-}
-
+/**
+    GameObject Class
+ 
+    All objects (models) in the game are of the class `GameObject`. Anything 
+    that all objects should have should be put in here for quick access and easy
+    reading.
+ */
 public class GameObject{
     public var name: String // must be defined
     public var tag: String? // can be nil
-    var vertices: Vertex
-    var position: Vector3 = Vector3(x: 0, y: 0, z: 0, w: 0)
+    var objectData: VertexData
+    var position: Vector4 = Vector4(x: 0, y: 0, z: 0, w: 1)
+    var velocity: Vector4 = Vector4(x: 0, y: 0, z: 0, w: 1)
     var scale: Float
     var baseMatrix: GLKMatrix4
     
-    var velocity: Vector3 = Vector3(x:0, y:0, z: 0, w: 0);
-    
+    init() {
+        self.name = ""
+        self.tag = ""
+        self.objectData = VertexData(position: [], texture: [], normal: [])
+        self.position = Vector4(x:0, y:0, z:0, w:1)
+        self.velocity = Vector4(x:0, y:0, z:0, w:1)
+        self.scale = 1
+        self.baseMatrix = GLKMatrix4Identity
+    }
     
     //Initialize object fields
-    init(name: String, tag: String?, vertices: Vertex, _ xPos: Float, _ yPos: Float, _ zPos: Float, scale: Float, baseMatrix: GLKMatrix4){
+    init(name: String, tag: String?, objectData: VertexData, _ xPos: Float, _ yPos: Float, _ zPos: Float, scale: Float, baseMatrix: GLKMatrix4){
         self.name = name
         self.tag = tag
-        self.vertices = vertices
-        self.position.x = xPos
-        self.position.y = yPos
-        self.position.z = zPos
+        self.objectData = objectData
+        self.position = Vector4(x:xPos, y:yPos, z:zPos, w:1)
         self.scale = scale
         self.baseMatrix = baseMatrix
     }
@@ -54,13 +72,11 @@ public class GameObject{
     }
     
     //overloaded init for seperated vertices and normals from blender
-    init(name: String, tag: String?, vertices: Vertex, ObjectNormalData: [GLfloat], _ xPos: Float, _ yPos: Float, _ zPos: Float, scale: Float, baseMatrix: GLKMatrix4){
+    init(name: String, tag: String?, objectData: VertexData, ObjectNormalData: [GLfloat], _ xPos: Float, _ yPos: Float, _ zPos: Float, scale: Float, baseMatrix: GLKMatrix4){
         self.name = name
         self.tag = tag
-        self.vertices = vertices
-        self.position.x = xPos
-        self.position.y = yPos
-        self.position.z = zPos
+        self.objectData = objectData
+        self.position = Vector4(x:xPos, y:yPos, z:zPos, w:1)
         self.scale = scale
         self.baseMatrix = baseMatrix
     }
@@ -71,8 +87,35 @@ public class GameObject{
     }
     
     //Returns the object's vertex data
-    func getVertices() -> Vertex{
-        return self.vertices;
+    func getObjectData() -> VertexData {
+        return self.objectData;
+    }
+    
+    //Gets postitions from vertex array
+    func getPositionsData() -> [GLfloat] {
+        var positions: [GLfloat] = [GLfloat](repeating: GLfloat(), count: objectData.position.count)
+        for i in 0..<objectData.position.count {
+            positions[i] = objectData.position[i]
+        }
+        return positions
+    }
+    
+    //Gets normals from vertex array
+    func getNormalsData() -> [GLfloat] {
+        var normals: [GLfloat] = [GLfloat](repeating: GLfloat(), count: objectData.normal.count)
+        for i in 0..<objectData.normal.count {
+            normals[i] = objectData.normal[i]
+        }
+        return normals
+    }
+    
+    //Gets textures from vertex array
+    func getTexturesData() -> [GLfloat] {
+        var textures: [GLfloat] = [GLfloat](repeating: GLfloat(), count: objectData.texture.count)
+        for i in 0..<objectData.texture.count {
+            textures[i] = objectData.texture[i]
+        }
+        return textures
     }
     
     //Get objects translation matrix for drawing
@@ -86,9 +129,7 @@ public class GameObject{
     
     //Move the object by the passed amount in each dimension
     func moveObject(xMove: Float, yMove: Float, zMove: Float){
-        self.position.x += xMove;
-        self.position.y += yMove;
-        self.position.z += zMove;
+        self.position = Vector4(x:self.position.x + xMove, y:self.position.y + yMove, z:self.position.z + zMove, w:0)
     }
     
     func updatePosition(deltaTime: GLfloat){
@@ -99,7 +140,7 @@ public class GameObject{
             self.velocity.y=0;
             self.velocity.x = self.velocity.x*0.5;
             self.velocity.z = self.velocity.z*0.5;
-            self.position.y = -2;
+//            self.position.y = -2;
         }
         self.position.z += self.velocity.z*deltaTime;
     }

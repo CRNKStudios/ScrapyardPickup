@@ -11,9 +11,7 @@ import GLKit
 
 public class CubeObject: ModelObject {
     public override init() {
-        super.init()
-        v.positions = cPositions
-        v.normals = cNormals
+        super.init(cPositions, cNormals)
     }
 }
 

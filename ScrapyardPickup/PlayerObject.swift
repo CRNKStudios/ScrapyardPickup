@@ -9,9 +9,15 @@
 import Foundation
 import GLKit
 
+/**
+    PlayerObject Class
+    
+    Create a player object that sets the string to be "Player" only. Should be
+    called max = 1 in a game setup. (Only 1 player in our game).
+ */
 public class PlayerObject: GameObject {
-    override init(name: String, tag: String?, vertices: Vertex, _ xPos: Float, _ yPos: Float, _ zPos: Float, scale: Float, baseMatrix: GLKMatrix4){
-        super.init(name: name, tag: tag, vertices: vertices, xPos, yPos, zPos, scale: scale, baseMatrix: baseMatrix)
+    override init(name: String, tag: String?, objectData: VertexData, _ xPos: Float, _ yPos: Float, _ zPos: Float, scale: Float, baseMatrix: GLKMatrix4){
+        super.init(name: name, tag: tag, objectData: objectData, xPos, yPos, zPos, scale: scale, baseMatrix: baseMatrix)
         self.tag = "Player"
     }
 }

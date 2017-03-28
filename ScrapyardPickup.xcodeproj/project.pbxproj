@@ -16,6 +16,8 @@
 		090363081E5CD91900584BE8 /* ic_settings_36pt.png in Resources */ = {isa = PBXBuildFile; fileRef = 090363071E5CD91900584BE8 /* ic_settings_36pt.png */; };
 		0903630D1E5D2FB400584BE8 /* PlayerPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0903630C1E5D2FB400584BE8 /* PlayerPrefs.swift */; };
 		0903630F1E5D2FBF00584BE8 /* LevelSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0903630E1E5D2FBF00584BE8 /* LevelSelectViewController.swift */; };
+		093AD9181E89FA0900AB0A24 /* cube.obj in Resources */ = {isa = PBXBuildFile; fileRef = 093AD9171E89FA0900AB0A24 /* cube.obj */; };
+		093AD91A1E8A09C000AB0A24 /* monkey.obj in Resources */ = {isa = PBXBuildFile; fileRef = 093AD9191E8A09C000AB0A24 /* monkey.obj */; };
 		093B03E61E5591E2008727AE /* Front Screen V2.png in Resources */ = {isa = PBXBuildFile; fileRef = 093B03E41E5591E2008727AE /* Front Screen V2.png */; };
 		093B03E71E5591E2008727AE /* Front Screen.png in Resources */ = {isa = PBXBuildFile; fileRef = 093B03E51E5591E2008727AE /* Front Screen.png */; };
 		0958EBD51E6128A400B2FC7F /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0958EBD41E6128A400B2FC7F /* GLKit.framework */; };
@@ -51,6 +53,8 @@
 		090363071E5CD91900584BE8 /* ic_settings_36pt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ic_settings_36pt.png; path = Assets/Icons/ic_settings_36pt.png; sourceTree = "<group>"; };
 		0903630C1E5D2FB400584BE8 /* PlayerPrefs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerPrefs.swift; sourceTree = "<group>"; };
 		0903630E1E5D2FBF00584BE8 /* LevelSelectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelSelectViewController.swift; sourceTree = "<group>"; };
+		093AD9171E89FA0900AB0A24 /* cube.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cube.obj; sourceTree = "<group>"; };
+		093AD9191E8A09C000AB0A24 /* monkey.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = monkey.obj; sourceTree = "<group>"; };
 		093B03E41E5591E2008727AE /* Front Screen V2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Front Screen V2.png"; path = "Assets/Front Screen V2.png"; sourceTree = "<group>"; };
 		093B03E51E5591E2008727AE /* Front Screen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Front Screen.png"; path = "Assets/Front Screen.png"; sourceTree = "<group>"; };
 		0958EBD41E6128A400B2FC7F /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
@@ -207,6 +211,8 @@
 		82AEE6641E66546B00606C35 /* Objects */ = {
 			isa = PBXGroup;
 			children = (
+				093AD9191E8A09C000AB0A24 /* monkey.obj */,
+				093AD9171E89FA0900AB0A24 /* cube.obj */,
 				82AEE6651E66548200606C35 /* CraneObject.h */,
 			);
 			name = Objects;
@@ -278,6 +284,8 @@
 				09E7B5261E54F46E0027B069 /* Assets.xcassets in Resources */,
 				B9317F1F1E5E26090030ECEA /* downArrow.png in Resources */,
 				09E7B5291E54F46E0027B069 /* LaunchScreen.storyboard in Resources */,
+				093AD9181E89FA0900AB0A24 /* cube.obj in Resources */,
+				093AD91A1E8A09C000AB0A24 /* monkey.obj in Resources */,
 				09E7B51D1E54F46E0027B069 /* Shader.fsh in Resources */,
 				093B03E61E5591E2008727AE /* Front Screen V2.png in Resources */,
 				B9317F211E5E26090030ECEA /* rightArrow.png in Resources */,
