@@ -139,7 +139,7 @@ class GameViewController: GLKViewController {
             glEnableVertexAttribArray(GLuint(GLKVertexAttrib.normal.rawValue))
             glVertexAttribPointer(GLuint(GLKVertexAttrib.normal.rawValue), 3, GLenum(GL_FLOAT), GLboolean(GL_FALSE), 0, BUFFER_OFFSET(0))
             
-            glDrawArrays(GLenum(GL_TRIANGLES), 0, GLsizei(cubeVertexData.position.count + cubeVertexData.normal.count))
+            glDrawArrays(GLenum(GL_TRIANGLES), 0, GLsizei(cubeVertexData.position.count))
             magnetIsOn = true;
             break;
         default:
@@ -214,9 +214,9 @@ class GameViewController: GLKViewController {
         glBindVertexArrayOES(0)
         
         let mo: ModelObject = ModelObject()
-        mo.parseOBJFile(fileName: "cube")
+        mo.parseOBJFile(fileName: "monkey")
 //        var data: VertexData = mo.getModelData()
-        playerCube = GameObject(name: "Cube", tag: "Scrap", objectData: mo.getModelData(), 0.0, -2.0, 0.0, scale: 1.0, baseMatrix: GLKMatrix4Identity)
+        playerCube = GameObject(name: "Cube", tag: "Scrap", objectData: mo.getModelData(), 0.0, -2.0, 0.0, scale: 0.1, baseMatrix: GLKMatrix4Identity)
     }
     
     func tearDownGL() {
