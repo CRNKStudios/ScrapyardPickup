@@ -41,11 +41,10 @@ class GameViewController: GLKViewController {
     var effect: GLKBaseEffect? = nil
     var magnetIsOn = false;
     var magnetStrength: GLfloat = 15.0;
+    var blockActivated: Bool = false;
     var timer = 0.0
     
 // MARK: Create objects
-//    var playerMagnet: PlayerObject = PlayerObject(name: "CraneModel1", tag: "Player", objectData: CraneObject().getModelData(), 0.0, 0.0, 0.0, scale: 1.0, baseMatrix: GLKMatrix4Identity)
-//    var playerCube: GameObject = GameObject(name: "Cube", tag: "Scrap", objectData: CubeObject().getModelData(), 0.0, -2.0, 0.0, scale: 1.0, baseMatrix: GLKMatrix4Identity)
     var playerMagnet: PlayerObject = PlayerObject()
     var playerCube: GameObject = GameObject()
     
@@ -142,7 +141,8 @@ class GameViewController: GLKViewController {
             glVertexAttribPointer(GLuint(GLKVertexAttrib.normal.rawValue), 3, GLenum(GL_FLOAT), GLboolean(GL_FALSE), 0, BUFFER_OFFSET(0))
             
             glDrawArrays(GLenum(GL_TRIANGLES), 0, GLsizei(cubeVertexData.position.count))
-            magnetIsOn = true;
+            blockActivated=true;
+            magnetIsOn=true;
             break;
         default:
             break;
@@ -262,10 +262,24 @@ class GameViewController: GLKViewController {
             zdiff = zdiff/magnitude;
             playerCube.addToVelocities(velx: magnetStrength*xdiff*Float(self.timeSinceLastUpdate), vely: magnetStrength*ydiff*Float(self.timeSinceLastUpdate), velz: magnetStrength*zdiff*Float(self.timeSinceLastUpdate));
         }
+        
+        var magnetBox: HitBox = HitBox(left:-0.6, right:0.1, top:0.1, bottom:-1.2, front:1.2, back:-1.2);
+        var junkHitBox: HitBox = HitBox(left:-0.5, right:0.5, top:0.5, bottom:-0.5, front:0.5, back:-0.5);
+        
+        //print(playerCube.velocity);
+        //print("collision: ",HitBox.collisionHasOccured(firstPos: playerMagnet.position, firstBox: magnetBox, secondPos: playerCube.position, secondBox: junkHitBox));
+        
+        if(HitBox.collisionHasOccured(firstPos: playerMagnet.position, firstBox: magnetBox, secondPos: playerCube.position, secondBox: junkHitBox)&&blockActivated){
+            var magnetVel = Vector3(x:0,y:0,z:0,w:0);
+            Physics.calculateCollision(ui: &magnetVel, firstPos: playerMagnet.position, firstBox: magnetBox, vi: &playerCube.velocity, secondPos: playerCube.position, secondBox: junkHitBox, mass1: 1000, mass2: 1)
+        }
+        
+        
         playerCube.addToVelocities(velx: 0, vely: Float(-9.81*self.timeSinceLastUpdate), velz: 0);
         playerCube.updatePosition(deltaTime: GLfloat(self.timeSinceLastUpdate));
         var modelViewMatrix = playerMagnet.getTranslationMatrix();
         var modelViewMatrix2 = playerCube.getTranslationMatrix();
+        modelViewMatrix = GLKMatrix4Translate(modelViewMatrix, 0, -2.5, 0)
         modelViewMatrix = GLKMatrix4Scale(modelViewMatrix, 0.5, 0.5, 0.5)
         modelViewMatrix = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix)
         modelViewMatrix2 = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix2)

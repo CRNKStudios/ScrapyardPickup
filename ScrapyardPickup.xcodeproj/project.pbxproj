@@ -37,6 +37,7 @@
 		B9317F211E5E26090030ECEA /* rightArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = B9317F1D1E5E26090030ECEA /* rightArrow.png */; };
 		B9317F221E5E26090030ECEA /* upArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = B9317F1E1E5E26090030ECEA /* upArrow.png */; };
 		B9317F241E5E27B20030ECEA /* redButton.png in Resources */ = {isa = PBXBuildFile; fileRef = B9317F231E5E27B20030ECEA /* redButton.png */; };
+		BE4E71C61E89F735006F17CD /* Physics.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4E71C51E89F735006F17CD /* Physics.swift */; };
 		BE59414C1E7B351D006B4DBE /* HitBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE59414B1E7B351D006B4DBE /* HitBox.swift */; };
 		BE785A1D1E6601EC0062B6D3 /* GameObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE785A1C1E6601EC0062B6D3 /* GameObject.swift */; };
 		C489AE3F1E88EE7E00695525 /* ScoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C489AE3B1E88E93700695525 /* ScoreManager.swift */; };
@@ -78,6 +79,7 @@
 		B9317F1D1E5E26090030ECEA /* rightArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = rightArrow.png; path = Assets/rightArrow.png; sourceTree = "<group>"; };
 		B9317F1E1E5E26090030ECEA /* upArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = upArrow.png; path = Assets/upArrow.png; sourceTree = "<group>"; };
 		B9317F231E5E27B20030ECEA /* redButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = redButton.png; path = Assets/redButton.png; sourceTree = "<group>"; };
+		BE4E71C51E89F735006F17CD /* Physics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Physics.swift; sourceTree = "<group>"; };
 		BE59414B1E7B351D006B4DBE /* HitBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HitBox.swift; sourceTree = "<group>"; };
 		BE785A1C1E6601EC0062B6D3 /* GameObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameObject.swift; sourceTree = "<group>"; };
 		C489AE3B1E88E93700695525 /* ScoreManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScoreManager.swift; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 				C489AE411E8A5E0B00695525 /* FileWriter.swift */,
 				C489AE3B1E88E93700695525 /* ScoreManager.swift */,
 				C489AE3D1E88EAE100695525 /* LevelManager.swift */,
+				BE4E71C51E89F735006F17CD /* Physics.swift */,
 			);
 			name = GameFiles;
 			sourceTree = "<group>";
@@ -253,7 +256,6 @@
 				TargetAttributes = {
 					09E7B5161E54F46D0027B069 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = 26RCKZ873P;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -321,6 +323,7 @@
 				C489AE3F1E88EE7E00695525 /* ScoreManager.swift in Sources */,
 				09D2CE7F1E774B2F009E3D24 /* ModelObject.swift in Sources */,
 				0980E9821E77457200E5107E /* CraneObject.swift in Sources */,
+				BE4E71C61E89F735006F17CD /* Physics.swift in Sources */,
 				090362FA1E5CC6CE00584BE8 /* MenuViewController.swift in Sources */,
 				090363041E5CD04600584BE8 /* HowToViewController.swift in Sources */,
 				09D2CE7D1E774679009E3D24 /* CubeObject.swift in Sources */,
@@ -448,7 +451,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 26RCKZ873P;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = ScrapyardPickup/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -463,7 +466,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 26RCKZ873P;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = ScrapyardPickup/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
