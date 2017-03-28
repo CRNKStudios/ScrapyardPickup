@@ -16,59 +16,11 @@ import GLKit
     
     As discussed, each point drawn to the screen has a: position, texture and 
     normal (in that order read from `faces` in an `*.obj` file).
- 
-    Note: Vincent, when loading in objects, they need to be put into an array of
-    Vertex structures. When doing this, make a Vertex object, set position = 
-    GLKVector4 (textures in some cases may not be there, but just set to 0).
- 
-    Example:
-    v: 1 0 0
-    v: 0 1 0
-    v: 0 0 1
-    v: 1 0 1
-    n: 1 0 0
-    n: 0 1 0
- 
-    f: 1//1 2//1 3//1
-    f: 4//1 3//1 2//1
- 
-    var vertex:[Vertex] = [
-        Vertex(
-            position:GLKVector4(1, 0, 0, 0),
-            texture:GLKVector4(0, 0, 0, 0), // in this case we don't have one
-            normal:GLKVector4(1, 0, 0, 0)
-        ),
-        Vertex(
-            position:GLKVector4(0, 1, 0, 0),
-            texture:GLKVector4(0, 0, 0, 0),
-            normal:GLKVector4(1, 0, 0, 0)
-        ),
-        Vertex(
-            position:GLKVector4(0, 0, 1, 0),
-            texture:GLKVector4(0, 0, 0, 0),
-            normal:GLKVector4(1, 0, 0, 0)
-        ),
-        Vertex(
-            position:GLKVector4(1, 0, 1, 0),
-            texture:GLKVector4(0, 0, 0, 0),
-            normal:GLKVector4(1, 0, 0, 0)
-        ),
-        Vertex(
-            position:GLKVector4(0, 0, 1, 0),
-            texture:GLKVector4(0, 0, 0, 0),
-            normal:GLKVector4(1, 0, 0, 0)
-        ),
-        Vertex(
-            position:GLKVector4(0, 1, 0, 0),
-            texture:GLKVector4(0, 0, 0, 0),
-            normal:GLKVector4(1, 0, 0, 0)
-        )
-    ]
  */
-public struct Vertex {
-    var position: GLKVector4
-    var texture: GLKVector4
-    var normal: GLKVector4
+public struct VertexData {
+    var position: [GLfloat]
+    var texture: [GLfloat]
+    var normal: [GLfloat]
 }
 
 /**
@@ -81,14 +33,22 @@ public struct Vertex {
 public class GameObject{
     public var name: String // must be defined
     public var tag: String? // can be nil
-    var objectData: [Vertex]
+    var objectData: VertexData
     var position: GLKVector4 = GLKVector4Make(0.0, 0.0, 0.0, 0.0)
     var scale: Float
     var baseMatrix: GLKMatrix4
     
+    init() {
+        self.name = ""
+        self.tag = ""
+        self.objectData = VertexData(position: [], texture: [], normal: [])
+        self.position = GLKVector4Make(0, 0, 0, 1)
+        self.scale = 1
+        self.baseMatrix = GLKMatrix4Identity
+    }
     
     //Initialize object fields
-    init(name: String, tag: String?, objectData: [Vertex], _ xPos: Float, _ yPos: Float, _ zPos: Float, scale: Float, baseMatrix: GLKMatrix4){
+    init(name: String, tag: String?, objectData: VertexData, _ xPos: Float, _ yPos: Float, _ zPos: Float, scale: Float, baseMatrix: GLKMatrix4){
         self.name = name
         self.tag = tag
         self.objectData = objectData
@@ -103,7 +63,7 @@ public class GameObject{
     }
     
     //overloaded init for seperated vertices and normals from blender
-    init(name: String, tag: String?, objectData: [Vertex], ObjectNormalData: [GLfloat], _ xPos: Float, _ yPos: Float, _ zPos: Float, scale: Float, baseMatrix: GLKMatrix4){
+    init(name: String, tag: String?, objectData: VertexData, ObjectNormalData: [GLfloat], _ xPos: Float, _ yPos: Float, _ zPos: Float, scale: Float, baseMatrix: GLKMatrix4){
         self.name = name
         self.tag = tag
         self.objectData = objectData
@@ -118,33 +78,33 @@ public class GameObject{
     }
     
     //Returns the object's vertex data
-    func getObjectData() -> [Vertex]{
+    func getObjectData() -> VertexData {
         return self.objectData;
     }
     
     //Gets postitions from vertex array
-    func getPositionsData() -> [GLKVector4] {
-        var positions: [GLKVector4] = [GLKVector4](repeating: GLKVector4(), count: objectData.count)
-        for i in 0..<objectData.count {
-            positions[i] = objectData[i].position
+    func getPositionsData() -> [GLfloat] {
+        var positions: [GLfloat] = [GLfloat](repeating: GLfloat(), count: objectData.position.count)
+        for i in 0..<objectData.position.count {
+            positions[i] = objectData.position[i]
         }
         return positions
     }
     
     //Gets normals from vertex array
-    func getNormalsData() -> [GLKVector4] {
-        var normals: [GLKVector4] = [GLKVector4](repeating: GLKVector4(), count: objectData.count)
-        for i in 0..<objectData.count {
-            normals[i] = objectData[i].normal
+    func getNormalsData() -> [GLfloat] {
+        var normals: [GLfloat] = [GLfloat](repeating: GLfloat(), count: objectData.normal.count)
+        for i in 0..<objectData.normal.count {
+            normals[i] = objectData.normal[i]
         }
         return normals
     }
     
     //Gets textures from vertex array
-    func getTexturesData() -> [GLKVector4] {
-        var textures: [GLKVector4] = [GLKVector4](repeating: GLKVector4(), count: objectData.count)
-        for i in 0..<objectData.count {
-            textures[i] = objectData[i].texture
+    func getTexturesData() -> [GLfloat] {
+        var textures: [GLfloat] = [GLfloat](repeating: GLfloat(), count: objectData.texture.count)
+        for i in 0..<objectData.texture.count {
+            textures[i] = objectData.texture[i]
         }
         return textures
     }
