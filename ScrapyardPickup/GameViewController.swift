@@ -241,7 +241,7 @@ class GameViewController: GLKViewController {
         
         // MARK: Magnet Object Creation
         playerMagnet = PlayerObject(name: "CraneModel", tag: "Player", vertexArray: 0, vertexBuffer: 0, objectData: ModelObject.parseOBJFileToModel(fileName: "CraneModel")
-.getModelData(), 0, 4, -8, scale: 1, baseMatrix: GLKMatrix4Identity)
+.getModelData(), 0, 2, -8, scale: 1, baseMatrix: GLKMatrix4Identity)
         self.loadObjectsToBuffers(go: playerMagnet)
         
         // MARK: Cube Object Loaded
@@ -255,7 +255,7 @@ class GameViewController: GLKViewController {
         self.loadObjectsToBuffers(go: grinderBlades)
         
         // MARK: Ground Object Creation
-        ground = GameObject(name: "Ground", tag: "Ground", vertexArray: 0, vertexBuffer: 0, objectData: ModelObject.parseOBJFileToModel(fileName: "cube").getModelData(), 0.0, -8.0, 0.0, scale: 1, baseMatrix: GLKMatrix4Identity)
+        ground = GameObject(name: "Ground", tag: "Ground", vertexArray: 0, vertexBuffer: 0, objectData: ModelObject.parseOBJFileToModel(fileName: "cube").getModelData(), 0.0, 0.0, 0.0, scale: 1, baseMatrix: GLKMatrix4Identity)
         self.loadObjectsToBuffers(go: ground)
         
         // MARK: Create scrap objects
@@ -349,7 +349,7 @@ class GameViewController: GLKViewController {
             xdiff = xdiff/magnitude;
             ydiff = ydiff/magnitude;
             zdiff = zdiff/magnitude;
-            playerCube.addToVelocities(velx: magnetStrength*xdiff*Float(self.timeSinceLastUpdate), vely: magnetStrength*ydiff*Float(self.timeSinceLastUpdate), velz: magnetStrength*zdiff*Float(self.timeSinceLastUpdate));
+            scrapObjects[0].addToVelocities(velx: magnetStrength*xdiff*Float(self.timeSinceLastUpdate), vely: magnetStrength*ydiff*Float(self.timeSinceLastUpdate), velz: magnetStrength*zdiff*Float(self.timeSinceLastUpdate));
         }
         
         var magnetBox: HitBox = HitBox(left:-0.6, right:0.1, top:0.1, bottom:-1.2, front:1.2, back:-1.2);
@@ -359,9 +359,9 @@ class GameViewController: GLKViewController {
         //print(playerCube.velocity);
         //print("collision: ",HitBox.collisionHasOccured(firstPos: playerMagnet.position, firstBox: magnetBox, secondPos: playerCube.position, secondBox: junkHitBox));
         
-        if(HitBox.collisionHasOccured(firstPos: playerMagnet.position, firstBox: magnetBox, secondPos: playerCube.position, secondBox: junkHitBox)&&blockActivated){
+        if(HitBox.collisionHasOccured(firstPos: playerMagnet.position, firstBox: magnetBox, secondPos: scrapObjects[0].position, secondBox: junkHitBox)&&blockActivated){
             var magnetVel = Vector4(x:0,y:0,z:0,w:0)
-            Physics.calculateCollision(ui: &magnetVel, firstPos: playerMagnet.position, firstBox: magnetBox, vi: &playerCube.velocity, secondPos: playerCube.position, secondBox: junkHitBox, mass1: 1000, mass2: 1)
+            Physics.calculateCollision(ui: &magnetVel, firstPos: playerMagnet.position, firstBox: magnetBox, vi: &scrapObjects[0].velocity, secondPos: scrapObjects[0].position, secondBox: junkHitBox, mass1: 1000, mass2: 1)
         }
         
         // TODO: Loop through models to set their MVM's, then set their normals, then projection matrices
@@ -370,16 +370,16 @@ class GameViewController: GLKViewController {
 //        playerCube.addToVelocities(velx: 0, vely: Float(-9.81*self.timeSinceLastUpdate), velz: 0)
 //        playerCube.updatePosition(deltaTime: GLfloat(self.timeSinceLastUpdate))
         //loop this for all scrap objects. 8==========D~~~~~~~ HANK LO ~~~~~~~~~~~~~
-        if(playerCube.tag == "Scrap"){
-            if(HitBox.collisionHasOccured(firstPos: playerCube.position, firstBox: junkHitBox, secondPos: grinderBox.position, secondBox: grinderHitBox)){
-                playerCube.tag = "cleared";
+        if(scrapObjects[0].tag == "Scrap"){
+            if(HitBox.collisionHasOccured(firstPos: scrapObjects[0].position, firstBox: junkHitBox, secondPos: grinderBox.position, secondBox: grinderHitBox)){
+                scrapObjects[0].tag = "cleared";
                 pp.setScore(score: pp.getScore() + 10000)
                 self.endLevel()
             }
         }
 
-        playerCube.addToVelocities(velx: 0, vely: Float(-9.81*self.timeSinceLastUpdate), velz: 0)
-        playerCube.updatePosition(deltaTime: GLfloat(self.timeSinceLastUpdate))
+        scrapObjects[0].addToVelocities(velx: 0, vely: Float(-9.81*self.timeSinceLastUpdate), velz: 0)
+        scrapObjects[0].updatePosition(deltaTime: GLfloat(self.timeSinceLastUpdate))
         
         // TODO: Fix this so that there is a better way of doing it
         var modelViewMatrix = playerMagnet.getTranslationMatrix();
@@ -395,6 +395,7 @@ class GameViewController: GLKViewController {
         modelViewMatrix3 = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix3)
         modelViewMatrix4 = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix4)
         modelViewMatrix5 = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix5)
+        modelViewMatrix6 = GLKMatrix4Translate(modelViewMatrix6, 0, 2, 0)
         modelViewMatrix6 = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix6)
         
         normalMatrix = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(modelViewMatrix), nil)
