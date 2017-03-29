@@ -52,6 +52,8 @@ class GameViewController: GLKViewController {
     var blockActivated: Bool = false;
     var timer = 0.0
     
+    var soundManager: SoundManager = SoundManager()
+    
     @IBOutlet weak var UIButtonUp: UIButton!
     @IBOutlet weak var UIButtonDown: UIButton!
     @IBOutlet weak var UIButtonLeft: UIButton!
@@ -83,6 +85,8 @@ class GameViewController: GLKViewController {
         
         //setup the ui buttons
         initButtons();
+        
+        soundManager.playSound(fileName: "track_3")
         
         self.setupGL()
     }
