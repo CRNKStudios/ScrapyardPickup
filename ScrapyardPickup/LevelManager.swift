@@ -83,4 +83,9 @@ public class LevelManager {
         
         FileWriter.writeFile(filename: levelfilename, contents: temptxt);
     }
+    
+    class func endLevel(score: Int, level: Int) {
+        let tstars = ScoreManager.determineStarRating(score: score, level: level);
+        writeLeveldata(level: level, stars: tstars);
+    }
 }

@@ -35,6 +35,10 @@ class GameViewController: GLKViewController {
     var playerCube: GameObject = GameObject()
     var ground: GameObject = GameObject()
     var scrapObjects: [GameObject] = []
+    var grinderBox: GameObject = GameObject()
+    var grinderBlades: GameObject = GameObject()
+    var pp: PlayerPrefs = PlayerPrefs(name: "player")
+    
     // TODO: Fix this. Each object should hold it's own projviewmatrix && normal
     var modelViewProjectionMatrix:GLKMatrix4 = GLKMatrix4Identity
     var normalMatrix: GLKMatrix3 = GLKMatrix3Identity
@@ -42,7 +46,10 @@ class GameViewController: GLKViewController {
     var normalMatrix2: GLKMatrix3 = GLKMatrix3Identity
     var modelViewProjectionMatrix3:GLKMatrix4 = GLKMatrix4Identity
     var normalMatrix3: GLKMatrix3 = GLKMatrix3Identity
-    
+    var modelViewProjectionMatrix4:GLKMatrix4 = GLKMatrix4Identity
+    var normalMatrix4: GLKMatrix3 = GLKMatrix3Identity
+    var modelViewProjectionMatrix5:GLKMatrix4 = GLKMatrix4Identity
+    var normalMatrix5: GLKMatrix3 = GLKMatrix3Identity
     var rotation: Float = 0.0
     
     var context: EAGLContext? = nil
@@ -51,6 +58,10 @@ class GameViewController: GLKViewController {
     var magnetStrength: GLfloat = 15.0; // Is this where the model stuff goes?
     var blockActivated: Bool = false;
     var timer = 0.0
+    var movingUp = false;
+    var movingDown = false;
+    var movingLeft = false;
+    var movingRight = false;
     
     @IBOutlet weak var UIButtonUp: UIButton!
     @IBOutlet weak var UIButtonDown: UIButton!
@@ -90,16 +101,24 @@ class GameViewController: GLKViewController {
     //connect UI buttons to funtions
     func initButtons(){
         UIButtonUp.tag = Buttons.BUTTON_UP.rawValue;
-        UIButtonUp.addTarget(self,action:#selector(buttonClicked),for:.touchUpInside);
+        UIButtonUp.addTarget(self,action:#selector(buttonClicked),for:.touchDown);
+        UIButtonUp.addTarget(self,action:#selector(buttonReleased),for:.touchUpInside);
+        UIButtonUp.addTarget(self,action:#selector(buttonReleased),for:.touchUpOutside);
         
         UIButtonDown.tag = Buttons.BUTTON_DOWN.rawValue;
-        UIButtonDown.addTarget(self,action:#selector(buttonClicked),for:.touchUpInside);
+        UIButtonDown.addTarget(self,action:#selector(buttonClicked),for:.touchDown);
+        UIButtonDown.addTarget(self,action:#selector(buttonReleased),for:.touchUpInside);
+        UIButtonDown.addTarget(self,action:#selector(buttonReleased),for:.touchUpOutside);
         
         UIButtonLeft.tag = Buttons.BUTTON_LEFT.rawValue;
-        UIButtonLeft.addTarget(self,action:#selector(buttonClicked),for:.touchUpInside);
+        UIButtonLeft.addTarget(self,action:#selector(buttonClicked),for:.touchDown);
+        UIButtonLeft.addTarget(self,action:#selector(buttonReleased),for:.touchUpInside);
+        UIButtonLeft.addTarget(self,action:#selector(buttonReleased),for:.touchUpOutside);
         
         UIButtonRight.tag = Buttons.BUTTON_RIGHT.rawValue;
-        UIButtonRight.addTarget(self,action:#selector(buttonClicked),for:.touchUpInside);
+        UIButtonRight.addTarget(self,action:#selector(buttonClicked),for:.touchDown);
+        UIButtonRight.addTarget(self,action:#selector(buttonReleased),for:.touchUpInside);
+        UIButtonRight.addTarget(self,action:#selector(buttonReleased),for:.touchUpOutside);
         
         UIButtonMagnetPower.tag = Buttons.BUTTON_MAGNET_POWER.rawValue;
         UIButtonMagnetPower.addTarget(self,action:#selector(buttonClicked),for:.touchDown);
@@ -110,16 +129,16 @@ class GameViewController: GLKViewController {
     {
         switch(sender.tag){
         case Buttons.BUTTON_UP.rawValue:
-            playerMagnet.moveObject(xMove: 0.0, yMove: 0.0, zMove: -0.1);
+            movingUp = true;
             break;
         case Buttons.BUTTON_DOWN.rawValue:
-            playerMagnet.moveObject(xMove: 0.0, yMove: 0.0, zMove: 0.1);
+            movingDown = true;
             break;
         case Buttons.BUTTON_LEFT.rawValue:
-            playerMagnet.moveObject(xMove: -0.1, yMove: 0.0, zMove: 0.0);
+            movingLeft = true;
             break;
         case Buttons.BUTTON_RIGHT.rawValue:
-            playerMagnet.moveObject(xMove: 0.1, yMove: 0.0, zMove: 0.0);
+            movingRight = true;
             break;
         case Buttons.BUTTON_MAGNET_POWER.rawValue:
             print("magnet power on");
@@ -157,6 +176,19 @@ class GameViewController: GLKViewController {
     //Handle UI button Releases
     func buttonReleased(sender:UIButton){
         switch(sender.tag){
+        case Buttons.BUTTON_UP.rawValue:
+            movingUp = false;
+            break;
+        case Buttons.BUTTON_DOWN.rawValue:
+            movingDown = false;
+            break;
+        case Buttons.BUTTON_LEFT.rawValue:
+            movingLeft = false;
+            break;
+        case Buttons.BUTTON_RIGHT.rawValue:
+            movingRight = false;
+            break;
+
         case Buttons.BUTTON_MAGNET_POWER.rawValue:
             print("magnet power off");
             magnetIsOn=false;
@@ -196,15 +228,21 @@ class GameViewController: GLKViewController {
         
         // MARK: Magnet Object Creation
         playerMagnet = PlayerObject(name: "CraneModel", tag: "Player", vertexArray: 0, vertexBuffer: 0, objectData: ModelObject.parseOBJFileToModel(fileName: "CraneModel")
-.getModelData(), 0, 2, 0, scale: 1, baseMatrix: GLKMatrix4Identity)
+.getModelData(), 0, 4, -8, scale: 1, baseMatrix: GLKMatrix4Identity)
         self.loadObjectsToBuffers(go: playerMagnet)
         
         // MARK: Cube Object Loaded
 //        playerCube = GameObject(name: "Cube", tag: "Scrap", vertexArray: 0, vertexBuffer: 0, objectData: ModelObject.parseOBJFileToModel(fileName: "monkey").getModelData(), 0.0, -2.0, 0.0, scale: 0.5, baseMatrix: GLKMatrix4Identity)
 //        self.loadObjectsToBuffers(go: playerCube)
         
+        grinderBox = GameObject(name: "Buster", tag: "Grinder", vertexArray: 0, vertexBuffer: 0, objectData: ModelObject.parseOBJFileToModel(fileName: "junkyardGrinderBoxNoTex").getModelData(), -2.0, 0.0, 0.0, scale: 1.0, baseMatrix: GLKMatrix4Identity);
+        self.loadObjectsToBuffers(go: grinderBox)
+        
+        grinderBlades = GameObject(name: "Blades", tag: "Grinder", vertexArray: 0, vertexBuffer: 0, objectData: ModelObject.parseOBJFileToModel(fileName: "junkyardGrinderBladesNoTex").getModelData(), -2.0, 0.0, 0.0, scale: 1.0, baseMatrix: GLKMatrix4Identity);
+        self.loadObjectsToBuffers(go: grinderBlades)
+        
         // MARK: Ground Object Creation
-        ground = GameObject(name: "Ground", tag: "Ground", vertexArray: 0, vertexBuffer: 0, objectData: ModelObject.parseOBJFileToModel(fileName: "cube").getModelData(), 0.0, -4, 0.0, scale: 1, baseMatrix: GLKMatrix4Identity)
+        ground = GameObject(name: "Ground", tag: "Ground", vertexArray: 0, vertexBuffer: 0, objectData: ModelObject.parseOBJFileToModel(fileName: "cube").getModelData(), 0.0, -8.0, 0.0, scale: 1, baseMatrix: GLKMatrix4Identity)
         self.loadObjectsToBuffers(go: ground)
         
         // MARK: Create scrap objects
@@ -269,10 +307,11 @@ class GameViewController: GLKViewController {
     func update() {
         let aspect = fabsf(Float(self.view.bounds.size.width / self.view.bounds.size.height))
         var projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(65.0), aspect, 0.1, 100.0)
+        projectionMatrix = GLKMatrix4RotateX(projectionMatrix, GLKMathDegreesToRadians(30))
         
         self.effect?.transform.projectionMatrix = projectionMatrix
         
-        let baseModelViewMatrix = GLKMatrix4MakeTranslation(0.0, -2.0, -4.0)
+        let baseModelViewMatrix = GLKMatrix4MakeTranslation(0.0, -8.0, -8.0)
         //baseModelViewMatrix = GLKMatrix4Rotate(baseModelViewMatrix, rotation, 0.0, 1.0, 0.0)
         
         // Compute the model view matrix for the object rendered with GLKit
@@ -297,6 +336,7 @@ class GameViewController: GLKViewController {
         
         var magnetBox: HitBox = HitBox(left:-0.6, right:0.1, top:0.1, bottom:-1.2, front:1.2, back:-1.2);
         var junkHitBox: HitBox = HitBox(left:-0.5, right:0.5, top:0.5, bottom:-0.5, front:0.5, back:-0.5);
+        var grinderHitBox: HitBox = HitBox(left:-0.5, right:0.5, top:0.5, bottom:-0.5, front:0.5, back:-0.5);
         
         //print(playerCube.velocity);
         //print("collision: ",HitBox.collisionHasOccured(firstPos: playerMagnet.position, firstBox: magnetBox, secondPos: playerCube.position, secondBox: junkHitBox));
@@ -306,15 +346,18 @@ class GameViewController: GLKViewController {
             Physics.calculateCollision(ui: &magnetVel, firstPos: playerMagnet.position, firstBox: magnetBox, vi: &playerCube.velocity, secondPos: playerCube.position, secondBox: junkHitBox, mass1: 1000, mass2: 1)
         }
         
-        projectionMatrix = GLKMatrix4RotateX(projectionMatrix, 0.5);
-        let worldTranslationMatrix = GLKMatrix4MakeTranslation(0.0,  0.0, -3.0)
-        projectionMatrix = GLKMatrix4Multiply(projectionMatrix, worldTranslationMatrix)
-        
         // TODO: Loop through models to set their MVM's, then set their normals, then projection matrices
         
         //TODO: Set into objects. There is a better way of doing this
 //        playerCube.addToVelocities(velx: 0, vely: Float(-9.81*self.timeSinceLastUpdate), velz: 0)
 //        playerCube.updatePosition(deltaTime: GLfloat(self.timeSinceLastUpdate))
+        //loop this for all scrap objects. 8==========D~~~~~~~ HANK LO ~~~~~~~~~~~~~
+        if(playerCube.tag == "Scrap"){
+            if(HitBox.collisionHasOccured(firstPos: playerCube.position, firstBox: junkHitBox, secondPos: grinderBox.position, secondBox: grinderHitBox)){
+                playerCube.tag = "cleared";
+                pp.setScore(score: pp.getScore() + 10000)
+            }
+        }
         
 //        self.setObjectMVPMatrix(go: playerMagnet, proj: projectionMatrix, translate: Vector4(x:0, y:-2.5, z:0, w:1), scale: Vector4(x:0.5, y:0.5, z:0.5, w:1), rotate: Vector4())
 //        self.setObjectMVPMatrix(go: ground, proj: projectionMatrix, translate: Vector4(), scale: Vector4(x:10, y:0.5, z:10, w:1), rotate: Vector4())
@@ -322,22 +365,31 @@ class GameViewController: GLKViewController {
 
         playerCube.addToVelocities(velx: 0, vely: Float(-9.81*self.timeSinceLastUpdate), velz: 0)
         playerCube.updatePosition(deltaTime: GLfloat(self.timeSinceLastUpdate))
+        
+        // TODO: Fix this so that there is a better way of doing it
         var modelViewMatrix = playerMagnet.getTranslationMatrix();
         var modelViewMatrix2 = playerCube.getTranslationMatrix();
         var modelViewMatrix3 = ground.getTranslationMatrix()
-        modelViewMatrix = GLKMatrix4Translate(modelViewMatrix, 0, -2.5, 0)
+        var modelViewMatrix4 = grinderBox.getTranslationMatrix()
+        var modelViewMatrix5 = grinderBlades.getTranslationMatrix()
         modelViewMatrix = GLKMatrix4Scale(modelViewMatrix, 0.5, 0.5, 0.5)
         modelViewMatrix = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix)
         modelViewMatrix2 = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix2)
         modelViewMatrix3 = GLKMatrix4Scale(modelViewMatrix3, 1000, 0.5, 1000)
         modelViewMatrix3 = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix3)
+        modelViewMatrix4 = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix4)
+        modelViewMatrix5 = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix5)
         
         normalMatrix = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(modelViewMatrix), nil)
         normalMatrix2 = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(modelViewMatrix2), nil)
+        normalMatrix4 = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(modelViewMatrix4), nil)
+        normalMatrix5 = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(modelViewMatrix5), nil)
         
         modelViewProjectionMatrix = GLKMatrix4Multiply(projectionMatrix, modelViewMatrix)
         modelViewProjectionMatrix2 = GLKMatrix4Multiply(projectionMatrix, modelViewMatrix2)
         modelViewProjectionMatrix3 = GLKMatrix4Multiply(projectionMatrix, modelViewMatrix3)
+        modelViewProjectionMatrix4 = GLKMatrix4Multiply(projectionMatrix, modelViewMatrix4)
+        modelViewProjectionMatrix5 = GLKMatrix4Multiply(projectionMatrix, modelViewMatrix5)
         
         playerMagnet.modelViewMatrix = modelViewMatrix
         playerMagnet.normalMatrix = normalMatrix
@@ -347,8 +399,32 @@ class GameViewController: GLKViewController {
         ground.normalMatrix = normalMatrix3
         ground.modelViewProjectionMatrix = modelViewProjectionMatrix3
         
+        grinderBox.modelViewMatrix = modelViewMatrix4
+        grinderBox.normalMatrix = normalMatrix4
+        grinderBox.modelViewProjectionMatrix = modelViewProjectionMatrix4
+        
+        grinderBlades.modelViewMatrix = modelViewMatrix5
+        grinderBlades.normalMatrix = normalMatrix5
+        grinderBlades.modelViewProjectionMatrix = modelViewProjectionMatrix5
+        
+        
         //rotation += Float(self.timeSinceLastUpdate * 0.5)
         self.updateTimer(dt: self.timeSinceLastUpdate)
+        
+        if(movingUp){
+            playerMagnet.moveObject(xMove: 0.0, yMove: 0.0, zMove: -0.1);
+        }
+        if(movingDown){
+            playerMagnet.moveObject(xMove: 0.0, yMove: 0.0, zMove: 0.1);
+        }
+        if(movingLeft){
+            playerMagnet.moveObject(xMove: -0.1, yMove: 0.0, zMove: 0.0);
+        }
+        if(movingRight){
+            playerMagnet.moveObject(xMove: 0.1, yMove: 0.0, zMove: 0.0);
+        }
+        
+        NSLog("Score: %d", pp.getScore());
     }
     
     func setObjectMVPMatrix(go: GameObject, proj: GLKMatrix4, translate: Vector4, scale: Vector4, rotate:Vector4) -> GameObject {
@@ -369,6 +445,8 @@ class GameViewController: GLKViewController {
         
         self.drawObject(go: playerMagnet)
         self.drawObject(go: ground)
+        self.drawObject(go: grinderBox)
+        self.drawObject(go: grinderBlades)
 //        self.drawObjects(gos: scrapObjects)
         
 //        glBindVertexArrayOES(playerMagnet.vertexArray)

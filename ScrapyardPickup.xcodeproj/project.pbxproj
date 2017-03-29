@@ -37,6 +37,8 @@
 		09EAF2051E8B4AF9008AEDB1 /* scrap_box.obj in Resources */ = {isa = PBXBuildFile; fileRef = 09EAF2011E8B4AF9008AEDB1 /* scrap_box.obj */; };
 		09EAF2061E8B4AF9008AEDB1 /* scrap_car.obj in Resources */ = {isa = PBXBuildFile; fileRef = 09EAF2021E8B4AF9008AEDB1 /* scrap_car.obj */; };
 		09EAF2071E8B4AF9008AEDB1 /* scrap_frame.obj in Resources */ = {isa = PBXBuildFile; fileRef = 09EAF2031E8B4AF9008AEDB1 /* scrap_frame.obj */; };
+		82D8C87D1E8B59AE0025A26C /* junkyardGrinderBladesNoTex.obj in Resources */ = {isa = PBXBuildFile; fileRef = 82D8C87C1E8B59AE0025A26C /* junkyardGrinderBladesNoTex.obj */; };
+		82D8C87F1E8B59BA0025A26C /* junkyardGrinderBoxNoTex.obj in Resources */ = {isa = PBXBuildFile; fileRef = 82D8C87E1E8B59BA0025A26C /* junkyardGrinderBoxNoTex.obj */; };
 		B9317F1F1E5E26090030ECEA /* downArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = B9317F1B1E5E26090030ECEA /* downArrow.png */; };
 		B9317F201E5E26090030ECEA /* leftArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = B9317F1C1E5E26090030ECEA /* leftArrow.png */; };
 		B9317F211E5E26090030ECEA /* rightArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = B9317F1D1E5E26090030ECEA /* rightArrow.png */; };
@@ -84,6 +86,8 @@
 		09EAF2021E8B4AF9008AEDB1 /* scrap_car.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = scrap_car.obj; path = "Scrap Objects/scrap_car.obj"; sourceTree = "<group>"; };
 		09EAF2031E8B4AF9008AEDB1 /* scrap_frame.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = scrap_frame.obj; path = "Scrap Objects/scrap_frame.obj"; sourceTree = "<group>"; };
 		82AEE6651E66548200606C35 /* CraneObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CraneObject.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		82D8C87C1E8B59AE0025A26C /* junkyardGrinderBladesNoTex.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = junkyardGrinderBladesNoTex.obj; sourceTree = "<group>"; };
+		82D8C87E1E8B59BA0025A26C /* junkyardGrinderBoxNoTex.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = junkyardGrinderBoxNoTex.obj; sourceTree = "<group>"; };
 		B9317F1B1E5E26090030ECEA /* downArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = downArrow.png; path = Assets/downArrow.png; sourceTree = "<group>"; };
 		B9317F1C1E5E26090030ECEA /* leftArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = leftArrow.png; path = Assets/leftArrow.png; sourceTree = "<group>"; };
 		B9317F1D1E5E26090030ECEA /* rightArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = rightArrow.png; path = Assets/rightArrow.png; sourceTree = "<group>"; };
@@ -239,6 +243,8 @@
 			isa = PBXGroup;
 			children = (
 				09EAF1FF1E8B4AEB008AEDB1 /* Scrap */,
+				82D8C87E1E8B59BA0025A26C /* junkyardGrinderBoxNoTex.obj */,
+				82D8C87C1E8B59AE0025A26C /* junkyardGrinderBladesNoTex.obj */,
 				093AD91B1E8A3A5400AB0A24 /* CraneModel.obj */,
 				093AD9191E8A09C000AB0A24 /* monkey.obj */,
 				093AD9171E89FA0900AB0A24 /* cube.obj */,
@@ -307,9 +313,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				82D8C87F1E8B59BA0025A26C /* junkyardGrinderBoxNoTex.obj in Resources */,
 				09E7B5241E54F46E0027B069 /* Main.storyboard in Resources */,
 				093AD91C1E8A3A5400AB0A24 /* CraneModel.obj in Resources */,
 				09E7B51F1E54F46E0027B069 /* Shader.vsh in Resources */,
+				82D8C87D1E8B59AE0025A26C /* junkyardGrinderBladesNoTex.obj in Resources */,
 				B9317F201E5E26090030ECEA /* leftArrow.png in Resources */,
 				09E7B5261E54F46E0027B069 /* Assets.xcassets in Resources */,
 				B9317F1F1E5E26090030ECEA /* downArrow.png in Resources */,
@@ -484,7 +492,7 @@
 				INFOPLIST_FILE = ScrapyardPickup/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.crnkstudios.ScrapyardPickup;
+				PRODUCT_BUNDLE_IDENTIFIER = com.spollock.ScrapyardPickup;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -499,7 +507,7 @@
 				INFOPLIST_FILE = ScrapyardPickup/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.crnkstudios.ScrapyardPickup;
+				PRODUCT_BUNDLE_IDENTIFIER = com.spollock.ScrapyardPickup;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
