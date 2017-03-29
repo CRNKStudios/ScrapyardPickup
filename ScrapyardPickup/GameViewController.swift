@@ -342,9 +342,9 @@ class GameViewController: GLKViewController {
         // Compute the model view matrix for the object rendered with ES2
         //var modelViewMatrix = GLKMatrix4MakeTranslation(0.0, 0.0, 1.5)
         if(magnetIsOn){
-            var xdiff = playerMagnet.position.x-playerCube.position.x;
-            var ydiff = playerMagnet.position.y-playerCube.position.y;
-            var zdiff = playerMagnet.position.z-playerCube.position.z;
+            var xdiff = playerMagnet.position.x-scrapObjects[0].position.x;
+            var ydiff = playerMagnet.position.y-scrapObjects[0].position.y;
+            var zdiff = playerMagnet.position.z-scrapObjects[0].position.z;
             var magnitude = sqrt(xdiff*xdiff+ydiff*ydiff+zdiff*zdiff);
             xdiff = xdiff/magnitude;
             ydiff = ydiff/magnitude;
