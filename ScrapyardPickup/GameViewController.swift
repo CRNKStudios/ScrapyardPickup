@@ -391,7 +391,7 @@ class GameViewController: GLKViewController {
         if(playerCube.tag == "Scrap"){
             if(HitBox.collisionHasOccured(firstPos: playerCube.position, firstBox: junkHitBox, secondPos: grinderBox.position, secondBox: grinderHitBox)){
                 playerCube.tag = "cleared";
-                pp.setScore(score: pp.getScore() + 1)
+                pp.setScore(score: pp.getScore() + 10000)
             }
         }
         
