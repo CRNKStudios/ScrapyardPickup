@@ -342,14 +342,9 @@ class GameViewController: GLKViewController {
         // Compute the model view matrix for the object rendered with ES2
         //var modelViewMatrix = GLKMatrix4MakeTranslation(0.0, 0.0, 1.5)
         if(magnetIsOn){
-            var xdiff = playerMagnet.position.x-scrapObjects[0].position.x;
-            var ydiff = playerMagnet.position.y-scrapObjects[0].position.y;
-            var zdiff = playerMagnet.position.z-scrapObjects[0].position.z;
-            var magnitude = sqrt(xdiff*xdiff+ydiff*ydiff+zdiff*zdiff);
-            xdiff = xdiff/magnitude;
-            ydiff = ydiff/magnitude;
-            zdiff = zdiff/magnitude;
-            scrapObjects[0].addToVelocities(velx: magnetStrength*xdiff*Float(self.timeSinceLastUpdate), vely: magnetStrength*ydiff*Float(self.timeSinceLastUpdate), velz: magnetStrength*zdiff*Float(self.timeSinceLastUpdate));
+            for i in 0...scrapObjects.count-1 {
+                Physics.applyMagnetPull(playerMagnet: playerMagnet, objectToPull: &scrapObjects[i], magnetStrength: 1, pullRadius: 10)
+            }
         }
         
         var magnetBox: HitBox = HitBox(left:-0.6, right:0.1, top:0.1, bottom:-1.2, front:1.2, back:-1.2);
@@ -381,13 +376,25 @@ class GameViewController: GLKViewController {
         scrapObjects[0].addToVelocities(velx: 0, vely: Float(-9.81*self.timeSinceLastUpdate), velz: 0)
         scrapObjects[0].updatePosition(deltaTime: GLfloat(self.timeSinceLastUpdate))
         
+        
+        for i in 0...scrapObjects.count-1 {
+            var modelViewMatrix6 = scrapObjects[i].getTranslationMatrix()
+            modelViewMatrix6 = GLKMatrix4Translate(modelViewMatrix6, 0, 2, 0)
+            modelViewMatrix6 = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix6)
+            normalMatrix6 = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(modelViewMatrix6), nil)
+            modelViewProjectionMatrix6 = GLKMatrix4Multiply(projectionMatrix, modelViewMatrix6)
+            scrapObjects[i].modelViewMatrix = modelViewMatrix6
+            scrapObjects[i].normalMatrix = normalMatrix6
+            scrapObjects[i].modelViewProjectionMatrix = modelViewProjectionMatrix6
+        }
+        
         // TODO: Fix this so that there is a better way of doing it
         var modelViewMatrix = playerMagnet.getTranslationMatrix();
         var modelViewMatrix2 = playerCube.getTranslationMatrix();
         var modelViewMatrix3 = ground.getTranslationMatrix()
         var modelViewMatrix4 = grinderBox.getTranslationMatrix()
         var modelViewMatrix5 = grinderBlades.getTranslationMatrix()
-        var modelViewMatrix6 = scrapObjects[0].getTranslationMatrix()
+        //var modelViewMatrix6 = scrapObjects[0].getTranslationMatrix()
         modelViewMatrix = GLKMatrix4Scale(modelViewMatrix, 0.5, 0.5, 0.5)
         modelViewMatrix = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix)
         modelViewMatrix2 = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix2)
@@ -395,21 +402,21 @@ class GameViewController: GLKViewController {
         modelViewMatrix3 = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix3)
         modelViewMatrix4 = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix4)
         modelViewMatrix5 = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix5)
-        modelViewMatrix6 = GLKMatrix4Translate(modelViewMatrix6, 0, 2, 0)
-        modelViewMatrix6 = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix6)
+        //modelViewMatrix6 = GLKMatrix4Translate(modelViewMatrix6, 0, 2, 0)
+        //modelViewMatrix6 = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix6)
         
         normalMatrix = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(modelViewMatrix), nil)
         normalMatrix2 = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(modelViewMatrix2), nil)
         normalMatrix4 = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(modelViewMatrix4), nil)
         normalMatrix5 = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(modelViewMatrix5), nil)
-        normalMatrix6 = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(modelViewMatrix6), nil)
+        //normalMatrix6 = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(modelViewMatrix6), nil)
         
         modelViewProjectionMatrix = GLKMatrix4Multiply(projectionMatrix, modelViewMatrix)
         modelViewProjectionMatrix2 = GLKMatrix4Multiply(projectionMatrix, modelViewMatrix2)
         modelViewProjectionMatrix3 = GLKMatrix4Multiply(projectionMatrix, modelViewMatrix3)
         modelViewProjectionMatrix4 = GLKMatrix4Multiply(projectionMatrix, modelViewMatrix4)
         modelViewProjectionMatrix5 = GLKMatrix4Multiply(projectionMatrix, modelViewMatrix5)
-        modelViewProjectionMatrix6 = GLKMatrix4Multiply(projectionMatrix, modelViewMatrix6)
+        //modelViewProjectionMatrix6 = GLKMatrix4Multiply(projectionMatrix, modelViewMatrix6)
         
         playerMagnet.modelViewMatrix = modelViewMatrix
         playerMagnet.normalMatrix = normalMatrix
@@ -431,9 +438,9 @@ class GameViewController: GLKViewController {
         grinderBlades.normalMatrix = normalMatrix5
         grinderBlades.modelViewProjectionMatrix = modelViewProjectionMatrix5
         
-        scrapObjects[0].modelViewMatrix = modelViewMatrix6
-        scrapObjects[0].normalMatrix = normalMatrix6
-        scrapObjects[0].modelViewProjectionMatrix = modelViewProjectionMatrix6
+        //scrapObjects[0].modelViewMatrix = modelViewMatrix6
+        //scrapObjects[0].normalMatrix = normalMatrix6
+        //scrapObjects[0].modelViewProjectionMatrix = modelViewProjectionMatrix6
         
 //        self.setObjectMVPMatrixPlayer(po: &playerMagnet, base: baseModelViewMatrix, proj: projectionMatrix, translate: Vector4(x: 0, y: 0, z: 0, w: 0), scale: Vector4(x: 0.5, y: 0.5, z: 0.5, w: 0))
 //        self.setObjectMVPMatrix(go: &ground, base: baseModelViewMatrix, proj: projectionMatrix, translate: Vector4(x: 0, y: 0, z: 0, w: 0), scale: Vector4(x: 1000, y: 0.5, z: 1000, w: 0))
@@ -487,7 +494,9 @@ class GameViewController: GLKViewController {
         self.drawObject(go: ground)
         self.drawObject(go: grinderBox)
         self.drawObject(go: grinderBlades)
-        self.drawObject(go: scrapObjects[0])
+        for i in 0...scrapObjects.count-1 {
+            self.drawObject(go: scrapObjects[i])
+        }
 //        self.drawObjects(gos: scrapObjects)
         
 //        glBindVertexArrayOES(playerMagnet.vertexArray)

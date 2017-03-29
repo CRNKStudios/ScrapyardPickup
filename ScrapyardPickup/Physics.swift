@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import OpenGLES
 
 public class Physics{
 
@@ -82,5 +82,20 @@ public class Physics{
      */
     static func dotProduct(first: Vector4, second:Vector4)->Float{
         return first.x*second.x+first.y*second.y+first.z*second.z;
+    }
+    
+    
+    static func applyMagnetPull(playerMagnet: PlayerObject, objectToPull: inout GameObject, magnetStrength: GLfloat, pullRadius: GLfloat){
+        var xdiff = playerMagnet.position.x-objectToPull.position.x;
+        var ydiff = playerMagnet.position.y-objectToPull.position.y;
+        var zdiff = playerMagnet.position.z-objectToPull.position.z;
+        let dist = sqrt(xdiff*xdiff+ydiff*ydiff+zdiff*zdiff);
+        if(dist<pullRadius){
+            let magnitude = sqrt(xdiff*xdiff+ydiff*ydiff+zdiff*zdiff);
+            xdiff = xdiff/magnitude;
+            ydiff = ydiff/magnitude;
+            zdiff = zdiff/magnitude;
+            objectToPull.addToVelocities(velx: magnetStrength*xdiff, vely: magnetStrength*ydiff, velz: magnetStrength*zdiff);
+        }
     }
 }
