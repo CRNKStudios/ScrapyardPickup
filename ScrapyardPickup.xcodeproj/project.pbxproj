@@ -53,6 +53,8 @@
 		C489AE3F1E88EE7E00695525 /* ScoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C489AE3B1E88E93700695525 /* ScoreManager.swift */; };
 		C489AE401E88EE8200695525 /* LevelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C489AE3D1E88EAE100695525 /* LevelManager.swift */; };
 		C489AE421E8A5E0B00695525 /* FileWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C489AE411E8A5E0B00695525 /* FileWriter.swift */; };
+		C4B1B3AA1E8BA9AB00EC1E11 /* Machine Whirring Sound Effect Magnet.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C4B1B3A81E8BA9AB00EC1E11 /* Machine Whirring Sound Effect Magnet.mp3 */; };
+		C4B1B3AB1E8BA9AB00EC1E11 /* Machine Whirring SOUND Effect.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C4B1B3A91E8BA9AB00EC1E11 /* Machine Whirring SOUND Effect.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -105,6 +107,8 @@
 		C489AE3B1E88E93700695525 /* ScoreManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScoreManager.swift; sourceTree = "<group>"; };
 		C489AE3D1E88EAE100695525 /* LevelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelManager.swift; sourceTree = "<group>"; };
 		C489AE411E8A5E0B00695525 /* FileWriter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileWriter.swift; sourceTree = "<group>"; };
+		C4B1B3A81E8BA9AB00EC1E11 /* Machine Whirring Sound Effect Magnet.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "Machine Whirring Sound Effect Magnet.mp3"; path = "ScrapyardPickup/Assets/Machine Whirring Sound Effect Magnet.mp3"; sourceTree = SOURCE_ROOT; };
+		C4B1B3A91E8BA9AB00EC1E11 /* Machine Whirring SOUND Effect.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "Machine Whirring SOUND Effect.mp3"; path = "ScrapyardPickup/Assets/Machine Whirring SOUND Effect.mp3"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -207,6 +211,8 @@
 			isa = PBXGroup;
 			children = (
 				09AEE2D01E8B9C400033EAAA /* track_2.mp3 */,
+				C4B1B3A81E8BA9AB00EC1E11 /* Machine Whirring Sound Effect Magnet.mp3 */,
+				C4B1B3A91E8BA9AB00EC1E11 /* Machine Whirring SOUND Effect.mp3 */,
 				09AEE2D11E8B9C400033EAAA /* track_3.mp3 */,
 			);
 			name = Sounds;
@@ -336,6 +342,7 @@
 				09AEE2D31E8B9C400033EAAA /* track_2.mp3 in Resources */,
 				09E7B51F1E54F46E0027B069 /* Shader.vsh in Resources */,
 				82D8C87D1E8B59AE0025A26C /* junkyardGrinderBladesNoTex.obj in Resources */,
+				C4B1B3AA1E8BA9AB00EC1E11 /* Machine Whirring Sound Effect Magnet.mp3 in Resources */,
 				B9317F201E5E26090030ECEA /* leftArrow.png in Resources */,
 				09E7B5261E54F46E0027B069 /* Assets.xcassets in Resources */,
 				09AEE2D41E8B9C400033EAAA /* track_3.mp3 in Resources */,
@@ -349,6 +356,7 @@
 				093B03E61E5591E2008727AE /* Front Screen V2.png in Resources */,
 				09EAF2061E8B4AF9008AEDB1 /* scrap_car.obj in Resources */,
 				B9317F211E5E26090030ECEA /* rightArrow.png in Resources */,
+				C4B1B3AB1E8BA9AB00EC1E11 /* Machine Whirring SOUND Effect.mp3 in Resources */,
 				093B03E71E5591E2008727AE /* Front Screen.png in Resources */,
 				B9317F221E5E26090030ECEA /* upArrow.png in Resources */,
 				09EAF2051E8B4AF9008AEDB1 /* scrap_box.obj in Resources */,

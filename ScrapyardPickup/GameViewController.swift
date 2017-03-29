@@ -134,17 +134,22 @@ class GameViewController: GLKViewController {
         switch(sender.tag){
         case Buttons.BUTTON_UP.rawValue:
             movingUp = true;
+            soundManager.playSound(fileName: "Machine Whirring SOUND Effect");
             break;
         case Buttons.BUTTON_DOWN.rawValue:
+            soundManager.playSound(fileName: "Machine Whirring SOUND Effect");
             movingDown = true;
             break;
         case Buttons.BUTTON_LEFT.rawValue:
+            soundManager.playSound(fileName: "Machine Whirring SOUND Effect");
             movingLeft = true;
             break;
         case Buttons.BUTTON_RIGHT.rawValue:
+            soundManager.playSound(fileName: "Machine Whirring SOUND Effect");
             movingRight = true;
             break;
         case Buttons.BUTTON_MAGNET_POWER.rawValue:
+            soundManager.playSound(fileName: "Machine Whirring Sound Effect Magnet");
             print("magnet power on");
             
         // MARK: Create Cube on Button press
@@ -200,6 +205,8 @@ class GameViewController: GLKViewController {
         default:
             break;
         }
+        soundManager.stopSound();
+        
     }
     
     override func didReceiveMemoryWarning() {
