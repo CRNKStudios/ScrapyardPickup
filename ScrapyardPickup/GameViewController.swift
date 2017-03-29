@@ -153,29 +153,6 @@ class GameViewController: GLKViewController {
         case Buttons.BUTTON_MAGNET_POWER.rawValue:
             soundManager.playSound(fileName: "Machine Whirring Sound Effect Magnet");
             print("magnet power on");
-            
-        // MARK: Create Cube on Button press
-            // TODO: Remove this
-//            let cubeVertexData = playerCube.getObjectData()
-//            glGenVertexArraysOES(1, &playerCube.vertexArray)
-//            glBindVertexArrayOES(playerCube.vertexArray)
-//            
-//            glGenBuffers(1, &playerCube.vertexBuffer)
-//            glBindBuffer(GLenum(GL_ARRAY_BUFFER), playerCube.vertexBuffer)
-//            glBindVertexArrayOES(playerCube.vertexArray)
-//            
-//            glBufferData(GLenum(GL_ARRAY_BUFFER), GLsizeiptr(MemoryLayout<GLfloat>.size * cubeVertexData.position.count + MemoryLayout<GLfloat>.size * cubeVertexData.normal.count), nil, GLenum(GL_STATIC_DRAW))
-//           
-//            glBufferSubData(GLenum(GL_ARRAY_BUFFER), 0, GLsizeiptr(MemoryLayout<GLfloat>.size * cubeVertexData.position.count), playerCube.getPositionsData()) // target, offset, size, data
-//            glBufferSubData(GLenum(GL_ARRAY_BUFFER), MemoryLayout<GLfloat>.size * cubeVertexData.position.count, GLsizeiptr(MemoryLayout<GLfloat>.size * cubeVertexData.normal.count), playerCube.getNormalsData()) // target, offset, size, data
-//            
-//            glEnableVertexAttribArray(GLuint(GLKVertexAttrib.position.rawValue))
-//            // Index, size, type, normalized, stride, pointer
-//            glVertexAttribPointer(GLuint(GLKVertexAttrib.position.rawValue), 3, GLenum(GL_FLOAT), GLboolean(GL_FALSE), 0, BUFFER_OFFSET(0))
-//            glEnableVertexAttribArray(GLuint(GLKVertexAttrib.normal.rawValue))
-//            glVertexAttribPointer(GLuint(GLKVertexAttrib.normal.rawValue), 3, GLenum(GL_FLOAT), GLboolean(GL_FALSE), 0, BUFFER_OFFSET(0))
-//            
-//            glDrawArrays(GLenum(GL_TRIANGLES), 0, GLsizei(cubeVertexData.position.count))
             blockActivated=true;
             magnetIsOn=true;
             break;
@@ -298,7 +275,7 @@ class GameViewController: GLKViewController {
     
     func endLevel() {
         print("Ending level...")
-        tearDownGL()
+        
     }
     
     func tearDownGL() {
