@@ -42,6 +42,8 @@ public class GameObject{
     public var tag: String? // can be nil
     public var vertexArray: GLuint
     public var vertexBuffer: GLuint
+    public var modelViewMatrix: GLKMatrix4
+    public var normalMatrix: GLKMatrix4
     var objectData: VertexData
     var position: Vector4 = Vector4(x: 0, y: 0, z: 0, w: 1)
     var velocity: Vector4 = Vector4(x: 0, y: 0, z: 0, w: 1)
@@ -53,6 +55,8 @@ public class GameObject{
         self.tag = ""
         self.vertexArray = 0
         self.vertexBuffer = 0
+        modelViewMatrix = GLKMatrix4Identity
+        normalMatrix = GLKMatrix4Identity
         self.objectData = VertexData(position: [], texture: [], normal: [])
         self.position = Vector4(x:0, y:0, z:0, w:1)
         self.velocity = Vector4(x:0, y:0, z:0, w:1)
@@ -66,6 +70,8 @@ public class GameObject{
         self.tag = tag
         self.vertexArray = vertexArray
         self.vertexBuffer = vertexBuffer
+        modelViewMatrix = GLKMatrix4Identity
+        normalMatrix = GLKMatrix4Identity
         self.objectData = objectData
         self.position = Vector4(x:xPos, y:yPos, z:zPos, w:1)
         self.scale = scale
@@ -84,6 +90,8 @@ public class GameObject{
         self.tag = tag
         self.vertexArray = vertexArray
         self.vertexBuffer = vertexBuffer
+        modelViewMatrix = GLKMatrix4Identity
+        normalMatrix = GLKMatrix4Identity
         self.objectData = objectData
         self.position = Vector4(x:xPos, y:yPos, z:zPos, w:1)
         self.scale = scale
