@@ -218,7 +218,7 @@ class GameViewController: GLKViewController {
         
         // MARK: Magnet Object Creation
         playerMagnet = PlayerObject(name: "CraneModel", tag: "Player", vertexArray: 0, vertexBuffer: 0, objectData: ModelObject.parseOBJFileToModel(fileName: "CraneModel")
-.getModelData(), 0, 2, -8, scale: 1, baseMatrix: GLKMatrix4Identity)
+.getModelData(), 0, 4, -8, scale: 1, baseMatrix: GLKMatrix4Identity)
         self.loadObjectsToBuffers(go: playerMagnet)
         
         // MARK: Cube Object Loaded
