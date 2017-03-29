@@ -25,6 +25,9 @@
 		0958EBD51E6128A400B2FC7F /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0958EBD41E6128A400B2FC7F /* GLKit.framework */; };
 		0980E9801E771E0F00E5107E /* PlayerObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0980E97F1E771E0F00E5107E /* PlayerObject.swift */; };
 		0980E9821E77457200E5107E /* CraneObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0980E9811E77457200E5107E /* CraneObject.swift */; };
+		09AEE2D21E8B9C400033EAAA /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09AEE2CF1E8B9C400033EAAA /* SoundManager.swift */; };
+		09AEE2D31E8B9C400033EAAA /* track_2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 09AEE2D01E8B9C400033EAAA /* track_2.mp3 */; };
+		09AEE2D41E8B9C400033EAAA /* track_3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 09AEE2D11E8B9C400033EAAA /* track_3.mp3 */; };
 		09D2CE7D1E774679009E3D24 /* CubeObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D2CE7C1E774679009E3D24 /* CubeObject.swift */; };
 		09D2CE7F1E774B2F009E3D24 /* ModelObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D2CE7E1E774B2F009E3D24 /* ModelObject.swift */; };
 		09E7B51B1E54F46E0027B069 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E7B51A1E54F46E0027B069 /* AppDelegate.swift */; };
@@ -71,6 +74,9 @@
 		0958EBD41E6128A400B2FC7F /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		0980E97F1E771E0F00E5107E /* PlayerObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerObject.swift; sourceTree = "<group>"; };
 		0980E9811E77457200E5107E /* CraneObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CraneObject.swift; sourceTree = "<group>"; };
+		09AEE2CF1E8B9C400033EAAA /* SoundManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundManager.swift; sourceTree = "<group>"; };
+		09AEE2D01E8B9C400033EAAA /* track_2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = track_2.mp3; sourceTree = "<group>"; };
+		09AEE2D11E8B9C400033EAAA /* track_3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = track_3.mp3; sourceTree = "<group>"; };
 		09D2CE7C1E774679009E3D24 /* CubeObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CubeObject.swift; sourceTree = "<group>"; };
 		09D2CE7E1E774B2F009E3D24 /* ModelObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelObject.swift; sourceTree = "<group>"; };
 		09E7B5171E54F46E0027B069 /* ScrapyardPickup.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScrapyardPickup.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -124,6 +130,7 @@
 		090363101E5D2FCA00584BE8 /* GameFiles */ = {
 			isa = PBXGroup;
 			children = (
+				09AEE2CF1E8B9C400033EAAA /* SoundManager.swift */,
 				0903630C1E5D2FB400584BE8 /* PlayerPrefs.swift */,
 				BE785A1C1E6601EC0062B6D3 /* GameObject.swift */,
 				0980E97F1E771E0F00E5107E /* PlayerObject.swift */,
@@ -166,6 +173,7 @@
 		093B03DE1E558EAD008727AE /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				09AEE2D51E8B9C4A0033EAAA /* Sounds */,
 				82AEE6641E66546B00606C35 /* Objects */,
 				090363091E5CD92700584BE8 /* Icons */,
 				093B03DF1E558EB6008727AE /* Images */,
@@ -193,6 +201,15 @@
 				0958EBD41E6128A400B2FC7F /* GLKit.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		09AEE2D51E8B9C4A0033EAAA /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				09AEE2D01E8B9C400033EAAA /* track_2.mp3 */,
+				09AEE2D11E8B9C400033EAAA /* track_3.mp3 */,
+			);
+			name = Sounds;
 			sourceTree = "<group>";
 		};
 		09E7B50E1E54F46D0027B069 = {
@@ -316,10 +333,12 @@
 				82D8C87F1E8B59BA0025A26C /* junkyardGrinderBoxNoTex.obj in Resources */,
 				09E7B5241E54F46E0027B069 /* Main.storyboard in Resources */,
 				093AD91C1E8A3A5400AB0A24 /* CraneModel.obj in Resources */,
+				09AEE2D31E8B9C400033EAAA /* track_2.mp3 in Resources */,
 				09E7B51F1E54F46E0027B069 /* Shader.vsh in Resources */,
 				82D8C87D1E8B59AE0025A26C /* junkyardGrinderBladesNoTex.obj in Resources */,
 				B9317F201E5E26090030ECEA /* leftArrow.png in Resources */,
 				09E7B5261E54F46E0027B069 /* Assets.xcassets in Resources */,
+				09AEE2D41E8B9C400033EAAA /* track_3.mp3 in Resources */,
 				B9317F1F1E5E26090030ECEA /* downArrow.png in Resources */,
 				09E7B5291E54F46E0027B069 /* LaunchScreen.storyboard in Resources */,
 				093AD9181E89FA0900AB0A24 /* cube.obj in Resources */,
@@ -350,6 +369,7 @@
 				0903630F1E5D2FBF00584BE8 /* LevelSelectViewController.swift in Sources */,
 				090363001E5CD02D00584BE8 /* LeaderboardViewController.swift in Sources */,
 				C489AE401E88EE8200695525 /* LevelManager.swift in Sources */,
+				09AEE2D21E8B9C400033EAAA /* SoundManager.swift in Sources */,
 				090363021E5CD03E00584BE8 /* OptionsViewController.swift in Sources */,
 				091500171E8B29A50062BEBB /* ScrapFactory.swift in Sources */,
 				C489AE421E8A5E0B00695525 /* FileWriter.swift in Sources */,
