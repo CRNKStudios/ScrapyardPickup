@@ -9,19 +9,22 @@
 import UIKit
 
 class MenuViewController: UIViewController {
-
+    var soundManager: SoundManager = SoundManager()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        soundManager.playSound(fileName: "track_2")
         // Do any additional setup after loading the view.
     }
     
     override func viewDidAppear(_ animated: Bool) {
         NSLog(self.title! + " Appeared")
+        soundManager.playSound(fileName: "track_2")
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         NSLog(self.title! + " Disappeared")
+        soundManager.stopSound()
     }
 
     override func didReceiveMemoryWarning() {

@@ -20,6 +20,7 @@ class PlayerPrefs {
     func getName() -> String {
         return self.name!
     }
+    
     // DEPRICATED
     func setScore(score: Int) {
         self.score = score
