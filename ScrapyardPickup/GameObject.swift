@@ -40,6 +40,8 @@ public struct Vector4 {
 public class GameObject{
     public var name: String // must be defined
     public var tag: String? // can be nil
+    public var vertexArray: GLuint
+    public var vertexBuffer: GLuint
     var objectData: VertexData
     var position: Vector4 = Vector4(x: 0, y: 0, z: 0, w: 1)
     var velocity: Vector4 = Vector4(x: 0, y: 0, z: 0, w: 1)
@@ -49,6 +51,8 @@ public class GameObject{
     init() {
         self.name = ""
         self.tag = ""
+        self.vertexArray = 0
+        self.vertexBuffer = 0
         self.objectData = VertexData(position: [], texture: [], normal: [])
         self.position = Vector4(x:0, y:0, z:0, w:1)
         self.velocity = Vector4(x:0, y:0, z:0, w:1)
@@ -57,9 +61,11 @@ public class GameObject{
     }
     
     //Initialize object fields
-    init(name: String, tag: String?, objectData: VertexData, _ xPos: Float, _ yPos: Float, _ zPos: Float, scale: Float, baseMatrix: GLKMatrix4){
+    init(name: String, tag: String?, vertexArray: GLuint, vertexBuffer: GLuint, objectData: VertexData, _ xPos: Float, _ yPos: Float, _ zPos: Float, scale: Float, baseMatrix: GLKMatrix4){
         self.name = name
         self.tag = tag
+        self.vertexArray = vertexArray
+        self.vertexBuffer = vertexBuffer
         self.objectData = objectData
         self.position = Vector4(x:xPos, y:yPos, z:zPos, w:1)
         self.scale = scale
@@ -73,9 +79,11 @@ public class GameObject{
     }
     
     //overloaded init for seperated vertices and normals from blender
-    init(name: String, tag: String?, objectData: VertexData, ObjectNormalData: [GLfloat], _ xPos: Float, _ yPos: Float, _ zPos: Float, scale: Float, baseMatrix: GLKMatrix4){
+    init(name: String, tag: String?, vertexArray: GLuint, vertexBuffer: GLuint, objectData: VertexData, ObjectNormalData: [GLfloat], _ xPos: Float, _ yPos: Float, _ zPos: Float, scale: Float, baseMatrix: GLKMatrix4){
         self.name = name
         self.tag = tag
+        self.vertexArray = vertexArray
+        self.vertexBuffer = vertexBuffer
         self.objectData = objectData
         self.position = Vector4(x:xPos, y:yPos, z:zPos, w:1)
         self.scale = scale

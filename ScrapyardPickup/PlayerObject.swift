@@ -20,8 +20,8 @@ public class PlayerObject: GameObject {
         super.init()
         self.tag = "Player"
     }
-    override init(name: String, tag: String?, objectData: VertexData, _ xPos: Float, _ yPos: Float, _ zPos: Float, scale: Float, baseMatrix: GLKMatrix4){
-        super.init(name: name, tag: tag, objectData: objectData, xPos, yPos, zPos, scale: scale, baseMatrix: baseMatrix)
+    override init(name: String, tag: String?, vertexArray: GLuint, vertexBuffer: GLuint, objectData: VertexData, _ xPos: Float, _ yPos: Float, _ zPos: Float, scale: Float, baseMatrix: GLKMatrix4){
+        super.init(name: name, tag: tag, vertexArray: vertexArray, vertexBuffer: vertexBuffer, objectData: objectData, xPos, yPos, zPos, scale: scale, baseMatrix: baseMatrix)
         self.tag = "Player"
     }
 }

@@ -16,6 +16,7 @@
 		090363081E5CD91900584BE8 /* ic_settings_36pt.png in Resources */ = {isa = PBXBuildFile; fileRef = 090363071E5CD91900584BE8 /* ic_settings_36pt.png */; };
 		0903630D1E5D2FB400584BE8 /* PlayerPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0903630C1E5D2FB400584BE8 /* PlayerPrefs.swift */; };
 		0903630F1E5D2FBF00584BE8 /* LevelSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0903630E1E5D2FBF00584BE8 /* LevelSelectViewController.swift */; };
+		091500171E8B29A50062BEBB /* ScrapFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 091500161E8B29A50062BEBB /* ScrapFactory.swift */; };
 		093AD9181E89FA0900AB0A24 /* cube.obj in Resources */ = {isa = PBXBuildFile; fileRef = 093AD9171E89FA0900AB0A24 /* cube.obj */; };
 		093AD91A1E8A09C000AB0A24 /* monkey.obj in Resources */ = {isa = PBXBuildFile; fileRef = 093AD9191E8A09C000AB0A24 /* monkey.obj */; };
 		093AD91C1E8A3A5400AB0A24 /* CraneModel.obj in Resources */ = {isa = PBXBuildFile; fileRef = 093AD91B1E8A3A5400AB0A24 /* CraneModel.obj */; };
@@ -32,6 +33,10 @@
 		09E7B5241E54F46E0027B069 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 09E7B5221E54F46E0027B069 /* Main.storyboard */; };
 		09E7B5261E54F46E0027B069 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 09E7B5251E54F46E0027B069 /* Assets.xcassets */; };
 		09E7B5291E54F46E0027B069 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 09E7B5271E54F46E0027B069 /* LaunchScreen.storyboard */; };
+		09EAF2041E8B4AF9008AEDB1 /* scrap_bar.obj in Resources */ = {isa = PBXBuildFile; fileRef = 09EAF2001E8B4AF9008AEDB1 /* scrap_bar.obj */; };
+		09EAF2051E8B4AF9008AEDB1 /* scrap_box.obj in Resources */ = {isa = PBXBuildFile; fileRef = 09EAF2011E8B4AF9008AEDB1 /* scrap_box.obj */; };
+		09EAF2061E8B4AF9008AEDB1 /* scrap_car.obj in Resources */ = {isa = PBXBuildFile; fileRef = 09EAF2021E8B4AF9008AEDB1 /* scrap_car.obj */; };
+		09EAF2071E8B4AF9008AEDB1 /* scrap_frame.obj in Resources */ = {isa = PBXBuildFile; fileRef = 09EAF2031E8B4AF9008AEDB1 /* scrap_frame.obj */; };
 		B9317F1F1E5E26090030ECEA /* downArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = B9317F1B1E5E26090030ECEA /* downArrow.png */; };
 		B9317F201E5E26090030ECEA /* leftArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = B9317F1C1E5E26090030ECEA /* leftArrow.png */; };
 		B9317F211E5E26090030ECEA /* rightArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = B9317F1D1E5E26090030ECEA /* rightArrow.png */; };
@@ -55,6 +60,7 @@
 		090363071E5CD91900584BE8 /* ic_settings_36pt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ic_settings_36pt.png; path = Assets/Icons/ic_settings_36pt.png; sourceTree = "<group>"; };
 		0903630C1E5D2FB400584BE8 /* PlayerPrefs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerPrefs.swift; sourceTree = "<group>"; };
 		0903630E1E5D2FBF00584BE8 /* LevelSelectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelSelectViewController.swift; sourceTree = "<group>"; };
+		091500161E8B29A50062BEBB /* ScrapFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrapFactory.swift; sourceTree = "<group>"; };
 		093AD9171E89FA0900AB0A24 /* cube.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cube.obj; sourceTree = "<group>"; };
 		093AD9191E8A09C000AB0A24 /* monkey.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = monkey.obj; sourceTree = "<group>"; };
 		093AD91B1E8A3A5400AB0A24 /* CraneModel.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CraneModel.obj; sourceTree = "<group>"; };
@@ -73,6 +79,10 @@
 		09E7B5251E54F46E0027B069 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		09E7B5281E54F46E0027B069 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		09E7B52A1E54F46E0027B069 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		09EAF2001E8B4AF9008AEDB1 /* scrap_bar.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = scrap_bar.obj; path = "Scrap Objects/scrap_bar.obj"; sourceTree = "<group>"; };
+		09EAF2011E8B4AF9008AEDB1 /* scrap_box.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = scrap_box.obj; path = "Scrap Objects/scrap_box.obj"; sourceTree = "<group>"; };
+		09EAF2021E8B4AF9008AEDB1 /* scrap_car.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = scrap_car.obj; path = "Scrap Objects/scrap_car.obj"; sourceTree = "<group>"; };
+		09EAF2031E8B4AF9008AEDB1 /* scrap_frame.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = scrap_frame.obj; path = "Scrap Objects/scrap_frame.obj"; sourceTree = "<group>"; };
 		82AEE6651E66548200606C35 /* CraneObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CraneObject.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		B9317F1B1E5E26090030ECEA /* downArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = downArrow.png; path = Assets/downArrow.png; sourceTree = "<group>"; };
 		B9317F1C1E5E26090030ECEA /* leftArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = leftArrow.png; path = Assets/leftArrow.png; sourceTree = "<group>"; };
@@ -116,6 +126,7 @@
 				0980E9811E77457200E5107E /* CraneObject.swift */,
 				09D2CE7C1E774679009E3D24 /* CubeObject.swift */,
 				09D2CE7E1E774B2F009E3D24 /* ModelObject.swift */,
+				091500161E8B29A50062BEBB /* ScrapFactory.swift */,
 				BE59414B1E7B351D006B4DBE /* HitBox.swift */,
 				C489AE411E8A5E0B00695525 /* FileWriter.swift */,
 				C489AE3B1E88E93700695525 /* ScoreManager.swift */,
@@ -213,9 +224,21 @@
 			path = ScrapyardPickup;
 			sourceTree = "<group>";
 		};
+		09EAF1FF1E8B4AEB008AEDB1 /* Scrap */ = {
+			isa = PBXGroup;
+			children = (
+				09EAF2001E8B4AF9008AEDB1 /* scrap_bar.obj */,
+				09EAF2011E8B4AF9008AEDB1 /* scrap_box.obj */,
+				09EAF2021E8B4AF9008AEDB1 /* scrap_car.obj */,
+				09EAF2031E8B4AF9008AEDB1 /* scrap_frame.obj */,
+			);
+			name = Scrap;
+			sourceTree = "<group>";
+		};
 		82AEE6641E66546B00606C35 /* Objects */ = {
 			isa = PBXGroup;
 			children = (
+				09EAF1FF1E8B4AEB008AEDB1 /* Scrap */,
 				093AD91B1E8A3A5400AB0A24 /* CraneModel.obj */,
 				093AD9191E8A09C000AB0A24 /* monkey.obj */,
 				093AD9171E89FA0900AB0A24 /* cube.obj */,
@@ -256,6 +279,7 @@
 				TargetAttributes = {
 					09E7B5161E54F46D0027B069 = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = 26RCKZ873P;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -293,10 +317,14 @@
 				093AD9181E89FA0900AB0A24 /* cube.obj in Resources */,
 				093AD91A1E8A09C000AB0A24 /* monkey.obj in Resources */,
 				09E7B51D1E54F46E0027B069 /* Shader.fsh in Resources */,
+				09EAF2041E8B4AF9008AEDB1 /* scrap_bar.obj in Resources */,
+				09EAF2071E8B4AF9008AEDB1 /* scrap_frame.obj in Resources */,
 				093B03E61E5591E2008727AE /* Front Screen V2.png in Resources */,
+				09EAF2061E8B4AF9008AEDB1 /* scrap_car.obj in Resources */,
 				B9317F211E5E26090030ECEA /* rightArrow.png in Resources */,
 				093B03E71E5591E2008727AE /* Front Screen.png in Resources */,
 				B9317F221E5E26090030ECEA /* upArrow.png in Resources */,
+				09EAF2051E8B4AF9008AEDB1 /* scrap_box.obj in Resources */,
 				B9317F241E5E27B20030ECEA /* redButton.png in Resources */,
 				090363081E5CD91900584BE8 /* ic_settings_36pt.png in Resources */,
 			);
@@ -315,6 +343,7 @@
 				090363001E5CD02D00584BE8 /* LeaderboardViewController.swift in Sources */,
 				C489AE401E88EE8200695525 /* LevelManager.swift in Sources */,
 				090363021E5CD03E00584BE8 /* OptionsViewController.swift in Sources */,
+				091500171E8B29A50062BEBB /* ScrapFactory.swift in Sources */,
 				C489AE421E8A5E0B00695525 /* FileWriter.swift in Sources */,
 				BE785A1D1E6601EC0062B6D3 /* GameObject.swift in Sources */,
 				BE59414C1E7B351D006B4DBE /* HitBox.swift in Sources */,
@@ -451,7 +480,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 26RCKZ873P;
 				INFOPLIST_FILE = ScrapyardPickup/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -466,7 +495,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 26RCKZ873P;
 				INFOPLIST_FILE = ScrapyardPickup/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

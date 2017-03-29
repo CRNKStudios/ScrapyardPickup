@@ -28,32 +28,38 @@ class GameViewController: GLKViewController {
     
     // MARK: Properties
     var program: GLuint = 0
+    
+    
+    // MARK: Create objects
+    var playerMagnet: PlayerObject = PlayerObject()
+    var playerCube: GameObject = GameObject()
+    var ground: GameObject = GameObject()
+    var scrapObjects: [GameObject] = []
+    // TODO: Fix this. Each object should hold it's own projviewmatrix && normal
     var modelViewProjectionMatrix:GLKMatrix4 = GLKMatrix4Identity
     var normalMatrix: GLKMatrix3 = GLKMatrix3Identity
     var modelViewProjectionMatrix2:GLKMatrix4 = GLKMatrix4Identity
     var normalMatrix2: GLKMatrix3 = GLKMatrix3Identity
     var modelViewProjectionMatrix3:GLKMatrix4 = GLKMatrix4Identity
     var normalMatrix3: GLKMatrix3 = GLKMatrix3Identity
-    var rotation: Float = 0.0
+//    // TODO: See if they can go into different ones
+//    var vertexArray: GLuint = 0
+//    var vertexBuffer: GLuint = 0
+//    var vertexArray2: GLuint = 0
+//    var vertexBuffer2: GLuint = 0
+//    var vertexArray3: GLuint = 0
+//    var vertexBuffer3: GLuint = 0
+//    var vertexArray4: GLuint = 0
+//    var vertexBuffer4: GLuint = 0
     
-    var vertexArray: GLuint = 0
-    var vertexBuffer: GLuint = 0
-    var vertexArray2: GLuint = 0
-    var vertexBuffer2: GLuint = 0
-    var vertexArray3: GLuint = 0
-    var vertexBuffer3: GLuint = 0
+    var rotation: Float = 0.0
     
     var context: EAGLContext? = nil
     var effect: GLKBaseEffect? = nil
     var magnetIsOn = false;
-    var magnetStrength: GLfloat = 15.0;
+    var magnetStrength: GLfloat = 15.0; // Is this where the model stuff goes?
     var blockActivated: Bool = false;
     var timer = 0.0
-    
-// MARK: Create objects
-    var playerMagnet: PlayerObject = PlayerObject()
-    var playerCube: GameObject = GameObject()
-    var ground: GameObject = GameObject()
     
     @IBOutlet weak var UIButtonUp: UIButton!
     @IBOutlet weak var UIButtonDown: UIButton!
@@ -127,14 +133,15 @@ class GameViewController: GLKViewController {
         case Buttons.BUTTON_MAGNET_POWER.rawValue:
             print("magnet power on");
             
-// MARK: Create Cube on Button press
+// MARK: Create Cube on Button press 
+            // TODO: Fix this
             let cubeVertexData = playerCube.getObjectData()
-            glGenVertexArraysOES(1, &vertexArray2)
-            glBindVertexArrayOES(vertexArray2)
+            glGenVertexArraysOES(1, &playerCube.vertexArray)
+            glBindVertexArrayOES(playerCube.vertexArray)
             
-            glGenBuffers(1, &vertexBuffer2)
-            glBindBuffer(GLenum(GL_ARRAY_BUFFER), vertexBuffer2)
-            glBindVertexArrayOES(vertexArray2)
+            glGenBuffers(1, &playerCube.vertexBuffer)
+            glBindBuffer(GLenum(GL_ARRAY_BUFFER), playerCube.vertexBuffer)
+            glBindVertexArrayOES(playerCube.vertexArray)
             
             glBufferData(GLenum(GL_ARRAY_BUFFER), GLsizeiptr(MemoryLayout<GLfloat>.size * cubeVertexData.position.count + MemoryLayout<GLfloat>.size * cubeVertexData.normal.count), nil, GLenum(GL_STATIC_DRAW))
            
@@ -196,15 +203,23 @@ class GameViewController: GLKViewController {
         
         glEnable(GLenum(GL_DEPTH_TEST))
         
+        // MARK: Create scrap objects
+        // TODO: Change the level to the one the user selected
+        scrapObjects = ScrapFactory.generateScrapObjects(level: 1)
+        // TODO: Put in a different vertex array (same as others?)
+        self.generateScrapObjects(scrapObjects)
+        
         // MARK: Magnet Object Creation
-        glGenVertexArraysOES(1, &vertexArray)
-        glBindVertexArrayOES(vertexArray)
         
-        glGenBuffers(1, &vertexBuffer)
-        glBindBuffer(GLenum(GL_ARRAY_BUFFER), vertexBuffer)
-        
-        playerMagnet = PlayerObject(name: "CraneModel", tag: "Player", objectData: ModelObject.parseOBJFileToModel(fileName: "CraneModel")
+        // TODO: Better way to create this?
+        playerMagnet = PlayerObject(name: "CraneModel", tag: "Player", vertexArray: 0, vertexBuffer: 0, objectData: ModelObject.parseOBJFileToModel(fileName: "CraneModel")
 .getModelData(), 0, 2, 0, scale: 1, baseMatrix: GLKMatrix4Identity)
+        
+        glGenVertexArraysOES(1, &playerMagnet.vertexArray)
+        glBindVertexArrayOES(playerMagnet.vertexArray)
+        
+        glGenBuffers(1, &playerMagnet.vertexBuffer)
+        glBindBuffer(GLenum(GL_ARRAY_BUFFER), playerMagnet.vertexBuffer)
         
         //Get the vertex data from the playermagnet object for drawing
         let playerVertexData: VertexData = playerMagnet.getObjectData()
@@ -221,16 +236,16 @@ class GameViewController: GLKViewController {
         glVertexAttribPointer(GLuint(GLKVertexAttrib.normal.rawValue), 3, GLenum(GL_FLOAT), GLboolean(GL_FALSE), 0, BUFFER_OFFSET(0))
         
         // MARK: Cube Object Loaded
-        playerCube = GameObject(name: "Cube", tag: "Scrap", objectData: ModelObject.parseOBJFileToModel(fileName: "monkey").getModelData(), 0.0, -2.0, 0.0, scale: 0.5, baseMatrix: GLKMatrix4Identity)
+        playerCube = GameObject(name: "Cube", tag: "Scrap", vertexArray: 0, vertexBuffer: 0, objectData: ModelObject.parseOBJFileToModel(fileName: "monkey").getModelData(), 0.0, -2.0, 0.0, scale: 0.5, baseMatrix: GLKMatrix4Identity)
         
         // MARK: Ground Object Creation
-        glGenVertexArraysOES(1, &vertexArray3)
-        glBindVertexArrayOES(vertexArray3)
+        ground = GameObject(name: "Ground", tag: "Ground", vertexArray: 0, vertexBuffer: 0, objectData: ModelObject.parseOBJFileToModel(fileName: "cube").getModelData(), 0.0, -4, 0.0, scale: 1, baseMatrix: GLKMatrix4Identity)
         
-        glGenBuffers(1, &vertexBuffer3)
-        glBindBuffer(GLenum(GL_ARRAY_BUFFER), vertexBuffer3)
+        glGenVertexArraysOES(1, &ground.vertexArray)
+        glBindVertexArrayOES(ground.vertexArray)
         
-        ground = GameObject(name: "Ground", tag: "Ground", objectData: ModelObject.parseOBJFileToModel(fileName: "cube").getModelData(), 0.0, -4, 0.0, scale: 1, baseMatrix: GLKMatrix4Identity)
+        glGenBuffers(1, &ground.vertexBuffer)
+        glBindBuffer(GLenum(GL_ARRAY_BUFFER), ground.vertexBuffer)
         
         //Get the vertex data from the playermagnet object for drawing
         let groundVertexData: VertexData = ground.getObjectData()
@@ -249,11 +264,20 @@ class GameViewController: GLKViewController {
         glBindVertexArrayOES(0)
     }
     
+    func generateScrapObjects(_: [GameObject]) {
+        
+    }
+    
     func tearDownGL() {
         EAGLContext.setCurrent(self.context)
         
-        glDeleteBuffers(1, &vertexBuffer)
-        glDeleteVertexArraysOES(1, &vertexArray)
+        // TODO: Delete all buffers of objects
+        glDeleteBuffers(1, &playerMagnet.vertexBuffer)
+        glDeleteVertexArraysOES(1, &playerMagnet.vertexArray)
+        glDeleteBuffers(1, &playerCube.vertexBuffer)
+        glDeleteVertexArraysOES(1, &playerCube.vertexArray)
+        glDeleteBuffers(1, &ground.vertexBuffer)
+        glDeleteVertexArraysOES(1, &ground.vertexArray)
         
         self.effect = nil
         
@@ -345,7 +369,7 @@ class GameViewController: GLKViewController {
         // Render the object again with ES2
         glUseProgram(program)
         
-        glBindVertexArrayOES(vertexArray)
+        glBindVertexArrayOES(playerMagnet.vertexArray)
         
         withUnsafePointer(to: &modelViewProjectionMatrix, {
             $0.withMemoryRebound(to: Float.self, capacity: 16, {
@@ -361,7 +385,7 @@ class GameViewController: GLKViewController {
         
         glDrawArrays(GLenum(GL_TRIANGLES), 0, GLsizei(playerMagnet.getObjectData().position.count))
         
-        glBindVertexArrayOES(vertexArray2)
+        glBindVertexArrayOES(playerCube.vertexArray)
         
          withUnsafePointer(to: &modelViewProjectionMatrix2, {
             $0.withMemoryRebound(to: Float.self, capacity: 16, {
@@ -377,7 +401,7 @@ class GameViewController: GLKViewController {
 
         glDrawArrays(GLenum(GL_TRIANGLES), 0, GLsizei(playerCube.getObjectData().position.count))
         
-        glBindVertexArrayOES(vertexArray3)
+        glBindVertexArrayOES(ground.vertexArray)
         
         withUnsafePointer(to: &modelViewProjectionMatrix3, {
             $0.withMemoryRebound(to: Float.self, capacity: 16, {
