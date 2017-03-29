@@ -69,6 +69,8 @@ class GameViewController: GLKViewController {
     var grinderBox: GameObject = GameObject()
     var grinderBlades: GameObject = GameObject()
     
+    var pp: PlayerPrefs = PlayerPrefs(name: "player")
+    
     @IBOutlet weak var UIButtonUp: UIButton!
     @IBOutlet weak var UIButtonDown: UIButton!
     @IBOutlet weak var UIButtonLeft: UIButton!
@@ -385,9 +387,12 @@ class GameViewController: GLKViewController {
             Physics.calculateCollision(ui: &magnetVel, firstPos: playerMagnet.position, firstBox: magnetBox, vi: &playerCube.velocity, secondPos: playerCube.position, secondBox: junkHitBox, mass1: 1000, mass2: 1)
         }
         
-        //loop this for all scrap objects.
-        if(HitBox.collisionHasOccured(firstPos: playerCube.position, firstBox: junkHitBox, secondPos: grinderBox.position, secondBox: grinderHitBox)){
-            playerCube.tag = "cleared";
+        //loop this for all scrap objects. 8==========D~~~~~~~ HANK LO ~~~~~~~~~~~~~
+        if(playerCube.tag == "Scrap"){
+            if(HitBox.collisionHasOccured(firstPos: playerCube.position, firstBox: junkHitBox, secondPos: grinderBox.position, secondBox: grinderHitBox)){
+                playerCube.tag = "cleared";
+                pp.setScore(score: pp.getScore() + 1)
+            }
         }
         
         playerCube.addToVelocities(velx: 0, vely: Float(-9.81*self.timeSinceLastUpdate), velz: 0);
@@ -437,6 +442,8 @@ class GameViewController: GLKViewController {
         if(movingRight){
             playerMagnet.moveObject(xMove: 0.1, yMove: 0.0, zMove: 0.0);
         }
+        
+        NSLog("Score: %d", pp.getScore());
     }
     
     override func glkView(_ view: GLKView, drawIn rect: CGRect) {
