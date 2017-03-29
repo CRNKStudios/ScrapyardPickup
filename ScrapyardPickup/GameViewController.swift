@@ -50,6 +50,8 @@ class GameViewController: GLKViewController {
     var normalMatrix4: GLKMatrix3 = GLKMatrix3Identity
     var modelViewProjectionMatrix5:GLKMatrix4 = GLKMatrix4Identity
     var normalMatrix5: GLKMatrix3 = GLKMatrix3Identity
+    var modelViewProjectionMatrix6:GLKMatrix4 = GLKMatrix4Identity
+    var normalMatrix6: GLKMatrix3 = GLKMatrix3Identity
     var rotation: Float = 0.0
     
     var context: EAGLContext? = nil
@@ -287,6 +289,11 @@ class GameViewController: GLKViewController {
         }
     }
     
+    func endLevel() {
+        print("Ending level...")
+        tearDownGL()
+    }
+    
     func tearDownGL() {
         EAGLContext.setCurrent(self.context)
         
@@ -360,57 +367,70 @@ class GameViewController: GLKViewController {
             if(HitBox.collisionHasOccured(firstPos: playerCube.position, firstBox: junkHitBox, secondPos: grinderBox.position, secondBox: grinderHitBox)){
                 playerCube.tag = "cleared";
                 pp.setScore(score: pp.getScore() + 10000)
+                self.endLevel()
             }
         }
 
         playerCube.addToVelocities(velx: 0, vely: Float(-9.81*self.timeSinceLastUpdate), velz: 0)
         playerCube.updatePosition(deltaTime: GLfloat(self.timeSinceLastUpdate))
         
-//        // TODO: Fix this so that there is a better way of doing it
-//        var modelViewMatrix = playerMagnet.getTranslationMatrix();
-//        var modelViewMatrix2 = playerCube.getTranslationMatrix();
-//        var modelViewMatrix3 = ground.getTranslationMatrix()
-//        var modelViewMatrix4 = grinderBox.getTranslationMatrix()
-//        var modelViewMatrix5 = grinderBlades.getTranslationMatrix()
-//        modelViewMatrix = GLKMatrix4Scale(modelViewMatrix, 0.5, 0.5, 0.5)
-//        modelViewMatrix = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix)
-//        modelViewMatrix2 = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix2)
-//        modelViewMatrix3 = GLKMatrix4Scale(modelViewMatrix3, 1000, 0.5, 1000)
-//        modelViewMatrix3 = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix3)
-//        modelViewMatrix4 = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix4)
-//        modelViewMatrix5 = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix5)
-//        
-//        normalMatrix = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(modelViewMatrix), nil)
-//        normalMatrix2 = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(modelViewMatrix2), nil)
-//        normalMatrix4 = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(modelViewMatrix4), nil)
-//        normalMatrix5 = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(modelViewMatrix5), nil)
-//        
-//        modelViewProjectionMatrix = GLKMatrix4Multiply(projectionMatrix, modelViewMatrix)
-//        modelViewProjectionMatrix2 = GLKMatrix4Multiply(projectionMatrix, modelViewMatrix2)
-//        modelViewProjectionMatrix3 = GLKMatrix4Multiply(projectionMatrix, modelViewMatrix3)
-//        modelViewProjectionMatrix4 = GLKMatrix4Multiply(projectionMatrix, modelViewMatrix4)
-//        modelViewProjectionMatrix5 = GLKMatrix4Multiply(projectionMatrix, modelViewMatrix5)
-//        
-//        playerMagnet.modelViewMatrix = modelViewMatrix
-//        playerMagnet.normalMatrix = normalMatrix
-//        playerMagnet.modelViewProjectionMatrix = modelViewProjectionMatrix
-//        
-//        ground.modelViewMatrix = modelViewMatrix3
-//        ground.normalMatrix = normalMatrix3
-//        ground.modelViewProjectionMatrix = modelViewProjectionMatrix3
-//        
-//        grinderBox.modelViewMatrix = modelViewMatrix4
-//        grinderBox.normalMatrix = normalMatrix4
-//        grinderBox.modelViewProjectionMatrix = modelViewProjectionMatrix4
-//        
-//        grinderBlades.modelViewMatrix = modelViewMatrix5
-//        grinderBlades.normalMatrix = normalMatrix5
-//        grinderBlades.modelViewProjectionMatrix = modelViewProjectionMatrix5
+        // TODO: Fix this so that there is a better way of doing it
+        var modelViewMatrix = playerMagnet.getTranslationMatrix();
+        var modelViewMatrix2 = playerCube.getTranslationMatrix();
+        var modelViewMatrix3 = ground.getTranslationMatrix()
+        var modelViewMatrix4 = grinderBox.getTranslationMatrix()
+        var modelViewMatrix5 = grinderBlades.getTranslationMatrix()
+        var modelViewMatrix6 = scrapObjects[0].getTranslationMatrix()
+        modelViewMatrix = GLKMatrix4Scale(modelViewMatrix, 0.5, 0.5, 0.5)
+        modelViewMatrix = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix)
+        modelViewMatrix2 = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix2)
+        modelViewMatrix3 = GLKMatrix4Scale(modelViewMatrix3, 1000, 0.5, 1000)
+        modelViewMatrix3 = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix3)
+        modelViewMatrix4 = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix4)
+        modelViewMatrix5 = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix5)
+        modelViewMatrix6 = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix6)
         
-        self.setObjectMVPMatrixPlayer(po: &playerMagnet, base: baseModelViewMatrix, proj: projectionMatrix, translate: Vector4(x: 0, y: 0, z: 0, w: 0), scale: Vector4(x: 0.5, y: 0.5, z: 0.5, w: 0))
-        self.setObjectMVPMatrix(go: &ground, base: baseModelViewMatrix, proj: projectionMatrix, translate: Vector4(x: 0, y: 0, z: 0, w: 0), scale: Vector4(x: 1000, y: 0.5, z: 1000, w: 0))
-        self.setObjectMVPMatrix(go: &grinderBox, base: baseModelViewMatrix, proj: projectionMatrix, translate: Vector4(x: 0, y: 0, z: 0, w: 0), scale: Vector4(x: 0, y: 0, z: 0, w: 0))
-        self.setObjectMVPMatrix(go: &grinderBlades, base: baseModelViewMatrix, proj: projectionMatrix, translate: Vector4(x: 0, y: 0, z: 0, w: 0), scale: Vector4(x: 0, y: 0, z: 0, w: 0))
+        normalMatrix = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(modelViewMatrix), nil)
+        normalMatrix2 = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(modelViewMatrix2), nil)
+        normalMatrix4 = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(modelViewMatrix4), nil)
+        normalMatrix5 = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(modelViewMatrix5), nil)
+        normalMatrix6 = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(modelViewMatrix6), nil)
+        
+        modelViewProjectionMatrix = GLKMatrix4Multiply(projectionMatrix, modelViewMatrix)
+        modelViewProjectionMatrix2 = GLKMatrix4Multiply(projectionMatrix, modelViewMatrix2)
+        modelViewProjectionMatrix3 = GLKMatrix4Multiply(projectionMatrix, modelViewMatrix3)
+        modelViewProjectionMatrix4 = GLKMatrix4Multiply(projectionMatrix, modelViewMatrix4)
+        modelViewProjectionMatrix5 = GLKMatrix4Multiply(projectionMatrix, modelViewMatrix5)
+        modelViewProjectionMatrix6 = GLKMatrix4Multiply(projectionMatrix, modelViewMatrix6)
+        
+        playerMagnet.modelViewMatrix = modelViewMatrix
+        playerMagnet.normalMatrix = normalMatrix
+        playerMagnet.modelViewProjectionMatrix = modelViewProjectionMatrix
+        
+        ground.modelViewMatrix = modelViewMatrix3
+        ground.normalMatrix = normalMatrix3
+        ground.modelViewProjectionMatrix = modelViewProjectionMatrix3
+        
+        grinderBox.modelViewMatrix = modelViewMatrix4
+        grinderBox.normalMatrix = normalMatrix4
+        grinderBox.modelViewProjectionMatrix = modelViewProjectionMatrix4
+        
+        grinderBlades.modelViewMatrix = modelViewMatrix5
+        grinderBlades.normalMatrix = normalMatrix5
+        grinderBlades.modelViewProjectionMatrix = modelViewProjectionMatrix5
+        
+        grinderBlades.modelViewMatrix = modelViewMatrix5
+        grinderBlades.normalMatrix = normalMatrix5
+        grinderBlades.modelViewProjectionMatrix = modelViewProjectionMatrix5
+        
+        scrapObjects[0].modelViewMatrix = modelViewMatrix6
+        scrapObjects[0].normalMatrix = normalMatrix6
+        scrapObjects[0].modelViewProjectionMatrix = modelViewProjectionMatrix6
+        
+//        self.setObjectMVPMatrixPlayer(po: &playerMagnet, base: baseModelViewMatrix, proj: projectionMatrix, translate: Vector4(x: 0, y: 0, z: 0, w: 0), scale: Vector4(x: 0.5, y: 0.5, z: 0.5, w: 0))
+//        self.setObjectMVPMatrix(go: &ground, base: baseModelViewMatrix, proj: projectionMatrix, translate: Vector4(x: 0, y: 0, z: 0, w: 0), scale: Vector4(x: 1000, y: 0.5, z: 1000, w: 0))
+//        self.setObjectMVPMatrix(go: &grinderBox, base: baseModelViewMatrix, proj: projectionMatrix, translate: Vector4(x: 0, y: 0, z: 0, w: 0), scale: Vector4(x: 0, y: 0, z: 0, w: 0))
+//        self.setObjectMVPMatrix(go: &grinderBlades, base: baseModelViewMatrix, proj: projectionMatrix, translate: Vector4(x: 0, y: 0, z: 0, w: 0), scale: Vector4(x: 0, y: 0, z: 0, w: 0))
         
         //rotation += Float(self.timeSinceLastUpdate * 0.5)
         self.updateTimer(dt: self.timeSinceLastUpdate)
@@ -456,9 +476,10 @@ class GameViewController: GLKViewController {
         glUseProgram(program)
         
         self.drawObject(go: playerMagnet)
-//        self.drawObject(go: ground)
+        self.drawObject(go: ground)
         self.drawObject(go: grinderBox)
         self.drawObject(go: grinderBlades)
+        self.drawObject(go: scrapObjects[0])
 //        self.drawObjects(gos: scrapObjects)
         
 //        glBindVertexArrayOES(playerMagnet.vertexArray)
