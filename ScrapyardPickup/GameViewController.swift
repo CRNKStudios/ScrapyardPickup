@@ -49,6 +49,10 @@ class GameViewController: GLKViewController {
     var magnetStrength: GLfloat = 15.0;
     var blockActivated: Bool = false;
     var timer = 0.0
+    var movingUp = false;
+    var movingDown = false;
+    var movingLeft = false;
+    var movingRight = false;
     
 // MARK: Create objects
     var playerMagnet: PlayerObject = PlayerObject()
@@ -93,16 +97,24 @@ class GameViewController: GLKViewController {
     //connect UI buttons to funtions
     func initButtons(){
         UIButtonUp.tag = Buttons.BUTTON_UP.rawValue;
-        UIButtonUp.addTarget(self,action:#selector(buttonClicked),for:.touchUpInside);
+        UIButtonUp.addTarget(self,action:#selector(buttonClicked),for:.touchDown);
+        UIButtonUp.addTarget(self,action:#selector(buttonReleased),for:.touchUpInside);
+        UIButtonUp.addTarget(self,action:#selector(buttonReleased),for:.touchUpOutside);
         
         UIButtonDown.tag = Buttons.BUTTON_DOWN.rawValue;
-        UIButtonDown.addTarget(self,action:#selector(buttonClicked),for:.touchUpInside);
+        UIButtonDown.addTarget(self,action:#selector(buttonClicked),for:.touchDown);
+        UIButtonDown.addTarget(self,action:#selector(buttonReleased),for:.touchUpInside);
+        UIButtonDown.addTarget(self,action:#selector(buttonReleased),for:.touchUpOutside);
         
         UIButtonLeft.tag = Buttons.BUTTON_LEFT.rawValue;
-        UIButtonLeft.addTarget(self,action:#selector(buttonClicked),for:.touchUpInside);
+        UIButtonLeft.addTarget(self,action:#selector(buttonClicked),for:.touchDown);
+        UIButtonLeft.addTarget(self,action:#selector(buttonReleased),for:.touchUpInside);
+        UIButtonLeft.addTarget(self,action:#selector(buttonReleased),for:.touchUpOutside);
         
         UIButtonRight.tag = Buttons.BUTTON_RIGHT.rawValue;
-        UIButtonRight.addTarget(self,action:#selector(buttonClicked),for:.touchUpInside);
+        UIButtonRight.addTarget(self,action:#selector(buttonClicked),for:.touchDown);
+        UIButtonRight.addTarget(self,action:#selector(buttonReleased),for:.touchUpInside);
+        UIButtonRight.addTarget(self,action:#selector(buttonReleased),for:.touchUpOutside);
         
         UIButtonMagnetPower.tag = Buttons.BUTTON_MAGNET_POWER.rawValue;
         UIButtonMagnetPower.addTarget(self,action:#selector(buttonClicked),for:.touchDown);
@@ -113,16 +125,16 @@ class GameViewController: GLKViewController {
     {
         switch(sender.tag){
         case Buttons.BUTTON_UP.rawValue:
-            playerMagnet.moveObject(xMove: 0.0, yMove: 0.0, zMove: -0.1);
+            movingUp = true;
             break;
         case Buttons.BUTTON_DOWN.rawValue:
-            playerMagnet.moveObject(xMove: 0.0, yMove: 0.0, zMove: 0.1);
+            movingDown = true;
             break;
         case Buttons.BUTTON_LEFT.rawValue:
-            playerMagnet.moveObject(xMove: -0.1, yMove: 0.0, zMove: 0.0);
+            movingLeft = true;
             break;
         case Buttons.BUTTON_RIGHT.rawValue:
-            playerMagnet.moveObject(xMove: 0.1, yMove: 0.0, zMove: 0.0);
+            movingRight = true;
             break;
         case Buttons.BUTTON_MAGNET_POWER.rawValue:
             print("magnet power on");
@@ -159,6 +171,19 @@ class GameViewController: GLKViewController {
     //Handle UI button Releases
     func buttonReleased(sender:UIButton){
         switch(sender.tag){
+        case Buttons.BUTTON_UP.rawValue:
+            movingUp = false;
+            break;
+        case Buttons.BUTTON_DOWN.rawValue:
+            movingDown = false;
+            break;
+        case Buttons.BUTTON_LEFT.rawValue:
+            movingLeft = false;
+            break;
+        case Buttons.BUTTON_RIGHT.rawValue:
+            movingRight = false;
+            break;
+
         case Buttons.BUTTON_MAGNET_POWER.rawValue:
             print("magnet power off");
             magnetIsOn=false;
@@ -331,6 +356,19 @@ class GameViewController: GLKViewController {
         
         //rotation += Float(self.timeSinceLastUpdate * 0.5)
         self.updateTimer(dt: self.timeSinceLastUpdate)
+        
+        if(movingUp){
+            playerMagnet.moveObject(xMove: 0.0, yMove: 0.0, zMove: -0.1);
+        }
+        if(movingDown){
+            playerMagnet.moveObject(xMove: 0.0, yMove: 0.0, zMove: 0.1);
+        }
+        if(movingLeft){
+            playerMagnet.moveObject(xMove: -0.1, yMove: 0.0, zMove: 0.0);
+        }
+        if(movingRight){
+            playerMagnet.moveObject(xMove: 0.1, yMove: 0.0, zMove: 0.0);
+        }
     }
     
     override func glkView(_ view: GLKView, drawIn rect: CGRect) {
