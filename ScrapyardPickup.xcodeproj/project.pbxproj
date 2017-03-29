@@ -32,6 +32,8 @@
 		09E7B5241E54F46E0027B069 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 09E7B5221E54F46E0027B069 /* Main.storyboard */; };
 		09E7B5261E54F46E0027B069 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 09E7B5251E54F46E0027B069 /* Assets.xcassets */; };
 		09E7B5291E54F46E0027B069 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 09E7B5271E54F46E0027B069 /* LaunchScreen.storyboard */; };
+		82D8C87D1E8B59AE0025A26C /* junkyardGrinderBladesNoTex.obj in Resources */ = {isa = PBXBuildFile; fileRef = 82D8C87C1E8B59AE0025A26C /* junkyardGrinderBladesNoTex.obj */; };
+		82D8C87F1E8B59BA0025A26C /* junkyardGrinderBoxNoTex.obj in Resources */ = {isa = PBXBuildFile; fileRef = 82D8C87E1E8B59BA0025A26C /* junkyardGrinderBoxNoTex.obj */; };
 		B9317F1F1E5E26090030ECEA /* downArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = B9317F1B1E5E26090030ECEA /* downArrow.png */; };
 		B9317F201E5E26090030ECEA /* leftArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = B9317F1C1E5E26090030ECEA /* leftArrow.png */; };
 		B9317F211E5E26090030ECEA /* rightArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = B9317F1D1E5E26090030ECEA /* rightArrow.png */; };
@@ -74,6 +76,8 @@
 		09E7B5281E54F46E0027B069 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		09E7B52A1E54F46E0027B069 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		82AEE6651E66548200606C35 /* CraneObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CraneObject.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		82D8C87C1E8B59AE0025A26C /* junkyardGrinderBladesNoTex.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = junkyardGrinderBladesNoTex.obj; sourceTree = "<group>"; };
+		82D8C87E1E8B59BA0025A26C /* junkyardGrinderBoxNoTex.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = junkyardGrinderBoxNoTex.obj; sourceTree = "<group>"; };
 		B9317F1B1E5E26090030ECEA /* downArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = downArrow.png; path = Assets/downArrow.png; sourceTree = "<group>"; };
 		B9317F1C1E5E26090030ECEA /* leftArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = leftArrow.png; path = Assets/leftArrow.png; sourceTree = "<group>"; };
 		B9317F1D1E5E26090030ECEA /* rightArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = rightArrow.png; path = Assets/rightArrow.png; sourceTree = "<group>"; };
@@ -216,6 +220,8 @@
 		82AEE6641E66546B00606C35 /* Objects */ = {
 			isa = PBXGroup;
 			children = (
+				82D8C87E1E8B59BA0025A26C /* junkyardGrinderBoxNoTex.obj */,
+				82D8C87C1E8B59AE0025A26C /* junkyardGrinderBladesNoTex.obj */,
 				093AD91B1E8A3A5400AB0A24 /* CraneModel.obj */,
 				093AD9191E8A09C000AB0A24 /* monkey.obj */,
 				093AD9171E89FA0900AB0A24 /* cube.obj */,
@@ -284,9 +290,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				82D8C87F1E8B59BA0025A26C /* junkyardGrinderBoxNoTex.obj in Resources */,
 				09E7B5241E54F46E0027B069 /* Main.storyboard in Resources */,
 				093AD91C1E8A3A5400AB0A24 /* CraneModel.obj in Resources */,
 				09E7B51F1E54F46E0027B069 /* Shader.vsh in Resources */,
+				82D8C87D1E8B59AE0025A26C /* junkyardGrinderBladesNoTex.obj in Resources */,
 				B9317F201E5E26090030ECEA /* leftArrow.png in Resources */,
 				09E7B5261E54F46E0027B069 /* Assets.xcassets in Resources */,
 				B9317F1F1E5E26090030ECEA /* downArrow.png in Resources */,

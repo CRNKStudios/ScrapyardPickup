@@ -34,6 +34,10 @@ class GameViewController: GLKViewController {
     var normalMatrix2: GLKMatrix3 = GLKMatrix3Identity
     var modelViewProjectionMatrix3:GLKMatrix4 = GLKMatrix4Identity
     var normalMatrix3: GLKMatrix3 = GLKMatrix3Identity
+    var modelViewProjectionMatrix4:GLKMatrix4 = GLKMatrix4Identity
+    var normalMatrix4: GLKMatrix3 = GLKMatrix3Identity
+    var modelViewProjectionMatrix5:GLKMatrix4 = GLKMatrix4Identity
+    var normalMatrix5: GLKMatrix3 = GLKMatrix3Identity
     var rotation: Float = 0.0
     
     var vertexArray: GLuint = 0
@@ -42,6 +46,10 @@ class GameViewController: GLKViewController {
     var vertexBuffer2: GLuint = 0
     var vertexArray3: GLuint = 0
     var vertexBuffer3: GLuint = 0
+    var vertexArray4: GLuint = 0
+    var vertexBuffer4: GLuint = 0
+    var vertexArray5: GLuint = 0
+    var vertexBuffer5: GLuint = 0
     
     var context: EAGLContext? = nil
     var effect: GLKBaseEffect? = nil
@@ -58,6 +66,8 @@ class GameViewController: GLKViewController {
     var playerMagnet: PlayerObject = PlayerObject()
     var playerCube: GameObject = GameObject()
     var ground: GameObject = GameObject()
+    var grinderBox: GameObject = GameObject()
+    var grinderBlades: GameObject = GameObject()
     
     @IBOutlet weak var UIButtonUp: UIButton!
     @IBOutlet weak var UIButtonDown: UIButton!
@@ -248,6 +258,50 @@ class GameViewController: GLKViewController {
         // MARK: Cube Object Loaded
         playerCube = GameObject(name: "Cube", tag: "Scrap", objectData: ModelObject.parseOBJFileToModel(fileName: "monkey").getModelData(), 0.0, -2.0, 0.0, scale: 0.5, baseMatrix: GLKMatrix4Identity)
         
+        grinderBox = GameObject(name: "Buster", tag: "Grinder", objectData: ModelObject.parseOBJFileToModel(fileName: "junkyardGrinderBoxNoTex").getModelData(), -2.0, -2.0, 2.0, scale: 1.0, baseMatrix: GLKMatrix4Identity);
+        
+        var cubeVertexData = grinderBox.getObjectData()
+        
+        glGenVertexArraysOES(1, &vertexArray4)
+        glBindVertexArrayOES(vertexArray4)
+        
+        glGenBuffers(1, &vertexBuffer4)
+        glBindBuffer(GLenum(GL_ARRAY_BUFFER), vertexBuffer4)
+        
+        glBufferData(GLenum(GL_ARRAY_BUFFER), GLsizeiptr(MemoryLayout<GLfloat>.size * cubeVertexData.position.count + MemoryLayout<GLfloat>.size * cubeVertexData.normal.count), nil, GLenum(GL_STATIC_DRAW))
+        
+        glBufferSubData(GLenum(GL_ARRAY_BUFFER), 0, GLsizeiptr(MemoryLayout<GLfloat>.size * cubeVertexData.position.count), grinderBox.getPositionsData()) // target, offset, size, data
+        glBufferSubData(GLenum(GL_ARRAY_BUFFER), MemoryLayout<GLfloat>.size * cubeVertexData.position.count, MemoryLayout<GLfloat>.size * cubeVertexData.texture.count, grinderBox.getTexturesData());
+        glBufferSubData(GLenum(GL_ARRAY_BUFFER), MemoryLayout<GLfloat>.size * cubeVertexData.position.count, GLsizeiptr(MemoryLayout<GLfloat>.size * cubeVertexData.normal.count), grinderBox.getNormalsData()) // target, offset, size, data
+        
+        glEnableVertexAttribArray(GLuint(GLKVertexAttrib.position.rawValue))
+        // Index, size, type, normalized, stride, pointer
+        glVertexAttribPointer(GLuint(GLKVertexAttrib.position.rawValue), 3, GLenum(GL_FLOAT), GLboolean(GL_FALSE), 0, BUFFER_OFFSET(0))
+        glEnableVertexAttribArray(GLuint(GLKVertexAttrib.normal.rawValue))
+        glVertexAttribPointer(GLuint(GLKVertexAttrib.normal.rawValue), 3, GLenum(GL_FLOAT), GLboolean(GL_FALSE), 0, BUFFER_OFFSET(0))
+        
+        grinderBlades = GameObject(name: "Blades", tag: "Grinder", objectData: ModelObject.parseOBJFileToModel(fileName: "junkyardGrinderBladesNoTex").getModelData(), -2.0, -2.0, 2.0, scale: 1.0, baseMatrix: GLKMatrix4Identity);
+        
+        cubeVertexData = grinderBlades.getObjectData()
+        
+        glGenVertexArraysOES(1, &vertexArray5)
+        glBindVertexArrayOES(vertexArray5)
+        
+        glGenBuffers(1, &vertexBuffer5)
+        glBindBuffer(GLenum(GL_ARRAY_BUFFER), vertexBuffer5)
+        
+        glBufferData(GLenum(GL_ARRAY_BUFFER), GLsizeiptr(MemoryLayout<GLfloat>.size * cubeVertexData.position.count + MemoryLayout<GLfloat>.size * cubeVertexData.normal.count), nil, GLenum(GL_STATIC_DRAW))
+        
+        glBufferSubData(GLenum(GL_ARRAY_BUFFER), 0, GLsizeiptr(MemoryLayout<GLfloat>.size * cubeVertexData.position.count), grinderBlades.getPositionsData()) // target, offset, size, data
+        glBufferSubData(GLenum(GL_ARRAY_BUFFER), MemoryLayout<GLfloat>.size * cubeVertexData.position.count, MemoryLayout<GLfloat>.size * cubeVertexData.texture.count, grinderBlades.getTexturesData());
+        glBufferSubData(GLenum(GL_ARRAY_BUFFER), MemoryLayout<GLfloat>.size * cubeVertexData.position.count, GLsizeiptr(MemoryLayout<GLfloat>.size * cubeVertexData.normal.count), grinderBlades.getNormalsData()) // target, offset, size, data
+        
+        glEnableVertexAttribArray(GLuint(GLKVertexAttrib.position.rawValue))
+        // Index, size, type, normalized, stride, pointer
+        glVertexAttribPointer(GLuint(GLKVertexAttrib.position.rawValue), 3, GLenum(GL_FLOAT), GLboolean(GL_FALSE), 0, BUFFER_OFFSET(0))
+        glEnableVertexAttribArray(GLuint(GLKVertexAttrib.normal.rawValue))
+        glVertexAttribPointer(GLuint(GLKVertexAttrib.normal.rawValue), 3, GLenum(GL_FLOAT), GLboolean(GL_FALSE), 0, BUFFER_OFFSET(0))
+        
         // MARK: Ground Object Creation
         glGenVertexArraysOES(1, &vertexArray3)
         glBindVertexArrayOES(vertexArray3)
@@ -321,6 +375,7 @@ class GameViewController: GLKViewController {
         
         var magnetBox: HitBox = HitBox(left:-0.6, right:0.1, top:0.1, bottom:-1.2, front:1.2, back:-1.2);
         var junkHitBox: HitBox = HitBox(left:-0.5, right:0.5, top:0.5, bottom:-0.5, front:0.5, back:-0.5);
+        var grinderHitBox: HitBox = HitBox(left:-0.5, right:0.5, top:0.5, bottom:-0.5, front:0.5, back:-0.5);
         
         //print(playerCube.velocity);
         //print("collision: ",HitBox.collisionHasOccured(firstPos: playerMagnet.position, firstBox: magnetBox, secondPos: playerCube.position, secondBox: junkHitBox));
@@ -330,18 +385,27 @@ class GameViewController: GLKViewController {
             Physics.calculateCollision(ui: &magnetVel, firstPos: playerMagnet.position, firstBox: magnetBox, vi: &playerCube.velocity, secondPos: playerCube.position, secondBox: junkHitBox, mass1: 1000, mass2: 1)
         }
         
+        //loop this for all scrap objects.
+        if(HitBox.collisionHasOccured(firstPos: playerCube.position, firstBox: junkHitBox, secondPos: grinderBox.position, secondBox: grinderHitBox)){
+            playerCube.tag = "cleared";
+        }
         
         playerCube.addToVelocities(velx: 0, vely: Float(-9.81*self.timeSinceLastUpdate), velz: 0);
         playerCube.updatePosition(deltaTime: GLfloat(self.timeSinceLastUpdate));
         var modelViewMatrix = playerMagnet.getTranslationMatrix();
         var modelViewMatrix2 = playerCube.getTranslationMatrix();
         var modelViewMatrix3 = ground.getTranslationMatrix()
+        var modelViewMatrix4 = grinderBox.getTranslationMatrix()
+        var modelViewMatrix5 = grinderBlades.getTranslationMatrix()
         modelViewMatrix = GLKMatrix4Translate(modelViewMatrix, 0, -2.5, 0)
         modelViewMatrix = GLKMatrix4Scale(modelViewMatrix, 0.5, 0.5, 0.5)
         modelViewMatrix = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix)
         modelViewMatrix2 = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix2)
         modelViewMatrix3 = GLKMatrix4Scale(modelViewMatrix3, 1000, 0.5, 1000)
         modelViewMatrix3 = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix3)
+        modelViewMatrix4 = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix4)
+        modelViewMatrix5 = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix5)
+        
         
         projectionMatrix = GLKMatrix4RotateX(projectionMatrix, 0.5);
         let worldTranslationMatrix = GLKMatrix4MakeTranslation(0.0,  0.0, -3.0)
@@ -349,10 +413,14 @@ class GameViewController: GLKViewController {
         
         normalMatrix = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(modelViewMatrix), nil)
         normalMatrix2 = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(modelViewMatrix2), nil)
+        normalMatrix4 = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(modelViewMatrix4), nil)
+        normalMatrix5 = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(modelViewMatrix5), nil)
         
         modelViewProjectionMatrix = GLKMatrix4Multiply(projectionMatrix, modelViewMatrix)
         modelViewProjectionMatrix2 = GLKMatrix4Multiply(projectionMatrix, modelViewMatrix2)
         modelViewProjectionMatrix3 = GLKMatrix4Multiply(projectionMatrix, modelViewMatrix3)
+        modelViewProjectionMatrix4 = GLKMatrix4Multiply(projectionMatrix, modelViewMatrix4)
+        modelViewProjectionMatrix5 = GLKMatrix4Multiply(projectionMatrix, modelViewMatrix5)
         
         //rotation += Float(self.timeSinceLastUpdate * 0.5)
         self.updateTimer(dt: self.timeSinceLastUpdate)
@@ -399,22 +467,24 @@ class GameViewController: GLKViewController {
         
         glDrawArrays(GLenum(GL_TRIANGLES), 0, GLsizei(playerMagnet.getObjectData().position.count))
         
-        glBindVertexArrayOES(vertexArray2)
-        
-         withUnsafePointer(to: &modelViewProjectionMatrix2, {
-            $0.withMemoryRebound(to: Float.self, capacity: 16, {
-                glUniformMatrix4fv(uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0, $0)
+        if(playerCube.tag == "Scrap"){
+            glBindVertexArrayOES(vertexArray2)
+            
+             withUnsafePointer(to: &modelViewProjectionMatrix2, {
+                $0.withMemoryRebound(to: Float.self, capacity: 16, {
+                    glUniformMatrix4fv(uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0, $0)
+                })
             })
-        })
-        
-        withUnsafePointer(to: &normalMatrix2, {
-            $0.withMemoryRebound(to: Float.self, capacity: 9, {
-                glUniformMatrix3fv(uniforms[UNIFORM_NORMAL_MATRIX], 1, 0, $0)
+            
+            withUnsafePointer(to: &normalMatrix2, {
+                $0.withMemoryRebound(to: Float.self, capacity: 9, {
+                    glUniformMatrix3fv(uniforms[UNIFORM_NORMAL_MATRIX], 1, 0, $0)
+                })
             })
-        })
 
-        glDrawArrays(GLenum(GL_TRIANGLES), 0, GLsizei(playerCube.getObjectData().position.count))
-        
+            glDrawArrays(GLenum(GL_TRIANGLES), 0, GLsizei(playerCube.getObjectData().position.count))
+        }
+            
         glBindVertexArrayOES(vertexArray3)
         
         withUnsafePointer(to: &modelViewProjectionMatrix3, {
@@ -430,6 +500,38 @@ class GameViewController: GLKViewController {
         })
         
         glDrawArrays(GLenum(GL_TRIANGLES), 0, GLsizei(ground.getObjectData().position.count))
+        
+        glBindVertexArrayOES(vertexArray4)
+        
+        withUnsafePointer(to: &modelViewProjectionMatrix4, {
+            $0.withMemoryRebound(to: Float.self, capacity: 16, {
+                glUniformMatrix4fv(uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0, $0)
+            })
+        })
+        
+        withUnsafePointer(to: &normalMatrix4, {
+            $0.withMemoryRebound(to: Float.self, capacity: 9, {
+                glUniformMatrix3fv(uniforms[UNIFORM_NORMAL_MATRIX], 1, 0, $0)
+            })
+        })
+        
+        glDrawArrays(GLenum(GL_TRIANGLES), 0, GLsizei(grinderBox.getObjectData().position.count))
+        
+        glBindVertexArrayOES(vertexArray5)
+        
+        withUnsafePointer(to: &modelViewProjectionMatrix5, {
+            $0.withMemoryRebound(to: Float.self, capacity: 16, {
+                glUniformMatrix4fv(uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0, $0)
+            })
+        })
+        
+        withUnsafePointer(to: &normalMatrix5, {
+            $0.withMemoryRebound(to: Float.self, capacity: 9, {
+                glUniformMatrix3fv(uniforms[UNIFORM_NORMAL_MATRIX], 1, 0, $0)
+            })
+        })
+        
+        glDrawArrays(GLenum(GL_TRIANGLES), 0, GLsizei(grinderBlades.getObjectData().position.count))
     }
     
     // MARK: -  OpenGL ES 2 shader compilation
