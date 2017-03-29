@@ -353,10 +353,11 @@ class GameViewController: GLKViewController {
         
         //print(playerCube.velocity);
         //print("collision: ",HitBox.collisionHasOccured(firstPos: playerMagnet.position, firstBox: magnetBox, secondPos: playerCube.position, secondBox: junkHitBox));
-        
-        if(HitBox.collisionHasOccured(firstPos: playerMagnet.position, firstBox: magnetBox, secondPos: scrapObjects[0].position, secondBox: junkHitBox)&&blockActivated){
-            var magnetVel = Vector4(x:0,y:0,z:0,w:0)
-            Physics.calculateCollision(ui: &magnetVel, firstPos: playerMagnet.position, firstBox: magnetBox, vi: &scrapObjects[0].velocity, secondPos: scrapObjects[0].position, secondBox: junkHitBox, mass1: 1000, mass2: 1)
+        for i in 0...scrapObjects.count-1 {
+            if(HitBox.collisionHasOccured(firstPos: playerMagnet.position, firstBox: magnetBox, secondPos: scrapObjects[i].position, secondBox: junkHitBox)&&blockActivated){
+                var magnetVel = Vector4(x:0,y:0,z:0,w:0)
+                Physics.calculateCollision(ui: &magnetVel, firstPos: playerMagnet.position, firstBox: magnetBox, vi: &scrapObjects[i].velocity, secondPos: scrapObjects[i].position, secondBox: junkHitBox, mass1: 1000, mass2: 1)
+            }
         }
         
         // TODO: Loop through models to set their MVM's, then set their normals, then projection matrices
@@ -373,8 +374,10 @@ class GameViewController: GLKViewController {
             }
         }
 
-        scrapObjects[0].addToVelocities(velx: 0, vely: Float(-9.81*self.timeSinceLastUpdate), velz: 0)
-        scrapObjects[0].updatePosition(deltaTime: GLfloat(self.timeSinceLastUpdate))
+        for i in 0...scrapObjects.count-1 {
+            scrapObjects[i].addToVelocities(velx: 0, vely: Float(-9.81*self.timeSinceLastUpdate), velz: 0)
+            scrapObjects[i].updatePosition(deltaTime: GLfloat(self.timeSinceLastUpdate))
+        }
         
         
         for i in 0...scrapObjects.count-1 {
