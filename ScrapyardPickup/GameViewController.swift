@@ -275,6 +275,7 @@ class GameViewController: GLKViewController {
     
     func endLevel() {
         print("Ending level...")
+        LevelManager.endLevel(score: pp.getScore(), level: pp.curLevel);
         tearDownGL()
         _ = navigationController?.popViewController(animated: true)
     }
