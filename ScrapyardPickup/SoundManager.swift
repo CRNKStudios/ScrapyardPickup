@@ -33,4 +33,8 @@ public class SoundManager{
     func stopSound(){
         player?.stop()
     }
+    
+    func setVolume(vol: Float){
+        player?.volume = vol
+    }
 }

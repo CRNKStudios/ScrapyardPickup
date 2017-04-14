@@ -66,6 +66,7 @@ class GameViewController: GLKViewController {
     var movingRight = false;
     
     var soundManager: SoundManager = SoundManager()
+    var bkgSoundManager: SoundManager = SoundManager()
     
     @IBOutlet weak var UIButtonUp: UIButton!
     @IBOutlet weak var UIButtonDown: UIButton!
@@ -99,9 +100,16 @@ class GameViewController: GLKViewController {
         //setup the ui buttons
         initButtons();
         
-        soundManager.playSound(fileName: "track_3")
+        bkgSoundManager.playSound(fileName: "track_3")
+        bkgSoundManager.setVolume(vol: 0.7)
         
         self.setupGL()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        NSLog(self.title! + " Disappeared")
+        bkgSoundManager.stopSound()
+        soundManager.stopSound()
     }
     
     //connect UI buttons to funtions
@@ -133,6 +141,7 @@ class GameViewController: GLKViewController {
     
     func buttonClicked(sender:UIButton)
     {
+        bkgSoundManager.setVolume(vol: 0.2)
         switch(sender.tag){
         case Buttons.BUTTON_UP.rawValue:
             movingUp = true;
@@ -185,7 +194,7 @@ class GameViewController: GLKViewController {
             break;
         }
         soundManager.stopSound();
-        
+        bkgSoundManager.setVolume(vol: 0.7)
     }
     
     override func didReceiveMemoryWarning() {
