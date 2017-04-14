@@ -225,14 +225,14 @@ class GameViewController: GLKViewController {
 //        playerCube = GameObject(name: "Cube", tag: "Scrap", vertexArray: 0, vertexBuffer: 0, objectData: ModelObject.parseOBJFileToModel(fileName: "monkey").getModelData(), 0.0, -2.0, 0.0, scale: 0.5, baseMatrix: GLKMatrix4Identity)
 //        self.loadObjectsToBuffers(go: playerCube)
         
-        grinderBox = GameObject(name: "Buster", tag: "Grinder", vertexArray: 0, vertexBuffer: 0, objectData: ModelObject.parseOBJFileToModel(fileName: "junkyardGrinderBoxNoTex").getModelData(), -2.0, 0.0, 0.0, scale: 1.0, baseMatrix: GLKMatrix4Identity);
+        grinderBox = GameObject(name: "Buster", tag: "Grinder", vertexArray: 0, vertexBuffer: 0, objectData: ModelObject.parseOBJFileToModel(fileName: "junkyardGrinderBoxNoTex").getModelData(), -2.0, -1.0, 0.0, scale: 1.0, baseMatrix: GLKMatrix4Identity);
         self.loadObjectsToBuffers(go: grinderBox)
         
-        grinderBlades = GameObject(name: "Blades", tag: "Grinder", vertexArray: 0, vertexBuffer: 0, objectData: ModelObject.parseOBJFileToModel(fileName: "junkyardGrinderBladesNoTex").getModelData(), -2.0, 0.0, 0.0, scale: 1.0, baseMatrix: GLKMatrix4Identity);
+        grinderBlades = GameObject(name: "Blades", tag: "Grinder", vertexArray: 0, vertexBuffer: 0, objectData: ModelObject.parseOBJFileToModel(fileName: "junkyardGrinderBladesNoTex").getModelData(), -2.0, -1.0, 0.0, scale: 1.0, baseMatrix: GLKMatrix4Identity);
         self.loadObjectsToBuffers(go: grinderBlades)
         
         // MARK: Ground Object Creation
-        ground = GameObject(name: "Ground", tag: "Ground", vertexArray: 0, vertexBuffer: 0, objectData: ModelObject.parseOBJFileToModel(fileName: "cube").getModelData(), 0.0, 0.0, 0.0, scale: 1, baseMatrix: GLKMatrix4Identity)
+        ground = GameObject(name: "Ground", tag: "Ground", vertexArray: 0, vertexBuffer: 0, objectData: ModelObject.parseOBJFileToModel(fileName: "cube").getModelData(), 0.0, -2.0, 0.0, scale: 1, baseMatrix: GLKMatrix4Identity)
         self.loadObjectsToBuffers(go: ground)
         
         // MARK: Create scrap objects

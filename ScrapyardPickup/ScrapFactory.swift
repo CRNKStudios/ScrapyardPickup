@@ -14,6 +14,7 @@ public enum SCRAPMODELSTRING: String {
     case    SCRAP_FRAME = "scrap_frame"
     case    SCRAP_BAR   = "scrap_bar"
     case    SCRAP_CAR   = "scrap_car"
+    case    BOMB        = "monkey"
 }
 
 public enum SCRAPMODEL: Int {
@@ -21,6 +22,7 @@ public enum SCRAPMODEL: Int {
     case    SCRAP_FRAME
     case    SCRAP_BAR
     case    SCRAP_CAR
+    case    BOMB
 
     static let count: UInt32 = 4
     static func randomModel() -> SCRAPMODEL {
@@ -114,8 +116,38 @@ class ScrapFactory {
                     )
                     break
                 // no default
+                default:
+                    break;
             }
         }
+        
+        //Generate bombs
+        for i in 0..<(level) { // add -1 for none on level 1
+            //Generate random positions within bounds
+            var xPos: Float = Float(arc4random_uniform(UInt32(5))) - Float(2);
+            var yPos: Float = Float(0.0);
+            var zPos: Float = (Float(arc4random_uniform(UInt32(10)))) * Float(-1);
+            //If object spawn on top of the grinder, move it away
+            if(zPos == 0 && xPos <= -1){
+                xPos += 1;
+            }
+            
+            objects.append(
+                GameObject(
+                    name: SCRAPMODELSTRING.BOMB.rawValue + String(i),
+                    tag: "Bomb",
+                    vertexArray: 0,
+                    vertexBuffer: 0,
+                    objectData: ModelObject.parseOBJFileToModel(fileName: SCRAPMODELSTRING.BOMB.rawValue).getModelData(),
+                    xPos,
+                    yPos,
+                    zPos,
+                    scale: 1.0,
+                    baseMatrix: GLKMatrix4Identity
+                )
+            )
+        }
+
         return objects
     }
 }
