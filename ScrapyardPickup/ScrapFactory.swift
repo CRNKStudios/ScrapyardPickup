@@ -39,6 +39,15 @@ class ScrapFactory {
         var objects: [GameObject] = []
         //Generate objects based on levels
         for i in 0..<(level * Int((arc4random_uniform(2)) + 1 * 3)) {
+            //Generate random positions within bounds
+            var xPos: Float = Float(arc4random_uniform(UInt32(5))) - Float(2);
+            var yPos: Float = Float(0.0);
+            var zPos: Float = (Float(arc4random_uniform(UInt32(10)))) * Float(-1);
+            //If object spawn on top of the grinder, move it away
+            if(zPos == 0 && xPos <= -1){
+                xPos += 1;
+            }
+            
             switch SCRAPMODEL.randomModel() {
                 case .SCRAP_BOX:
                     objects.append(
@@ -48,9 +57,9 @@ class ScrapFactory {
                             vertexArray: 0,
                             vertexBuffer: 0,
                             objectData: ModelObject.parseOBJFileToModel(fileName: SCRAPMODELSTRING.SCRAP_BOX.rawValue).getModelData(),
-                            0.0,
-                            0.0,
-                            0.0,
+                            xPos,
+                            yPos,
+                            zPos,
                             scale: 1.0,
                             baseMatrix: GLKMatrix4Identity
                         )
@@ -64,9 +73,9 @@ class ScrapFactory {
                             vertexArray: 0,
                             vertexBuffer: 0,
                             objectData: ModelObject.parseOBJFileToModel(fileName: SCRAPMODELSTRING.SCRAP_FRAME.rawValue).getModelData(),
-                            0.0,
-                            0.0,
-                            0.0,
+                            xPos,
+                            yPos,
+                            zPos,
                             scale: 1.0,
                             baseMatrix: GLKMatrix4Identity
                         )
@@ -80,9 +89,9 @@ class ScrapFactory {
                             vertexArray: 0,
                             vertexBuffer: 0,
                             objectData: ModelObject.parseOBJFileToModel(fileName: SCRAPMODELSTRING.SCRAP_BOX.rawValue).getModelData(),
-                            0.0,
-                            0.0,
-                            0.0,
+                            xPos,
+                            yPos,
+                            zPos,
                             scale: 1.0,
                             baseMatrix: GLKMatrix4Identity
                         )
@@ -96,9 +105,9 @@ class ScrapFactory {
                             vertexArray: 0,
                             vertexBuffer: 0,
                             objectData: ModelObject.parseOBJFileToModel(fileName: SCRAPMODELSTRING.SCRAP_CAR.rawValue).getModelData(),
-                            0.0,
-                            0.0,
-                            0.0,
+                            xPos,
+                            yPos,
+                            zPos,
                             scale: 1.0,
                             baseMatrix: GLKMatrix4Identity
                         )
