@@ -180,4 +180,16 @@ public class GameObject{
         self.velocity.y+=vely;
         self.velocity.z+=velz;
     }
+    
+    func setVelocities(velx: GLfloat?, vely: GLfloat?, velz: GLfloat?){
+        if(velx != nil){
+            self.velocity.x = velx!;
+        }
+        if(vely != nil){
+            self.velocity.y = vely!;
+        }
+        if(velz != nil){
+            self.velocity.z = velz!;
+        }
+    }
 }

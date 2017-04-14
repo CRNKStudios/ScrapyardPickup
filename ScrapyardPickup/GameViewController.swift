@@ -29,7 +29,6 @@ class GameViewController: GLKViewController {
     // MARK: Properties
     var program: GLuint = 0
     
-    
     // MARK: Create objects
     var playerMagnet: PlayerObject = PlayerObject()
     var playerCube: GameObject = GameObject()
@@ -67,6 +66,12 @@ class GameViewController: GLKViewController {
     
     var soundManager: SoundManager = SoundManager()
     var bkgSoundManager: SoundManager = SoundManager()
+    
+    // MARK: Game Boundaries
+    var xLeftBoundary: Float = -2.0
+    var xRightBoundary: Float = 2.0
+    var zAwayFromCameraBoundary: Float = -10.0
+    var zTowardCameraBoundary: Float = 0.0
     
     @IBOutlet weak var UIButtonUp: UIButton!
     @IBOutlet weak var UIButtonDown: UIButton!
@@ -354,11 +359,14 @@ class GameViewController: GLKViewController {
 //        playerCube.addToVelocities(velx: 0, vely: Float(-9.81*self.timeSinceLastUpdate), velz: 0)
 //        playerCube.updatePosition(deltaTime: GLfloat(self.timeSinceLastUpdate))
         //loop this for all scrap objects. 8==========D~~~~~~~ HANK LO ~~~~~~~~~~~~~
-        if(scrapObjects[0].tag == "Scrap"){
-            if(HitBox.collisionHasOccured(firstPos: scrapObjects[0].position, firstBox: junkHitBox, secondPos: grinderBox.position, secondBox: grinderHitBox)){
-                scrapObjects[0].tag = "cleared";
-                pp.setScore(score: pp.getScore() + 10000)
-                self.endLevel()
+        for i in 0...scrapObjects.count-1{
+            if(scrapObjects[i].tag == "Scrap"){
+                if(HitBox.collisionHasOccured(firstPos: scrapObjects[i].position, firstBox: junkHitBox, secondPos: grinderBox.position, secondBox: grinderHitBox)){
+                    NSLog("Collision")
+                    scrapObjects[i].tag = "cleared";
+                    pp.setScore(score: pp.getScore() + 10000)
+                    //self.endLevel()
+                }
             }
         }
 
@@ -370,6 +378,24 @@ class GameViewController: GLKViewController {
         
         for i in 0...scrapObjects.count-1 {
             var modelViewMatrix6 = scrapObjects[i].getTranslationMatrix()
+
+            //Boundary checking and adjusting objects ensuring they are in the game boundary
+            if(modelViewMatrix6.m30 < xLeftBoundary){
+                scrapObjects[i].moveObject(xMove: 0.1, yMove: 0, zMove: 0)
+                scrapObjects[i].setVelocities(velx: 0, vely: nil, velz: nil)
+            }
+            if(modelViewMatrix6.m30 > xRightBoundary){
+                scrapObjects[i].moveObject(xMove: -0.1, yMove: 0, zMove: 0)
+                scrapObjects[i].setVelocities(velx: 0, vely: nil, velz: nil)
+            }
+            if(modelViewMatrix6.m32 < zAwayFromCameraBoundary){
+                scrapObjects[i].moveObject(xMove: 0, yMove: 0, zMove: 0.1)
+                scrapObjects[i].setVelocities(velx: nil, vely: nil, velz: 0)
+            }
+            if(modelViewMatrix6.m32 > zTowardCameraBoundary){
+                scrapObjects[i].moveObject(xMove: 0, yMove: 0, zMove: -0.1)
+                scrapObjects[i].setVelocities(velx: nil, vely: nil, velz: 0)
+            }
             modelViewMatrix6 = GLKMatrix4Translate(modelViewMatrix6, 0, 2, 0)
             modelViewMatrix6 = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix6)
             normalMatrix6 = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(modelViewMatrix6), nil)
@@ -442,19 +468,27 @@ class GameViewController: GLKViewController {
         self.updateTimer(dt: self.timeSinceLastUpdate)
         
         if(movingUp){
-            playerMagnet.moveObject(xMove: 0.0, yMove: 0.0, zMove: -0.1);
+            if(playerMagnet.getTranslationMatrix().m32 > zAwayFromCameraBoundary){
+                playerMagnet.moveObject(xMove: 0.0, yMove: 0.0, zMove: -0.1);
+            }
         }
         if(movingDown){
-            playerMagnet.moveObject(xMove: 0.0, yMove: 0.0, zMove: 0.1);
+            if(playerMagnet.getTranslationMatrix().m32 < zTowardCameraBoundary){
+                playerMagnet.moveObject(xMove: 0.0, yMove: 0.0, zMove: 0.1);
+            }
         }
         if(movingLeft){
-            playerMagnet.moveObject(xMove: -0.1, yMove: 0.0, zMove: 0.0);
+            if(playerMagnet.getTranslationMatrix().m30 > xLeftBoundary){
+                playerMagnet.moveObject(xMove: -0.1, yMove: 0.0, zMove: 0.0);
+            }
         }
         if(movingRight){
-            playerMagnet.moveObject(xMove: 0.1, yMove: 0.0, zMove: 0.0);
+            if(playerMagnet.getTranslationMatrix().m30 < xRightBoundary){
+                playerMagnet.moveObject(xMove: 0.1, yMove: 0.0, zMove: 0.0);
+            }
         }
         
-        NSLog("Score: %d", pp.getScore());
+        //NSLog("Score: %d", pp.getScore());
     }
     
     func setObjectMVPMatrix(go: inout GameObject, base: GLKMatrix4, proj: GLKMatrix4, translate: Vector4, scale: Vector4) {
@@ -540,21 +574,23 @@ class GameViewController: GLKViewController {
     }
     
     func drawObject(go: GameObject) {
-        glBindVertexArrayOES(go.vertexArray)
-        
-        withUnsafePointer(to: &go.modelViewProjectionMatrix, {
-            $0.withMemoryRebound(to: Float.self, capacity: 16, {
-                glUniformMatrix4fv(uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0, $0)
+        if(go.tag != "cleared"){
+            glBindVertexArrayOES(go.vertexArray)
+            
+            withUnsafePointer(to: &go.modelViewProjectionMatrix, {
+                $0.withMemoryRebound(to: Float.self, capacity: 16, {
+                    glUniformMatrix4fv(uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0, $0)
+                })
             })
-        })
-        
-        withUnsafePointer(to: &go.normalMatrix, {
-            $0.withMemoryRebound(to: Float.self, capacity: 9, {
-                glUniformMatrix3fv(uniforms[UNIFORM_NORMAL_MATRIX], 1, 0, $0)
+            
+            withUnsafePointer(to: &go.normalMatrix, {
+                $0.withMemoryRebound(to: Float.self, capacity: 9, {
+                    glUniformMatrix3fv(uniforms[UNIFORM_NORMAL_MATRIX], 1, 0, $0)
+                })
             })
-        })
-        
-        glDrawArrays(GLenum(GL_TRIANGLES), 0, GLsizei(go.getObjectData().position.count))
+            
+            glDrawArrays(GLenum(GL_TRIANGLES), 0, GLsizei(go.getObjectData().position.count))
+        }
     }
     
     func drawObjects(gos: [GameObject]) {
