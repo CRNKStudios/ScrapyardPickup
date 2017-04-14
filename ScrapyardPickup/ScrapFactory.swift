@@ -10,7 +10,7 @@ import Foundation
 import GLKit
 
 public enum SCRAPMODELSTRING: String {
-    case    SCRAP_BOX   = "scrap_box"
+    case    SCRAP_BOX   = "scrap_cube"
     case    SCRAP_FRAME = "scrap_frame"
     case    SCRAP_BAR   = "scrap_bar"
     case    SCRAP_CAR   = "scrap_car"
@@ -52,9 +52,11 @@ class ScrapFactory {
                             0.0,
                             0.0,
                             scale: 1.0,
-                            baseMatrix: GLKMatrix4Identity
+                            baseMatrix: GLKMatrix4Identity,
+                            texture: "crate"
                         )
                     )
+                    NSLog("Crate Object");
                     break
                 case .SCRAP_FRAME:
                     objects.append(
@@ -68,7 +70,8 @@ class ScrapFactory {
                             0.0,
                             0.0,
                             scale: 1.0,
-                            baseMatrix: GLKMatrix4Identity
+                            baseMatrix: GLKMatrix4Identity,
+                            texture: ""
                         )
                     )
                     break
@@ -84,7 +87,8 @@ class ScrapFactory {
                             0.0,
                             0.0,
                             scale: 1.0,
-                            baseMatrix: GLKMatrix4Identity
+                            baseMatrix: GLKMatrix4Identity,
+                            texture: ""
                         )
                     )
                     break
@@ -100,7 +104,8 @@ class ScrapFactory {
                             0.0,
                             0.0,
                             scale: 1.0,
-                            baseMatrix: GLKMatrix4Identity
+                            baseMatrix: GLKMatrix4Identity,
+                            texture: ""
                         )
                     )
                     break

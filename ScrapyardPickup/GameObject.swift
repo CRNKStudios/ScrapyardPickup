@@ -50,6 +50,7 @@ public class GameObject{
     var velocity: Vector4 = Vector4(x: 0, y: 0, z: 0, w: 1)
     var scale: Float
     var baseMatrix: GLKMatrix4
+    var texture: GLKTextureInfo?
     
     init() {
         self.name = ""
@@ -64,10 +65,11 @@ public class GameObject{
         self.velocity = Vector4(x:0, y:0, z:0, w:1)
         self.scale = 1
         self.baseMatrix = GLKMatrix4Identity
+        self.texture = loadTextures(fileName: "")
     }
     
     //Initialize object fields
-    init(name: String, tag: String?, vertexArray: GLuint, vertexBuffer: GLuint, objectData: VertexData, _ xPos: Float, _ yPos: Float, _ zPos: Float, scale: Float, baseMatrix: GLKMatrix4){
+    init(name: String, tag: String?, vertexArray: GLuint, vertexBuffer: GLuint, objectData: VertexData, _ xPos: Float, _ yPos: Float, _ zPos: Float, scale: Float, baseMatrix: GLKMatrix4, texture: String) {
         self.name = name
         self.tag = tag
         self.vertexArray = vertexArray
@@ -79,6 +81,7 @@ public class GameObject{
         self.position = Vector4(x:xPos, y:yPos, z:zPos, w:1)
         self.scale = scale
         self.baseMatrix = baseMatrix
+        self.texture = loadTextures(fileName: texture)
         //Conduct other things here
     }
     
@@ -88,7 +91,7 @@ public class GameObject{
     }
     
     //overloaded init for seperated vertices and normals from blender
-    init(name: String, tag: String?, vertexArray: GLuint, vertexBuffer: GLuint, objectData: VertexData, ObjectNormalData: [GLfloat], _ xPos: Float, _ yPos: Float, _ zPos: Float, scale: Float, baseMatrix: GLKMatrix4){
+    init(name: String, tag: String?, vertexArray: GLuint, vertexBuffer: GLuint, objectData: VertexData, ObjectNormalData: [GLfloat], _ xPos: Float, _ yPos: Float, _ zPos: Float, scale: Float, baseMatrix: GLKMatrix4, texture: String) {
         self.name = name
         self.tag = tag
         self.vertexArray = vertexArray
@@ -100,6 +103,7 @@ public class GameObject{
         self.position = Vector4(x:xPos, y:yPos, z:zPos, w:1)
         self.scale = scale
         self.baseMatrix = baseMatrix
+        self.texture = loadTextures(fileName: texture)
         //Conduct other things here
     }
     
@@ -179,5 +183,21 @@ public class GameObject{
         self.velocity.x+=velx;
         self.velocity.y+=vely;
         self.velocity.z+=velz;
+    }
+    
+    // TODO: Dealloc textures as well
+    // Loads in textures for the images
+    func loadTextures(fileName: String) -> GLKTextureInfo? {
+        var textInfo: GLKTextureInfo? = nil
+        if let filePath = Bundle.main.path(forResource: fileName, ofType: "jpg"){
+            do {
+                textInfo = try GLKTextureLoader.texture(withContentsOfFile: filePath, options: nil)
+            } catch {
+                NSLog("Something went wrong with loading \"" + fileName + "\"");
+            }
+        } else {
+            NSLog("File: " + fileName + " cannot be opened at this time.");
+        }
+        return textInfo
     }
 }

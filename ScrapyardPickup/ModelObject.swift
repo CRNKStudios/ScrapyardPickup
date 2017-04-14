@@ -175,7 +175,7 @@ public class ModelObject {
                     }
                 }
                 modelOut.modelData.position = ModelObject.reorder3(data: positions, indices: indices, offset: 0)
-                modelOut.modelData.texture = ModelObject.reorder2(data: textures, indices: indices, offset: 1)
+                modelOut.modelData.texture = ModelObject.reorder2(data: textures, indices: indices, vertices: positions, offset: 1)
                 modelOut.modelData.normal = ModelObject.reorder3(data: normals, indices: indices, offset: 2)
             } catch {
                 NSLog("File: " + fileName + ".obj file contents could not be loaded")
@@ -221,12 +221,12 @@ public class ModelObject {
         return dataOut
     }
     
-    private static func reorder2(data: [GLfloat], indices: [GLuint], offset: Int) -> [GLfloat] {
+    private static func reorder2(data: [GLfloat], indices: [GLuint], vertices: [GLfloat], offset: Int) -> [GLfloat] {
         if (data.count <= 0) {
             return []
         }
         var dataOut: [GLfloat] = []
-        for i in stride(from: offset, to: (indices.count / 3) * 2, by: 3) {
+        for i in stride(from: offset, to: ((vertices.count / 3) * 6), by: 3) {
             dataOut.append(data[(Int(indices[i]) - 1) * 3])
             dataOut.append(data[(Int(indices[i]) - 1) * 3 + 1])
         }

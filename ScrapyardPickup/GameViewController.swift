@@ -215,21 +215,21 @@ class GameViewController: GLKViewController {
         glEnable(GLenum(GL_DEPTH_TEST))
         
         // MARK: Magnet Object Creation
-        playerMagnet = PlayerObject(name: "CraneModel", tag: "Player", vertexArray: 0, vertexBuffer: 0, objectData: ModelObject.parseOBJFileToModel(fileName: "CraneModel").getModelData(), 0, 4, -8, scale: 1, baseMatrix: GLKMatrix4Identity)
+        playerMagnet = PlayerObject(name: "CraneModel", tag: "Player", vertexArray: 0, vertexBuffer: 0, objectData: ModelObject.parseOBJFileToModel(fileName: "CraneModel").getModelData(), 0, 4, -8, scale: 1, baseMatrix: GLKMatrix4Identity, texture: "")
         self.loadObjectsToBuffers(go: playerMagnet)
         
         // MARK: Cube Object Loaded
         // playerCube = GameObject(name: "Cube", tag: "Scrap", vertexArray: 0, vertexBuffer: 0, objectData: ModelObject.parseOBJFileToModel(fileName: "monkey").getModelData(), 0.0, -2.0, 0.0, scale: 0.5, baseMatrix: GLKMatrix4Identity)
         // self.loadObjectsToBuffers(go: playerCube)
         
-        grinderBox = GameObject(name: "Buster", tag: "Grinder", vertexArray: 0, vertexBuffer: 0, objectData: ModelObject.parseOBJFileToModel(fileName: "junkyardGrinderBoxNoTex").getModelData(), -2.0, 0.0, 0.0, scale: 1.0, baseMatrix: GLKMatrix4Identity);
+        grinderBox = GameObject(name: "Buster", tag: "Grinder", vertexArray: 0, vertexBuffer: 0, objectData: ModelObject.parseOBJFileToModel(fileName: "junkyardGrinderBoxNoTex").getModelData(), -2.0, 0.0, 0.0, scale: 1.0, baseMatrix: GLKMatrix4Identity, texture: "");
         self.loadObjectsToBuffers(go: grinderBox)
         
-        grinderBlades = GameObject(name: "Blades", tag: "Grinder", vertexArray: 0, vertexBuffer: 0, objectData: ModelObject.parseOBJFileToModel(fileName: "junkyardGrinderBladesNoTex").getModelData(), -2.0, 0.0, 0.0, scale: 1.0, baseMatrix: GLKMatrix4Identity);
+        grinderBlades = GameObject(name: "Blades", tag: "Grinder", vertexArray: 0, vertexBuffer: 0, objectData: ModelObject.parseOBJFileToModel(fileName: "junkyardGrinderBladesNoTex").getModelData(), -2.0, 0.0, 0.0, scale: 1.0, baseMatrix: GLKMatrix4Identity, texture: "");
         self.loadObjectsToBuffers(go: grinderBlades)
         
         // MARK: Ground Object Creation
-        ground = GameObject(name: "Ground", tag: "Ground", vertexArray: 0, vertexBuffer: 0, objectData: ModelObject.parseOBJFileToModel(fileName: "cube").getModelData(), 0.0, 0.0, 0.0, scale: 1, baseMatrix: GLKMatrix4Identity)
+        ground = GameObject(name: "Ground", tag: "Ground", vertexArray: 0, vertexBuffer: 0, objectData: ModelObject.parseOBJFileToModel(fileName: "scrap_cube").getModelData(), 0.0, 0.0, 0.0, scale: 1, baseMatrix: GLKMatrix4Identity, texture: "")
         self.loadObjectsToBuffers(go: ground)
         
         // MARK: Create scrap objects
@@ -358,14 +358,14 @@ class GameViewController: GLKViewController {
         
         
         for i in 0...scrapObjects.count-1 {
-            var modelViewMatrix6 = scrapObjects[i].getTranslationMatrix()
-            modelViewMatrix6 = GLKMatrix4Translate(modelViewMatrix6, 0, 2, 0)
-            modelViewMatrix6 = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix6)
-            normalMatrix6 = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(modelViewMatrix6), nil)
-            modelViewProjectionMatrix6 = GLKMatrix4Multiply(projectionMatrix, modelViewMatrix6)
-            scrapObjects[i].modelViewMatrix = modelViewMatrix6
-            scrapObjects[i].normalMatrix = normalMatrix6
-            scrapObjects[i].modelViewProjectionMatrix = modelViewProjectionMatrix6
+            var mvm = scrapObjects[i].getTranslationMatrix()
+            mvm = GLKMatrix4Translate(mvm, 0, 2, 0)
+            mvm = GLKMatrix4Multiply(baseModelViewMatrix, mvm)
+            var nm = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(mvm), nil)
+            var mvpm = GLKMatrix4Multiply(projectionMatrix, mvm)
+            scrapObjects[i].modelViewMatrix = mvm
+            scrapObjects[i].normalMatrix = nm
+            scrapObjects[i].modelViewProjectionMatrix = mvpm
         }
         
         // TODO: Fix this so that there is a better way of doing it
@@ -425,7 +425,7 @@ class GameViewController: GLKViewController {
         // self.setObjectMVPMatrixPlayer(po: &playerMagnet, base: baseModelViewMatrix, proj: projectionMatrix, translate: Vector4(x: 0, y: 0, z: 0, w: 0), scale: Vector4(x: 0.5, y: 0.5, z: 0.5, w: 0))
         // self.setObjectMVPMatrix(go: &ground, base: baseModelViewMatrix, proj: projectionMatrix, translate: Vector4(x: 0, y: 0, z: 0, w: 0), scale: Vector4(x: 1000, y: 0.5, z: 1000, w: 0))
         // self.setObjectMVPMatrix(go: &grinderBox, base: baseModelViewMatrix, proj: projectionMatrix, translate: Vector4(x: 0, y: 0, z: 0, w: 0), scale: Vector4(x: 0, y: 0, z: 0, w: 0))
-        // self.setObjectMVPMatrix(go: &grinderBlades, base: baseModelViewMatrix, proj: projectionMatrix, translate: Vector4(x: 0, y: 0, z: 0, w: 0), scale: Vector4(x: 0, y: 0, z: 0, w: 0))
+        // self.setObjectMVPMatrix(go: &grinderBlades, base: baseModelViewMatrix, proj: projectionMatrix, translate: Vector4(x: 0, y: 0, z: 0, w: 0), scale: Vector4(x: 0, y: 0, z: 0, w: 0))2
         
         //rotation += Float(self.timeSinceLastUpdate * 0.5)
         self.updateTimer(dt: self.timeSinceLastUpdate)
@@ -541,6 +541,10 @@ class GameViewController: GLKViewController {
             })
         })
         
+        if let tex = go.texture {
+            glActiveTexture(GLenum(GL_TEXTURE0))
+            glBindTexture(tex.target, tex.name)
+        }
         glDrawArrays(GLenum(GL_TRIANGLES), 0, GLsizei(go.getObjectData().position.count))
     }
     
@@ -622,7 +626,6 @@ class GameViewController: GLKViewController {
         
         return true
     }
-    
     
     func compileShader(_ shader: inout GLuint, type: GLenum, file: String) -> Bool {
         var status: GLint = 0
