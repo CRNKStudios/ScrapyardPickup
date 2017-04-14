@@ -39,7 +39,6 @@ class GameViewController: GLKViewController {
     var grinderBlades: GameObject = GameObject()
     var pp: PlayerPrefs = PlayerPrefs(name: "player")
     
-    // TODO: Fix this. Each object should hold it's own projviewmatrix && normal
     var modelViewProjectionMatrix:GLKMatrix4 = GLKMatrix4Identity
     var normalMatrix: GLKMatrix3 = GLKMatrix3Identity
     var modelViewProjectionMatrix2:GLKMatrix4 = GLKMatrix4Identity
@@ -74,7 +73,7 @@ class GameViewController: GLKViewController {
     @IBOutlet weak var UIButtonMagnetPower: UIButton!
     @IBOutlet weak var TimerLabel: UILabel!
     
-// MARK: Functions
+    // MARK: Functions
     deinit {
         self.tearDownGL()
         
@@ -131,8 +130,7 @@ class GameViewController: GLKViewController {
         UIButtonMagnetPower.addTarget(self,action:#selector(buttonReleased),for:.touchUpInside);
     }
     
-    func buttonClicked(sender:UIButton)
-    {
+    func buttonClicked(sender:UIButton) {
         switch(sender.tag){
         case Buttons.BUTTON_UP.rawValue:
             movingUp = true;
@@ -162,7 +160,7 @@ class GameViewController: GLKViewController {
     }
     
     //Handle UI button Releases
-    func buttonReleased(sender:UIButton){
+    func buttonReleased(sender:UIButton) {
         switch(sender.tag){
         case Buttons.BUTTON_UP.rawValue:
             movingUp = false;
@@ -217,13 +215,12 @@ class GameViewController: GLKViewController {
         glEnable(GLenum(GL_DEPTH_TEST))
         
         // MARK: Magnet Object Creation
-        playerMagnet = PlayerObject(name: "CraneModel", tag: "Player", vertexArray: 0, vertexBuffer: 0, objectData: ModelObject.parseOBJFileToModel(fileName: "CraneModel")
-.getModelData(), 0, 4, -8, scale: 1, baseMatrix: GLKMatrix4Identity)
+        playerMagnet = PlayerObject(name: "CraneModel", tag: "Player", vertexArray: 0, vertexBuffer: 0, objectData: ModelObject.parseOBJFileToModel(fileName: "CraneModel").getModelData(), 0, 4, -8, scale: 1, baseMatrix: GLKMatrix4Identity)
         self.loadObjectsToBuffers(go: playerMagnet)
         
         // MARK: Cube Object Loaded
-//        playerCube = GameObject(name: "Cube", tag: "Scrap", vertexArray: 0, vertexBuffer: 0, objectData: ModelObject.parseOBJFileToModel(fileName: "monkey").getModelData(), 0.0, -2.0, 0.0, scale: 0.5, baseMatrix: GLKMatrix4Identity)
-//        self.loadObjectsToBuffers(go: playerCube)
+        // playerCube = GameObject(name: "Cube", tag: "Scrap", vertexArray: 0, vertexBuffer: 0, objectData: ModelObject.parseOBJFileToModel(fileName: "monkey").getModelData(), 0.0, -2.0, 0.0, scale: 0.5, baseMatrix: GLKMatrix4Identity)
+        // self.loadObjectsToBuffers(go: playerCube)
         
         grinderBox = GameObject(name: "Buster", tag: "Grinder", vertexArray: 0, vertexBuffer: 0, objectData: ModelObject.parseOBJFileToModel(fileName: "junkyardGrinderBoxNoTex").getModelData(), -2.0, 0.0, 0.0, scale: 1.0, baseMatrix: GLKMatrix4Identity);
         self.loadObjectsToBuffers(go: grinderBox)
@@ -257,7 +254,7 @@ class GameViewController: GLKViewController {
         
         glBufferSubData(GLenum(GL_ARRAY_BUFFER), 0, MemoryLayout<GLfloat>.size * objectData.position.count, go.getPositionsData());
         glBufferSubData(GLenum(GL_ARRAY_BUFFER), MemoryLayout<GLfloat>.size * objectData.position.count, MemoryLayout<GLfloat>.size * objectData.texture.count, go.getTexturesData());
-        glBufferSubData(GLenum(GL_ARRAY_BUFFER), MemoryLayout<GLfloat>.size * objectData.position.count * 2, MemoryLayout<GLfloat>.size * objectData.normal.count, go.getNormalsData());
+        glBufferSubData(GLenum(GL_ARRAY_BUFFER), MemoryLayout<GLfloat>.size * objectData.position.count + MemoryLayout<GLfloat>.size * objectData.texture.count, MemoryLayout<GLfloat>.size * objectData.normal.count, go.getNormalsData());
         
         glEnableVertexAttribArray(GLuint(GLKVertexAttrib.position.rawValue))
         glVertexAttribPointer(GLuint(GLKVertexAttrib.position.rawValue), 3, GLenum(GL_FLOAT), GLboolean(GL_FALSE), 0, BUFFER_OFFSET(0))
@@ -290,6 +287,7 @@ class GameViewController: GLKViewController {
         glDeleteVertexArraysOES(1, &playerCube.vertexArray)
         glDeleteBuffers(1, &ground.vertexBuffer)
         glDeleteVertexArraysOES(1, &ground.vertexArray)
+        // TODO: Delete all OBJ buffers
         
         self.effect = nil
         
@@ -312,11 +310,11 @@ class GameViewController: GLKViewController {
         //baseModelViewMatrix = GLKMatrix4Rotate(baseModelViewMatrix, rotation, 0.0, 1.0, 0.0)
         
         // Compute the model view matrix for the object rendered with GLKit
-//        var modelViewMatrix = GLKMatrix4MakeTranslation(0.0, 0.0, -1.5)
-//        modelViewMatrix = GLKMatrix4Rotate(modelViewMatrix, rotation, 1.0, 1.0, 1.0)
-//        modelViewMatrix = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix)
-//        
-//        self.effect?.transform.modelviewMatrix = modelViewMatrix
+        //  var modelViewMatrix = GLKMatrix4MakeTranslation(0.0, 0.0, -1.5)
+        //  modelViewMatrix = GLKMatrix4Rotate(modelViewMatrix, rotation, 1.0, 1.0, 1.0)
+        //  modelViewMatrix = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix)
+        
+        //  self.effect?.transform.modelviewMatrix = modelViewMatrix
         
         // Compute the model view matrix for the object rendered with ES2
         //var modelViewMatrix = GLKMatrix4MakeTranslation(0.0, 0.0, 1.5)
@@ -342,9 +340,9 @@ class GameViewController: GLKViewController {
         // TODO: Loop through models to set their MVM's, then set their normals, then projection matrices
         
         //TODO: Set into objects. There is a better way of doing this
-//        playerCube.addToVelocities(velx: 0, vely: Float(-9.81*self.timeSinceLastUpdate), velz: 0)
-//        playerCube.updatePosition(deltaTime: GLfloat(self.timeSinceLastUpdate))
-        //loop this for all scrap objects. 8==========D~~~~~~~ HANK LO ~~~~~~~~~~~~~
+        // playerCube.addToVelocities(velx: 0, vely: Float(-9.81*self.timeSinceLastUpdate), velz: 0)
+        // playerCube.updatePosition(deltaTime: GLfloat(self.timeSinceLastUpdate))
+        //loop this for all scrap objects. 
         if(scrapObjects[0].tag == "Scrap"){
             if(HitBox.collisionHasOccured(firstPos: scrapObjects[0].position, firstBox: junkHitBox, secondPos: grinderBox.position, secondBox: grinderHitBox)){
                 scrapObjects[0].tag = "cleared";
@@ -424,10 +422,10 @@ class GameViewController: GLKViewController {
         //scrapObjects[0].normalMatrix = normalMatrix6
         //scrapObjects[0].modelViewProjectionMatrix = modelViewProjectionMatrix6
         
-//        self.setObjectMVPMatrixPlayer(po: &playerMagnet, base: baseModelViewMatrix, proj: projectionMatrix, translate: Vector4(x: 0, y: 0, z: 0, w: 0), scale: Vector4(x: 0.5, y: 0.5, z: 0.5, w: 0))
-//        self.setObjectMVPMatrix(go: &ground, base: baseModelViewMatrix, proj: projectionMatrix, translate: Vector4(x: 0, y: 0, z: 0, w: 0), scale: Vector4(x: 1000, y: 0.5, z: 1000, w: 0))
-//        self.setObjectMVPMatrix(go: &grinderBox, base: baseModelViewMatrix, proj: projectionMatrix, translate: Vector4(x: 0, y: 0, z: 0, w: 0), scale: Vector4(x: 0, y: 0, z: 0, w: 0))
-//        self.setObjectMVPMatrix(go: &grinderBlades, base: baseModelViewMatrix, proj: projectionMatrix, translate: Vector4(x: 0, y: 0, z: 0, w: 0), scale: Vector4(x: 0, y: 0, z: 0, w: 0))
+        // self.setObjectMVPMatrixPlayer(po: &playerMagnet, base: baseModelViewMatrix, proj: projectionMatrix, translate: Vector4(x: 0, y: 0, z: 0, w: 0), scale: Vector4(x: 0.5, y: 0.5, z: 0.5, w: 0))
+        // self.setObjectMVPMatrix(go: &ground, base: baseModelViewMatrix, proj: projectionMatrix, translate: Vector4(x: 0, y: 0, z: 0, w: 0), scale: Vector4(x: 1000, y: 0.5, z: 1000, w: 0))
+        // self.setObjectMVPMatrix(go: &grinderBox, base: baseModelViewMatrix, proj: projectionMatrix, translate: Vector4(x: 0, y: 0, z: 0, w: 0), scale: Vector4(x: 0, y: 0, z: 0, w: 0))
+        // self.setObjectMVPMatrix(go: &grinderBlades, base: baseModelViewMatrix, proj: projectionMatrix, translate: Vector4(x: 0, y: 0, z: 0, w: 0), scale: Vector4(x: 0, y: 0, z: 0, w: 0))
         
         //rotation += Float(self.timeSinceLastUpdate * 0.5)
         self.updateTimer(dt: self.timeSinceLastUpdate)
@@ -444,8 +442,6 @@ class GameViewController: GLKViewController {
         if(movingRight){
             playerMagnet.moveObject(xMove: 0.1, yMove: 0.0, zMove: 0.0);
         }
-        
-        NSLog("Score: %d", pp.getScore());
     }
     
     func setObjectMVPMatrix(go: inout GameObject, base: GLKMatrix4, proj: GLKMatrix4, translate: Vector4, scale: Vector4) {
@@ -479,55 +475,55 @@ class GameViewController: GLKViewController {
         for i in 0...scrapObjects.count-1 {
             self.drawObject(go: scrapObjects[i])
         }
-//        self.drawObjects(gos: scrapObjects)
-        
-//        glBindVertexArrayOES(playerMagnet.vertexArray)
-//        
-//        withUnsafePointer(to: &modelViewProjectionMatrix, {
-//            $0.withMemoryRebound(to: Float.self, capacity: 16, {
-//                glUniformMatrix4fv(uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0, $0)
-//            })
-//        })
-//        
-//        withUnsafePointer(to: &normalMatrix, {
-//            $0.withMemoryRebound(to: Float.self, capacity: 9, {
-//                glUniformMatrix3fv(uniforms[UNIFORM_NORMAL_MATRIX], 1, 0, $0)
-//            })
-//        })
-//        
-//        glDrawArrays(GLenum(GL_TRIANGLES), 0, GLsizei(playerMagnet.getObjectData().position.count))
-        
-//        glBindVertexArrayOES(playerCube.vertexArray)
-//        
-//        withUnsafePointer(to: &modelViewProjectionMatrix2, {
-//            $0.withMemoryRebound(to: Float.self, capacity: 16, {
-//                glUniformMatrix4fv(uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0, $0)
-//            })
-//        })
-//        
-//        withUnsafePointer(to: &normalMatrix2, {
-//            $0.withMemoryRebound(to: Float.self, capacity: 9, {
-//                glUniformMatrix3fv(uniforms[UNIFORM_NORMAL_MATRIX], 1, 0, $0)
-//            })
-//        })
-//        
-//        glDrawArrays(GLenum(GL_TRIANGLES), 0, GLsizei(playerCube.getObjectData().position.count))
-//        
-//        glBindVertexArrayOES(ground.vertexArray)
-//        
-//        withUnsafePointer(to: &modelViewProjectionMatrix3, {
-//            $0.withMemoryRebound(to: Float.self, capacity: 16, {
-//                glUniformMatrix4fv(uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0, $0)
-//            })
-//        })
-//        
-//        withUnsafePointer(to: &normalMatrix3, {
-//            $0.withMemoryRebound(to: Float.self, capacity: 9, {
-//                glUniformMatrix3fv(uniforms[UNIFORM_NORMAL_MATRIX], 1, 0, $0)
-//            })
-//        })
-//        
-//        glDrawArrays(GLenum(GL_TRIANGLES), 0, GLsizei(ground.getObjectData().position.count))
+        // self.drawObjects(gos: scrapObjects)
+
+        // glBindVertexArrayOES(playerMagnet.vertexArray)
+
+        // withUnsafePointer(to: &modelViewProjectionMatrix, {
+        //     $0.withMemoryRebound(to: Float.self, capacity: 16, {
+        //         glUniformMatrix4fv(uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0, $0)
+        //     })
+        // })
+
+        // withUnsafePointer(to: &normalMatrix, {
+        //     $0.withMemoryRebound(to: Float.self, capacity: 9, {
+        //         glUniformMatrix3fv(uniforms[UNIFORM_NORMAL_MATRIX], 1, 0, $0)
+        //     })
+        // })
+
+        // glDrawArrays(GLenum(GL_TRIANGLES), 0, GLsizei(playerMagnet.getObjectData().position.count))
+
+        // glBindVertexArrayOES(playerCube.vertexArray)
+
+        // withUnsafePointer(to: &modelViewProjectionMatrix2, {
+        //     $0.withMemoryRebound(to: Float.self, capacity: 16, {
+        //         glUniformMatrix4fv(uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0, $0)
+        //     })
+        // })
+
+        // withUnsafePointer(to: &normalMatrix2, {
+        //     $0.withMemoryRebound(to: Float.self, capacity: 9, {
+        //         glUniformMatrix3fv(uniforms[UNIFORM_NORMAL_MATRIX], 1, 0, $0)
+        //     })
+        // })
+
+        // glDrawArrays(GLenum(GL_TRIANGLES), 0, GLsizei(playerCube.getObjectData().position.count))
+
+        // glBindVertexArrayOES(ground.vertexArray)
+
+        // withUnsafePointer(to: &modelViewProjectionMatrix3, {
+        //     $0.withMemoryRebound(to: Float.self, capacity: 16, {
+        //         glUniformMatrix4fv(uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0, $0)
+        //     })
+        // })
+
+        // withUnsafePointer(to: &normalMatrix3, {
+        //     $0.withMemoryRebound(to: Float.self, capacity: 9, {
+        //         glUniformMatrix3fv(uniforms[UNIFORM_NORMAL_MATRIX], 1, 0, $0)
+        //     })
+        // })
+
+        // glDrawArrays(GLenum(GL_TRIANGLES), 0, GLsizei(ground.getObjectData().position.count))
     }
     
     func drawObject(go: GameObject) {
@@ -719,5 +715,4 @@ class GameViewController: GLKViewController {
         
         return NSString(format: "%0.2d:%0.2d:%0.2d",hours,minutes,seconds)
     }
-    
 }
